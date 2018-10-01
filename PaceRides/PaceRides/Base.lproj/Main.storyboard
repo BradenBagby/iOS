@@ -244,18 +244,21 @@
                                 </constraints>
                             </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="SnI-Cv-wmo">
-                                <rect key="frame" x="0.0" y="118" width="375" height="549"/>
+                                <rect key="frame" x="125" y="150" width="250" height="517"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="250" id="CZJ-00-50o"/>
+                                </constraints>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="default_cell" textLabel="x5F-KE-KxT" style="IBUITableViewCellStyleDefault" id="WZ2-r2-3EK">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="28" width="250" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="WZ2-r2-3EK" id="Ivg-06-wCq">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="250" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="x5F-KE-KxT">
-                                                    <rect key="frame" x="15" y="0.0" width="345" height="43.5"/>
+                                                    <rect key="frame" x="15" y="0.0" width="220" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -270,19 +273,30 @@
                                     <outlet property="delegate" destination="QSF-JH-Gcd" id="3C4-k8-TKf"/>
                                 </connections>
                             </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4IO-3L-EoL">
+                                <rect key="frame" x="141" y="110" width="218" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="218" id="07q-fE-IK3"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="mZ5-Pe-3mJ" firstAttribute="top" secondItem="3cm-o0-gLm" secondAttribute="top" constant="32" id="16E-ii-UOs"/>
                             <constraint firstItem="3cm-o0-gLm" firstAttribute="trailing" secondItem="mZ5-Pe-3mJ" secondAttribute="trailing" constant="100" id="7dW-ih-7Ri"/>
-                            <constraint firstItem="SnI-Cv-wmo" firstAttribute="top" secondItem="mZ5-Pe-3mJ" secondAttribute="bottom" constant="16" id="Dbc-a5-Gxc"/>
+                            <constraint firstItem="SnI-Cv-wmo" firstAttribute="top" secondItem="4IO-3L-EoL" secondAttribute="bottom" constant="8" id="CeU-QC-YbZ"/>
                             <constraint firstItem="3cm-o0-gLm" firstAttribute="trailing" secondItem="SnI-Cv-wmo" secondAttribute="trailing" id="TDy-UP-sUu"/>
                             <constraint firstItem="3cm-o0-gLm" firstAttribute="bottom" secondItem="SnI-Cv-wmo" secondAttribute="bottom" id="TIg-RG-jhL"/>
-                            <constraint firstItem="SnI-Cv-wmo" firstAttribute="leading" secondItem="3cm-o0-gLm" secondAttribute="leading" id="Uqg-T3-6f2"/>
+                            <constraint firstItem="3cm-o0-gLm" firstAttribute="trailing" secondItem="4IO-3L-EoL" secondAttribute="trailing" constant="16" id="caa-WT-jAa"/>
+                            <constraint firstItem="4IO-3L-EoL" firstAttribute="top" secondItem="mZ5-Pe-3mJ" secondAttribute="bottom" constant="8" id="yuS-SV-sjW"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="3cm-o0-gLm"/>
                     </view>
                     <connections>
+                        <outlet property="nameLabel" destination="4IO-3L-EoL" id="451-dH-Qvh"/>
                         <outlet property="profileImageView" destination="mZ5-Pe-3mJ" id="ocu-Bq-SpZ"/>
                         <outlet property="tableView" destination="SnI-Cv-wmo" id="QiZ-gn-gqw"/>
                     </connections>
