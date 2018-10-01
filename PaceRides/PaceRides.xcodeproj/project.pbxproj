@@ -19,6 +19,8 @@
 		E0860A742161B104003375A7 /* PublicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0860A732161B104003375A7 /* PublicViewController.swift */; };
 		E0860A782161B1B8003375A7 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0860A772161B1B8003375A7 /* UserModel.swift */; };
 		E0860A7A2161B455003375A7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E0860A792161B455003375A7 /* GoogleService-Info.plist */; };
+		E0860A7F2161B867003375A7 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0860A7E2161B867003375A7 /* SWRevealViewController.m */; };
+		E0860A832161C1C3003375A7 /* RearMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0860A822161C1C3003375A7 /* RearMenuTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +65,10 @@
 		E0860A732161B104003375A7 /* PublicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicViewController.swift; sourceTree = "<group>"; };
 		E0860A772161B1B8003375A7 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		E0860A792161B455003375A7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		E0860A7C2161B867003375A7 /* PaceRides-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PaceRides-Bridging-Header.h"; sourceTree = "<group>"; };
+		E0860A7D2161B867003375A7 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
+		E0860A7E2161B867003375A7 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
+		E0860A822161C1C3003375A7 /* RearMenuTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RearMenuTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,6 +155,7 @@
 				E0860A512161A9E6003375A7 /* Info.plist */,
 				E0860A762161B1A6003375A7 /* Models */,
 				E0860A752161B11D003375A7 /* ViewControllers */,
+				E0860A7B2161B852003375A7 /* Supporting Files */,
 			);
 			path = PaceRides;
 			sourceTree = "<group>";
@@ -175,6 +182,7 @@
 			isa = PBXGroup;
 			children = (
 				E0860A732161B104003375A7 /* PublicViewController.swift */,
+				E0860A822161C1C3003375A7 /* RearMenuTableViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -185,6 +193,16 @@
 				E0860A772161B1B8003375A7 /* UserModel.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		E0860A7B2161B852003375A7 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				E0860A7D2161B867003375A7 /* SWRevealViewController.h */,
+				E0860A7E2161B867003375A7 /* SWRevealViewController.m */,
+				E0860A7C2161B867003375A7 /* PaceRides-Bridging-Header.h */,
+			);
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -264,6 +282,7 @@
 				TargetAttributes = {
 					E0860A3F2161A9E5003375A7 = {
 						CreatedOnToolsVersion = 10.0;
+						LastSwiftMigration = 1000;
 					};
 					E0860A552161A9E6003375A7 = {
 						CreatedOnToolsVersion = 10.0;
@@ -497,8 +516,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				E0860A442161A9E5003375A7 /* AppDelegate.swift in Sources */,
+				E0860A832161C1C3003375A7 /* RearMenuTableViewController.swift in Sources */,
 				E0860A782161B1B8003375A7 /* UserModel.swift in Sources */,
 				E0860A742161B104003375A7 /* PublicViewController.swift in Sources */,
+				E0860A7F2161B867003375A7 /* SWRevealViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -674,6 +695,7 @@
 			baseConfigurationReference = 110959F8F8453741523406DB /* Pods-PaceRides.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = L5696BKBGY;
 				INFOPLIST_FILE = PaceRides/Info.plist;
@@ -684,6 +706,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.PaceRides.PaceRides;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "PaceRides/Supporting Files/PaceRides-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -694,6 +718,7 @@
 			baseConfigurationReference = 29335451A5D557316597A633 /* Pods-PaceRides.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = L5696BKBGY;
 				INFOPLIST_FILE = PaceRides/Info.plist;
@@ -704,6 +729,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.PaceRides.PaceRides;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "PaceRides/Supporting Files/PaceRides-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

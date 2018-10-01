@@ -7,26 +7,19 @@
 //
 
 import UIKit
-import Firebase
 
 class PublicViewController: UIViewController {
-
-    @IBOutlet weak var TitleLabel: UILabel!
     
-    let db = Firestore.firestore()
+    @IBOutlet weak var OpenMenuBarButtonItem: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        db.collection("data").document("author").getDocument { (document, error) in
-            
-            if let document = document, document.exists {
-                if let data = document.data(), let name = data["name"] as? String {
-                    self.TitleLabel.text = name
-                }
-            }
-            
-        }
+        self.OpenMenuBarButtonItem.target = self.revealViewController()
+        self.OpenMenuBarButtonItem.action = #selector(SWRevealViewController.revealToggle(_:))
+        
+        view.addGestureRecognizer(self.revealViewController()!.panGestureRecognizer())
+        view.addGestureRecognizer(self.revealViewController()!.tapGestureRecognizer())
     }
 
 }
