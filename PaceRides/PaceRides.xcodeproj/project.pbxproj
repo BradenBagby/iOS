@@ -11,13 +11,14 @@
 		5A31E1791CD9303110039676 /* Pods_PaceRidesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C03A8D1EAF739638F7645745 /* Pods_PaceRidesTests.framework */; };
 		A8737F286A9BBFB497BD5620 /* Pods_PaceRides.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26BDF7F891739D7D0B305928 /* Pods_PaceRides.framework */; };
 		E0860A442161A9E5003375A7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0860A432161A9E5003375A7 /* AppDelegate.swift */; };
-		E0860A462161A9E5003375A7 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0860A452161A9E5003375A7 /* MasterViewController.swift */; };
-		E0860A482161A9E5003375A7 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0860A472161A9E5003375A7 /* DetailViewController.swift */; };
 		E0860A4B2161A9E5003375A7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E0860A492161A9E5003375A7 /* Main.storyboard */; };
 		E0860A4D2161A9E6003375A7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E0860A4C2161A9E6003375A7 /* Assets.xcassets */; };
 		E0860A502161A9E6003375A7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E0860A4E2161A9E6003375A7 /* LaunchScreen.storyboard */; };
 		E0860A5B2161A9E6003375A7 /* PaceRidesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0860A5A2161A9E6003375A7 /* PaceRidesTests.swift */; };
 		E0860A662161A9E6003375A7 /* PaceRidesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0860A652161A9E6003375A7 /* PaceRidesUITests.swift */; };
+		E0860A742161B104003375A7 /* PublicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0860A732161B104003375A7 /* PublicViewController.swift */; };
+		E0860A782161B1B8003375A7 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0860A772161B1B8003375A7 /* UserModel.swift */; };
+		E0860A7A2161B455003375A7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E0860A792161B455003375A7 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,8 +50,6 @@
 		D11902CAC4075A23A8DA9911 /* Pods-PaceRidesUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PaceRidesUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PaceRidesUITests/Pods-PaceRidesUITests.release.xcconfig"; sourceTree = "<group>"; };
 		E0860A402161A9E5003375A7 /* PaceRides.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PaceRides.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0860A432161A9E5003375A7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		E0860A452161A9E5003375A7 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
-		E0860A472161A9E5003375A7 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		E0860A4A2161A9E5003375A7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E0860A4C2161A9E6003375A7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E0860A4F2161A9E6003375A7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -61,6 +60,9 @@
 		E0860A612161A9E6003375A7 /* PaceRidesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PaceRidesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0860A652161A9E6003375A7 /* PaceRidesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaceRidesUITests.swift; sourceTree = "<group>"; };
 		E0860A672161A9E6003375A7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E0860A732161B104003375A7 /* PublicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicViewController.swift; sourceTree = "<group>"; };
+		E0860A772161B1B8003375A7 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		E0860A792161B455003375A7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,13 +141,14 @@
 		E0860A422161A9E5003375A7 /* PaceRides */ = {
 			isa = PBXGroup;
 			children = (
+				E0860A792161B455003375A7 /* GoogleService-Info.plist */,
 				E0860A432161A9E5003375A7 /* AppDelegate.swift */,
-				E0860A452161A9E5003375A7 /* MasterViewController.swift */,
-				E0860A472161A9E5003375A7 /* DetailViewController.swift */,
 				E0860A492161A9E5003375A7 /* Main.storyboard */,
 				E0860A4C2161A9E6003375A7 /* Assets.xcassets */,
 				E0860A4E2161A9E6003375A7 /* LaunchScreen.storyboard */,
 				E0860A512161A9E6003375A7 /* Info.plist */,
+				E0860A762161B1A6003375A7 /* Models */,
+				E0860A752161B11D003375A7 /* ViewControllers */,
 			);
 			path = PaceRides;
 			sourceTree = "<group>";
@@ -166,6 +169,22 @@
 				E0860A672161A9E6003375A7 /* Info.plist */,
 			);
 			path = PaceRidesUITests;
+			sourceTree = "<group>";
+		};
+		E0860A752161B11D003375A7 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				E0860A732161B104003375A7 /* PublicViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		E0860A762161B1A6003375A7 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				E0860A772161B1B8003375A7 /* UserModel.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -282,6 +301,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E0860A502161A9E6003375A7 /* LaunchScreen.storyboard in Resources */,
+				E0860A7A2161B455003375A7 /* GoogleService-Info.plist in Resources */,
 				E0860A4D2161A9E6003375A7 /* Assets.xcassets in Resources */,
 				E0860A4B2161A9E5003375A7 /* Main.storyboard in Resources */,
 			);
@@ -359,15 +379,27 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-PaceRides/Pods-PaceRides-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/BoringSSL/openssl.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC/GRPCClient.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-ProtoRPC/ProtoRPC.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-RxLibrary/RxLibrary.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRPCClient.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ProtoRPC.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxLibrary.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
@@ -464,9 +496,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E0860A482161A9E5003375A7 /* DetailViewController.swift in Sources */,
-				E0860A462161A9E5003375A7 /* MasterViewController.swift in Sources */,
 				E0860A442161A9E5003375A7 /* AppDelegate.swift in Sources */,
+				E0860A782161B1B8003375A7 /* UserModel.swift in Sources */,
+				E0860A742161B104003375A7 /* PublicViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

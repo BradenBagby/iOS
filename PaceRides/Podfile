@@ -7,7 +7,7 @@ target 'PaceRides' do
 
   # Pods for PaceRides
   pod 'Firebase/Core'
-  pod 'Firebase/Database'
+  pod 'Firebase/Firestore'
   pod 'Firebase/Auth'
 
   target 'PaceRidesTests' do

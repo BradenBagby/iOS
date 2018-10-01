@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
+	<string>ca-app-pub-3940256099942544/2934735716</string>
+	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
+	<string>ca-app-pub-3940256099942544/4411468910</string>
+	<key>CLIENT_ID</key>
+	<string>1065386315758-i31c8jup711fe5ck4ntqvk4vnobh32m6.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1065386315758-i31c8jup711fe5ck4ntqvk4vnobh32m6</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBi_JZUjmHUIT8FQ3KqaCgThKKnDWqvlTA</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1065386315758</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.PaceRides.PaceRides</string>
+	<key>PROJECT_ID</key>
+	<string>pace-rides</string>
+	<key>STORAGE_BUCKET</key>
+	<string>pace-rides.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<true></true>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<false></false>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1065386315758:ios:1f86bf7c1f4ab223</string>
+	<key>DATABASE_URL</key>
+	<string>https://pace-rides.firebaseio.com</string>
+</dict>
+</plist>
