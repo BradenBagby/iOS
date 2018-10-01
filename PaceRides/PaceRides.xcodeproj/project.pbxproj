@@ -24,6 +24,9 @@
 		E0860A87216267C7003375A7 /* FrontViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0860A86216267C7003375A7 /* FrontViewController.swift */; };
 		E0860A8921626C0F003375A7 /* PublicSignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0860A8821626C0F003375A7 /* PublicSignInViewController.swift */; };
 		E0860A8C216281A6003375A7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E0860A8B216281A6003375A7 /* GoogleService-Info.plist */; };
+		E0C1A97E21629CFD006C4DF6 /* SchoolSignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0C1A97D21629CFD006C4DF6 /* SchoolSignInViewController.swift */; };
+		E0C1A9802162AC97006C4DF6 /* SchoolViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0C1A97F2162AC97006C4DF6 /* SchoolViewController.swift */; };
+		E0C1A9822162B7AD006C4DF6 /* RightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0C1A9812162B7AD006C4DF6 /* RightViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +78,9 @@
 		E0860A86216267C7003375A7 /* FrontViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrontViewController.swift; sourceTree = "<group>"; };
 		E0860A8821626C0F003375A7 /* PublicSignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicSignInViewController.swift; sourceTree = "<group>"; };
 		E0860A8B216281A6003375A7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		E0C1A97D21629CFD006C4DF6 /* SchoolSignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolSignInViewController.swift; sourceTree = "<group>"; };
+		E0C1A97F2162AC97006C4DF6 /* SchoolViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolViewController.swift; sourceTree = "<group>"; };
+		E0C1A9812162B7AD006C4DF6 /* RightViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,7 +196,9 @@
 			children = (
 				E0860A822161C1C3003375A7 /* RearMenuTableViewController.swift */,
 				E0860A86216267C7003375A7 /* FrontViewController.swift */,
+				E0C1A9812162B7AD006C4DF6 /* RightViewController.swift */,
 				E0860A8A21626D63003375A7 /* Public */,
+				E0C1A97C21629CED006C4DF6 /* School */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -220,6 +228,15 @@
 				E0860A8821626C0F003375A7 /* PublicSignInViewController.swift */,
 			);
 			path = Public;
+			sourceTree = "<group>";
+		};
+		E0C1A97C21629CED006C4DF6 /* School */ = {
+			isa = PBXGroup;
+			children = (
+				E0C1A97F2162AC97006C4DF6 /* SchoolViewController.swift */,
+				E0C1A97D21629CFD006C4DF6 /* SchoolSignInViewController.swift */,
+			);
+			path = School;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -419,6 +436,8 @@
 				"${BUILT_PRODUCTS_DIR}/BoringSSL/openssl.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
+				"${BUILT_PRODUCTS_DIR}/FacebookCore/FacebookCore.framework",
+				"${BUILT_PRODUCTS_DIR}/FacebookLogin/FacebookLogin.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
@@ -435,6 +454,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FacebookCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FacebookLogin.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
@@ -539,6 +560,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				E0860A442161A9E5003375A7 /* AppDelegate.swift in Sources */,
+				E0C1A97E21629CFD006C4DF6 /* SchoolSignInViewController.swift in Sources */,
+				E0C1A9802162AC97006C4DF6 /* SchoolViewController.swift in Sources */,
+				E0C1A9822162B7AD006C4DF6 /* RightViewController.swift in Sources */,
 				E0860A832161C1C3003375A7 /* RearMenuTableViewController.swift in Sources */,
 				E0860A8921626C0F003375A7 /* PublicSignInViewController.swift in Sources */,
 				E0860A87216267C7003375A7 /* FrontViewController.swift in Sources */,

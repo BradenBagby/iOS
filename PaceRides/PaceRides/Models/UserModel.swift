@@ -13,6 +13,7 @@ import FBSDKLoginKit
 
 extension NSNotification.Name {
     public static let UserPublicProfileDidChange = Notification.Name("UserPublicProfileDidChange")
+    public static let UserSchoolProfileDidChange = Notification.Name("UserSchoolProfileDidChange")
 }
 
 class UserProfile {
@@ -21,6 +22,7 @@ class UserProfile {
     var providerId: String? = nil
     var displayName: String? = nil
     var photoUrl: URL? = nil
+    var emailVerified = false
     
     init(uid: String) {
         self.uid = uid
@@ -48,9 +50,75 @@ class UserModel: NSObject {
         }
     }
     
+    private var _schoolProfile: UserProfile? = nil
+    var schoolProfile: UserProfile? {
+        get {
+            if let sp = self._schoolProfile {
+                return sp
+            }
+            if let curUser = Auth.auth().currentUser {
+                self.updateSchoolProfile(withAuthResult: curUser)
+            }
+            return self._schoolProfile
+        }
+        set {
+            self._schoolProfile = newValue
+            self.notificationCenter.post(name: .UserSchoolProfileDidChange, object: self)
+        }
+    }
+    
     private override init() {
         super.init()
     }
+    
+    private func createUser(withEmail email: String, andPassword password: String) {
+        Auth.auth().createUser(withEmail: email, password: password) { (authResult, error) in
+            
+            guard error == nil else {
+                print(error!.localizedDescription)
+                return
+            }
+            
+            guard let authResult = authResult else {
+                print("Invalid auth result")
+                return
+            }
+            
+            self.updateSchoolProfile(withAuthResult: authResult)
+        }
+    }
+    
+    func signIn(withEmail email: String, andPassword password: String) {
+        Auth.auth().signIn(withEmail: email, password: password) { (authResult, error) in
+            
+            guard error == nil else {
+                if let err = error as NSError? {
+                    if err.code == 17011 {
+                        self.createUser(withEmail: email, andPassword: password)
+                    }
+                } else {
+                    print(error!)
+                }
+                return
+            }
+            
+            guard let authResult = authResult else {
+                print("Invalid auth result")
+                return
+            }
+            
+            self.updateSchoolProfile(withAuthResult: authResult)
+        }
+    }
+    
+    func updateSchoolProfile(withAuthResult authResult: User) {
+        let newSchoolProfile = UserProfile(uid: authResult.uid)
+        newSchoolProfile.emailVerified = authResult.isEmailVerified
+        newSchoolProfile.providerId = authResult.email
+        newSchoolProfile.displayName = authResult.displayName
+        self.schoolProfile = newSchoolProfile
+    }
+    
 }
 
 extension UserModel: FBSDKLoginButtonDelegate {
@@ -71,7 +139,7 @@ extension UserModel: FBSDKLoginButtonDelegate {
         Auth.auth().signIn(with: fbCredential) { (authResult, error) in
             
             guard error == nil else {
-                print(error!.localizedDescription)
+                print(error!)
                 return
             }
             
@@ -92,5 +160,4 @@ extension UserModel: FBSDKLoginButtonDelegate {
     func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) {
         self.publicProfile = nil
     }
-    
 }

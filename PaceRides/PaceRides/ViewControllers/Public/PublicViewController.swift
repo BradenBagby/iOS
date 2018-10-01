@@ -15,16 +15,16 @@ class PublicViewController: FrontViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.UserPublicProfileDidChange()
+        self.userPublicProfileDidChange()
         UserModel.sharedInstance.notificationCenter.addObserver(
             forName: .UserPublicProfileDidChange,
             object: UserModel.sharedInstance,
             queue: OperationQueue.main,
-            using: self.UserPublicProfileDidChange
+            using: self.userPublicProfileDidChange
         )
     }
     
-    func UserPublicProfileDidChange(_: Notification? = nil) {
+    func userPublicProfileDidChange(_: Notification? = nil) {
         
         if let userPublicProfile = UserModel.sharedInstance.publicProfile {
             self.signInView.isHidden = true
