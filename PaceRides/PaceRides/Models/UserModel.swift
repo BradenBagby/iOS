@@ -18,6 +18,7 @@ extension NSNotification.Name {
 class UserProfile {
     
     let uid: String
+    var providerId: String? = nil
     var displayName: String? = nil
     var photoUrl: URL? = nil
     
@@ -80,6 +81,7 @@ extension UserModel: FBSDKLoginButtonDelegate {
             }
             
             let newPublicProfile = UserProfile(uid: authResult.uid)
+            newPublicProfile.providerId = authResult.providerID
             newPublicProfile.displayName = authResult.displayName
             newPublicProfile.photoUrl = authResult.photoURL
             

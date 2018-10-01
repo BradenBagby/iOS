@@ -18,12 +18,12 @@
 		E0860A662161A9E6003375A7 /* PaceRidesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0860A652161A9E6003375A7 /* PaceRidesUITests.swift */; };
 		E0860A742161B104003375A7 /* PublicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0860A732161B104003375A7 /* PublicViewController.swift */; };
 		E0860A782161B1B8003375A7 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0860A772161B1B8003375A7 /* UserModel.swift */; };
-		E0860A7A2161B455003375A7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E0860A792161B455003375A7 /* GoogleService-Info.plist */; };
 		E0860A7F2161B867003375A7 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0860A7E2161B867003375A7 /* SWRevealViewController.m */; };
 		E0860A832161C1C3003375A7 /* RearMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0860A822161C1C3003375A7 /* RearMenuTableViewController.swift */; };
 		E0860A852161CDC9003375A7 /* PaceRidesConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0860A842161CDC9003375A7 /* PaceRidesConstants.swift */; };
 		E0860A87216267C7003375A7 /* FrontViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0860A86216267C7003375A7 /* FrontViewController.swift */; };
 		E0860A8921626C0F003375A7 /* PublicSignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0860A8821626C0F003375A7 /* PublicSignInViewController.swift */; };
+		E0860A8C216281A6003375A7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E0860A8B216281A6003375A7 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,7 +67,6 @@
 		E0860A672161A9E6003375A7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E0860A732161B104003375A7 /* PublicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicViewController.swift; sourceTree = "<group>"; };
 		E0860A772161B1B8003375A7 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
-		E0860A792161B455003375A7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E0860A7C2161B867003375A7 /* PaceRides-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PaceRides-Bridging-Header.h"; sourceTree = "<group>"; };
 		E0860A7D2161B867003375A7 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
 		E0860A7E2161B867003375A7 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
@@ -75,6 +74,7 @@
 		E0860A842161CDC9003375A7 /* PaceRidesConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaceRidesConstants.swift; sourceTree = "<group>"; };
 		E0860A86216267C7003375A7 /* FrontViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrontViewController.swift; sourceTree = "<group>"; };
 		E0860A8821626C0F003375A7 /* PublicSignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicSignInViewController.swift; sourceTree = "<group>"; };
+		E0860A8B216281A6003375A7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,8 +153,8 @@
 		E0860A422161A9E5003375A7 /* PaceRides */ = {
 			isa = PBXGroup;
 			children = (
+				E0860A8B216281A6003375A7 /* GoogleService-Info.plist */,
 				E0860A512161A9E6003375A7 /* Info.plist */,
-				E0860A792161B455003375A7 /* GoogleService-Info.plist */,
 				E0860A432161A9E5003375A7 /* AppDelegate.swift */,
 				E0860A842161CDC9003375A7 /* PaceRidesConstants.swift */,
 				E0860A4E2161A9E6003375A7 /* LaunchScreen.storyboard */,
@@ -337,7 +337,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E0860A502161A9E6003375A7 /* LaunchScreen.storyboard in Resources */,
-				E0860A7A2161B455003375A7 /* GoogleService-Info.plist in Resources */,
+				E0860A8C216281A6003375A7 /* GoogleService-Info.plist in Resources */,
 				E0860A4D2161A9E6003375A7 /* Assets.xcassets in Resources */,
 				E0860A4B2161A9E5003375A7 /* Main.storyboard in Resources */,
 			);

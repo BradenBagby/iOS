@@ -23,6 +23,7 @@
                     <connections>
                         <segue destination="pNV-5f-0ux" kind="custom" identifier="sw_front" customClass="SWRevealViewControllerSegueSetController" id="QVj-oH-x3D"/>
                         <segue destination="2in-V8-2dK" kind="custom" identifier="sw_rear" customClass="SWRevealViewControllerSegueSetController" id="cGK-CR-4yZ"/>
+                        <segue destination="QSF-JH-Gcd" kind="custom" identifier="sw_right" customClass="SWRevealViewControllerSegueSetController" id="byM-op-sHN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VlG-4a-IAB" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -80,10 +81,12 @@
                     </view>
                     <navigationItem key="navigationItem" title="Public" id="00C-Xi-BBV">
                         <barButtonItem key="leftBarButtonItem" title="Menu" image="hamburgerMenuIcon" id="wuN-NY-LUl"/>
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="profileIcon" id="oTS-PY-sfv"/>
                     </navigationItem>
                     <connections>
                         <outlet property="OpenMenuBarButtonItem" destination="wuN-NY-LUl" id="6dP-jP-tvG"/>
                         <outlet property="primaryLabel" destination="EaX-50-jKe" id="o8q-Nn-uLw"/>
+                        <outlet property="profileBarButtonItem" destination="oTS-PY-sfv" id="L46-fu-ZGh"/>
                         <outlet property="signInView" destination="I8L-HL-pDi" id="2Qq-ds-pl8"/>
                     </connections>
                 </viewController>
@@ -103,9 +106,11 @@
                     </view>
                     <navigationItem key="navigationItem" title="School" id="51g-CY-Vmh">
                         <barButtonItem key="leftBarButtonItem" title="Menu" image="hamburgerMenuIcon" id="m3b-u8-UJJ"/>
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="profileIcon" id="XuV-Dg-UrN"/>
                     </navigationItem>
                     <connections>
                         <outlet property="OpenMenuBarButtonItem" destination="m3b-u8-UJJ" id="C2B-6r-6lr"/>
+                        <outlet property="profileBarButtonItem" destination="XuV-Dg-UrN" id="FYL-8e-xtw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S5B-ck-bjK" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -198,6 +203,61 @@
             </objects>
             <point key="canvasLocation" x="861.60000000000002" y="-729.08545727136436"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="hZU-mS-i9H">
+            <objects>
+                <viewController id="QSF-JH-Gcd" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="6aZ-06-z8O">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profileIcon" translatesAutoresizingMaskIntoConstraints="NO" id="mZ5-Pe-3mJ">
+                                <rect key="frame" x="225" y="52" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="9E1-WL-OOp"/>
+                                    <constraint firstAttribute="width" constant="50" id="UQO-u6-Gmn"/>
+                                </constraints>
+                            </imageView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="SnI-Cv-wmo">
+                                <rect key="frame" x="0.0" y="118" width="375" height="549"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="default_cell" textLabel="x5F-KE-KxT" style="IBUITableViewCellStyleDefault" id="WZ2-r2-3EK">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="WZ2-r2-3EK" id="Ivg-06-wCq">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="x5F-KE-KxT">
+                                                    <rect key="frame" x="15" y="0.0" width="345" height="43.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="mZ5-Pe-3mJ" firstAttribute="top" secondItem="3cm-o0-gLm" secondAttribute="top" constant="32" id="16E-ii-UOs"/>
+                            <constraint firstItem="3cm-o0-gLm" firstAttribute="trailing" secondItem="mZ5-Pe-3mJ" secondAttribute="trailing" constant="100" id="7dW-ih-7Ri"/>
+                            <constraint firstItem="SnI-Cv-wmo" firstAttribute="top" secondItem="mZ5-Pe-3mJ" secondAttribute="bottom" constant="16" id="Dbc-a5-Gxc"/>
+                            <constraint firstItem="3cm-o0-gLm" firstAttribute="trailing" secondItem="SnI-Cv-wmo" secondAttribute="trailing" id="TDy-UP-sUu"/>
+                            <constraint firstItem="3cm-o0-gLm" firstAttribute="bottom" secondItem="SnI-Cv-wmo" secondAttribute="bottom" id="TIg-RG-jhL"/>
+                            <constraint firstItem="SnI-Cv-wmo" firstAttribute="leading" secondItem="3cm-o0-gLm" secondAttribute="leading" id="Uqg-T3-6f2"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="3cm-o0-gLm"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IIW-GJ-Fzq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1624.8" y="-729.08545727136436"/>
+        </scene>
         <!--Public Sign In View Controller-->
         <scene sceneID="PKp-Y3-Owy">
             <objects>
@@ -238,8 +298,9 @@
     </scenes>
     <resources>
         <image name="hamburgerMenuIcon" width="25" height="25"/>
+        <image name="profileIcon" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="O36-Rz-1tC"/>
+        <segue reference="QVj-oH-x3D"/>
     </inferredMetricsTieBreakers>
 </document>

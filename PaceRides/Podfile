@@ -9,6 +9,7 @@ target 'PaceRides' do
   pod 'Firebase/Core'
   pod 'Firebase/Firestore'
   pod 'Firebase/Auth'
+  pod 'FBSDKCoreKit'
   pod 'FBSDKLoginKit'
 
   target 'PaceRidesTests' do
