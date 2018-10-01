@@ -21,54 +21,13 @@
                         <viewLayoutGuide key="safeArea" id="Dl5-CJ-mCS"/>
                     </view>
                     <connections>
-                        <segue destination="U41-fe-2tC" kind="custom" identifier="sw_rear" customClass="SWRevealViewControllerSegueSetController" id="mNE-yv-EQ0"/>
                         <segue destination="pNV-5f-0ux" kind="custom" identifier="sw_front" customClass="SWRevealViewControllerSegueSetController" id="QVj-oH-x3D"/>
+                        <segue destination="2in-V8-2dK" kind="custom" identifier="sw_rear" customClass="SWRevealViewControllerSegueSetController" id="cGK-CR-4yZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VlG-4a-IAB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-7.2000000000000002" y="-331.48425787106447"/>
-        </scene>
-        <!--Rear Menu Table View Controller-->
-        <scene sceneID="Ppl-7W-xSD">
-            <objects>
-                <tableViewController id="U41-fe-2tC" customClass="RearMenuTableViewController" customModule="PaceRides" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="dj0-uu-BBn">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="default_cell" textLabel="lFG-w3-1rK" style="IBUITableViewCellStyleDefault" id="6CE-6t-Oxf">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="6CE-6t-Oxf" id="aLC-fN-WPO">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="lFG-w3-1rK">
-                                            <rect key="frame" x="16" y="0.0" width="343" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="U41-fe-2tC" id="ffE-40-8mB"/>
-                            <outlet property="delegate" destination="U41-fe-2tC" id="Xmw-Ue-sjX"/>
-                        </connections>
-                    </tableView>
-                    <connections>
-                        <segue destination="pNV-5f-0ux" kind="custom" identifier="showPublic" customClass="SWRevealViewControllerSeguePushController" id="6KL-07-sTf"/>
-                        <segue destination="5mK-QR-ogR" kind="custom" identifier="showSchool" customClass="SWRevealViewControllerSeguePushController" id="rjm-8o-qND"/>
-                    </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="74P-72-8c6" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="863" y="-705"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="hSw-Ek-vky">
@@ -146,11 +105,79 @@
             </objects>
             <point key="canvasLocation" x="862" y="700"/>
         </scene>
+        <!--Rear Menu Table View Controller-->
+        <scene sceneID="aUI-Lg-NZG">
+            <objects>
+                <viewController id="2in-V8-2dK" customClass="RearMenuTableViewController" customModule="PaceRides" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="3gN-no-h14">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FfY-gP-FvR">
+                                <rect key="frame" x="16" y="52" width="343" height="31.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="31.5" id="ZOL-Ko-0p9"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="H43-8O-IiE">
+                                <rect key="frame" x="0.0" y="107.5" width="375" height="559.5"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="default_cell" textLabel="SYm-xV-TVN" style="IBUITableViewCellStyleDefault" id="EdI-q7-pay">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="EdI-q7-pay" id="5au-Mn-Iw2">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="SYm-xV-TVN">
+                                                    <rect key="frame" x="15" y="0.0" width="345" height="43.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="2in-V8-2dK" id="uHY-Ia-jQY"/>
+                                    <outlet property="delegate" destination="2in-V8-2dK" id="fNV-8e-bmY"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="FfY-gP-FvR" firstAttribute="top" secondItem="J3x-5I-AUa" secondAttribute="top" constant="32" id="57X-wH-au8"/>
+                            <constraint firstItem="FfY-gP-FvR" firstAttribute="leading" secondItem="J3x-5I-AUa" secondAttribute="leading" constant="16" id="AvU-ro-EJb"/>
+                            <constraint firstItem="H43-8O-IiE" firstAttribute="leading" secondItem="J3x-5I-AUa" secondAttribute="leading" id="Jrv-ap-fZR"/>
+                            <constraint firstItem="J3x-5I-AUa" firstAttribute="trailing" secondItem="FfY-gP-FvR" secondAttribute="trailing" constant="16" id="Ldn-XT-hqo"/>
+                            <constraint firstItem="J3x-5I-AUa" firstAttribute="bottom" secondItem="H43-8O-IiE" secondAttribute="bottom" id="QX9-zo-Zko"/>
+                            <constraint firstItem="H43-8O-IiE" firstAttribute="top" secondItem="FfY-gP-FvR" secondAttribute="bottom" constant="24" id="f3p-5M-Ke6"/>
+                            <constraint firstItem="J3x-5I-AUa" firstAttribute="trailing" secondItem="H43-8O-IiE" secondAttribute="trailing" id="zBd-ru-TRt"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="J3x-5I-AUa"/>
+                    </view>
+                    <connections>
+                        <outlet property="headerLabel" destination="FfY-gP-FvR" id="ir9-1q-Ao7"/>
+                        <outlet property="tableView" destination="H43-8O-IiE" id="H3x-LA-h6N"/>
+                        <segue destination="pNV-5f-0ux" kind="custom" identifier="showPublic" customClass="SWRevealViewControllerSeguePushController" id="O36-Rz-1tC"/>
+                        <segue destination="5mK-QR-ogR" kind="custom" identifier="showSchool" customClass="SWRevealViewControllerSeguePushController" id="K4d-5Y-w14"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HEq-0L-pjI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="861.60000000000002" y="-729.08545727136436"/>
+        </scene>
     </scenes>
     <resources>
         <image name="hamburgerMenuIcon" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="6KL-07-sTf"/>
+        <segue reference="O36-Rz-1tC"/>
     </inferredMetricsTieBreakers>
 </document>

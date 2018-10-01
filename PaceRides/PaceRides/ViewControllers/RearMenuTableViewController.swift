@@ -26,28 +26,34 @@ class MenuOption {
 }
 
 
-class RearMenuTableViewController: UITableViewController {
+class RearMenuTableViewController: UIViewController {
 
     let menuOptions: [MenuOption] = [
         MenuOption(text: "Public"),
         MenuOption(text: "School")
     ]
     
+    @IBOutlet weak var headerLabel: UILabel!
+    @IBOutlet weak var tableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.headerLabel.text = APPLICATION_TITLE
     }
+}
 
-    // MARK: - Table view data source
+extension RearMenuTableViewController: UITableViewDataSource {
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.menuOptions.count
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "default_cell", for: indexPath)
         
         if let label = cell.textLabel {
@@ -57,9 +63,11 @@ class RearMenuTableViewController: UITableViewController {
         return cell
     }
     
-    // MARK: - Table view delegate
+}
+
+extension RearMenuTableViewController: UITableViewDelegate {
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if indexPath.section == 0 {
             if indexPath.row == 0 {

@@ -21,6 +21,7 @@
 		E0860A7A2161B455003375A7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E0860A792161B455003375A7 /* GoogleService-Info.plist */; };
 		E0860A7F2161B867003375A7 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0860A7E2161B867003375A7 /* SWRevealViewController.m */; };
 		E0860A832161C1C3003375A7 /* RearMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0860A822161C1C3003375A7 /* RearMenuTableViewController.swift */; };
+		E0860A852161CDC9003375A7 /* PaceRidesConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0860A842161CDC9003375A7 /* PaceRidesConstants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +70,7 @@
 		E0860A7D2161B867003375A7 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
 		E0860A7E2161B867003375A7 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
 		E0860A822161C1C3003375A7 /* RearMenuTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RearMenuTableViewController.swift; sourceTree = "<group>"; };
+		E0860A842161CDC9003375A7 /* PaceRidesConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaceRidesConstants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,6 +158,7 @@
 				E0860A762161B1A6003375A7 /* Models */,
 				E0860A752161B11D003375A7 /* ViewControllers */,
 				E0860A7B2161B852003375A7 /* Supporting Files */,
+				E0860A842161CDC9003375A7 /* PaceRidesConstants.swift */,
 			);
 			path = PaceRides;
 			sourceTree = "<group>";
@@ -517,6 +520,7 @@
 			files = (
 				E0860A442161A9E5003375A7 /* AppDelegate.swift in Sources */,
 				E0860A832161C1C3003375A7 /* RearMenuTableViewController.swift in Sources */,
+				E0860A852161CDC9003375A7 /* PaceRidesConstants.swift in Sources */,
 				E0860A782161B1B8003375A7 /* UserModel.swift in Sources */,
 				E0860A742161B104003375A7 /* PublicViewController.swift in Sources */,
 				E0860A7F2161B867003375A7 /* SWRevealViewController.m in Sources */,
