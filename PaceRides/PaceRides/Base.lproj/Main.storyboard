@@ -52,7 +52,30 @@
                     <view key="view" contentMode="scaleToFill" id="oro-Ql-5oH">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Signed In" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EaX-50-jKe">
+                                <rect key="frame" x="16" y="132" width="343" height="32"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I8L-HL-pDi">
+                                <rect key="frame" x="0.0" y="116" width="375" height="551"/>
+                                <connections>
+                                    <segue destination="UkQ-nM-rXr" kind="embed" id="CoR-32-Exj"/>
+                                </connections>
+                            </containerView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="EaX-50-jKe" firstAttribute="top" secondItem="9YZ-0l-d8z" secondAttribute="top" constant="16" id="5d0-Yt-KWn"/>
+                            <constraint firstItem="9YZ-0l-d8z" firstAttribute="trailing" secondItem="I8L-HL-pDi" secondAttribute="trailing" id="6YU-Xl-pMN"/>
+                            <constraint firstItem="I8L-HL-pDi" firstAttribute="leading" secondItem="9YZ-0l-d8z" secondAttribute="leading" id="Gs7-IK-8qg"/>
+                            <constraint firstItem="I8L-HL-pDi" firstAttribute="top" secondItem="9YZ-0l-d8z" secondAttribute="top" id="J4l-H5-O3x"/>
+                            <constraint firstItem="EaX-50-jKe" firstAttribute="leading" secondItem="9YZ-0l-d8z" secondAttribute="leading" constant="16" id="Wb4-Y7-1qB"/>
+                            <constraint firstItem="9YZ-0l-d8z" firstAttribute="trailing" secondItem="EaX-50-jKe" secondAttribute="trailing" constant="16" id="Z6o-WW-avh"/>
+                            <constraint firstItem="9YZ-0l-d8z" firstAttribute="bottom" secondItem="I8L-HL-pDi" secondAttribute="bottom" id="zrz-BD-Bdb"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="9YZ-0l-d8z"/>
                     </view>
                     <navigationItem key="navigationItem" title="Public" id="00C-Xi-BBV">
@@ -60,6 +83,8 @@
                     </navigationItem>
                     <connections>
                         <outlet property="OpenMenuBarButtonItem" destination="wuN-NY-LUl" id="6dP-jP-tvG"/>
+                        <outlet property="primaryLabel" destination="EaX-50-jKe" id="o8q-Nn-uLw"/>
+                        <outlet property="signInView" destination="I8L-HL-pDi" id="2Qq-ds-pl8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SV9-EH-xe6" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -69,7 +94,7 @@
         <!--School-->
         <scene sceneID="mod-aR-wCZ">
             <objects>
-                <viewController id="9i9-KQ-PRT" customClass="PublicViewController" customModule="PaceRides" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="9i9-KQ-PRT" customClass="FrontViewController" customModule="PaceRides" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dqT-ci-K8K">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -172,6 +197,43 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HEq-0L-pjI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="861.60000000000002" y="-729.08545727136436"/>
+        </scene>
+        <!--Public Sign In View Controller-->
+        <scene sceneID="PKp-Y3-Owy">
+            <objects>
+                <viewController id="UkQ-nM-rXr" customClass="PublicSignInViewController" customModule="PaceRides" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="kMT-tR-hvz">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign In" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bda-VC-Q7T">
+                                <rect key="frame" x="16" y="16" width="333" height="32"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You need to sign in with Facebook before you can use Pace Rides." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aYg-9p-h4f">
+                                <rect key="frame" x="16" y="56" width="333" height="41"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="aYg-9p-h4f" firstAttribute="top" secondItem="Bda-VC-Q7T" secondAttribute="bottom" constant="8" id="8B5-7r-prX"/>
+                            <constraint firstItem="Bda-VC-Q7T" firstAttribute="top" secondItem="kMT-tR-hvz" secondAttribute="top" constant="16" id="HMy-6K-SAY"/>
+                            <constraint firstAttribute="trailing" secondItem="aYg-9p-h4f" secondAttribute="trailing" constant="26" id="LoJ-ZN-srJ"/>
+                            <constraint firstAttribute="trailing" secondItem="Bda-VC-Q7T" secondAttribute="trailing" constant="26" id="cxC-LY-81O"/>
+                            <constraint firstItem="aYg-9p-h4f" firstAttribute="leading" secondItem="kMT-tR-hvz" secondAttribute="leading" constant="16" id="jCV-1M-7jW"/>
+                            <constraint firstItem="Bda-VC-Q7T" firstAttribute="leading" secondItem="kMT-tR-hvz" secondAttribute="leading" constant="16" id="zP6-Oe-09b"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="f4Z-T7-oF0"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fCl-Uh-2yE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2528.8000000000002" y="-729.08545727136436"/>
         </scene>
     </scenes>
     <resources>

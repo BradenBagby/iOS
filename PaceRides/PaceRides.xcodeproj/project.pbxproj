@@ -22,6 +22,8 @@
 		E0860A7F2161B867003375A7 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0860A7E2161B867003375A7 /* SWRevealViewController.m */; };
 		E0860A832161C1C3003375A7 /* RearMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0860A822161C1C3003375A7 /* RearMenuTableViewController.swift */; };
 		E0860A852161CDC9003375A7 /* PaceRidesConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0860A842161CDC9003375A7 /* PaceRidesConstants.swift */; };
+		E0860A87216267C7003375A7 /* FrontViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0860A86216267C7003375A7 /* FrontViewController.swift */; };
+		E0860A8921626C0F003375A7 /* PublicSignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0860A8821626C0F003375A7 /* PublicSignInViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +73,8 @@
 		E0860A7E2161B867003375A7 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
 		E0860A822161C1C3003375A7 /* RearMenuTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RearMenuTableViewController.swift; sourceTree = "<group>"; };
 		E0860A842161CDC9003375A7 /* PaceRidesConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaceRidesConstants.swift; sourceTree = "<group>"; };
+		E0860A86216267C7003375A7 /* FrontViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrontViewController.swift; sourceTree = "<group>"; };
+		E0860A8821626C0F003375A7 /* PublicSignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicSignInViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,16 +153,16 @@
 		E0860A422161A9E5003375A7 /* PaceRides */ = {
 			isa = PBXGroup;
 			children = (
+				E0860A512161A9E6003375A7 /* Info.plist */,
 				E0860A792161B455003375A7 /* GoogleService-Info.plist */,
 				E0860A432161A9E5003375A7 /* AppDelegate.swift */,
+				E0860A842161CDC9003375A7 /* PaceRidesConstants.swift */,
+				E0860A4E2161A9E6003375A7 /* LaunchScreen.storyboard */,
 				E0860A492161A9E5003375A7 /* Main.storyboard */,
 				E0860A4C2161A9E6003375A7 /* Assets.xcassets */,
-				E0860A4E2161A9E6003375A7 /* LaunchScreen.storyboard */,
-				E0860A512161A9E6003375A7 /* Info.plist */,
 				E0860A762161B1A6003375A7 /* Models */,
 				E0860A752161B11D003375A7 /* ViewControllers */,
 				E0860A7B2161B852003375A7 /* Supporting Files */,
-				E0860A842161CDC9003375A7 /* PaceRidesConstants.swift */,
 			);
 			path = PaceRides;
 			sourceTree = "<group>";
@@ -184,8 +188,9 @@
 		E0860A752161B11D003375A7 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				E0860A732161B104003375A7 /* PublicViewController.swift */,
 				E0860A822161C1C3003375A7 /* RearMenuTableViewController.swift */,
+				E0860A86216267C7003375A7 /* FrontViewController.swift */,
+				E0860A8A21626D63003375A7 /* Public */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -206,6 +211,15 @@
 				E0860A7C2161B867003375A7 /* PaceRides-Bridging-Header.h */,
 			);
 			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E0860A8A21626D63003375A7 /* Public */ = {
+			isa = PBXGroup;
+			children = (
+				E0860A732161B104003375A7 /* PublicViewController.swift */,
+				E0860A8821626C0F003375A7 /* PublicSignInViewController.swift */,
+			);
+			path = Public;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -401,7 +415,10 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-PaceRides/Pods-PaceRides-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
 				"${BUILT_PRODUCTS_DIR}/BoringSSL/openssl.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
@@ -414,7 +431,10 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
@@ -520,6 +540,8 @@
 			files = (
 				E0860A442161A9E5003375A7 /* AppDelegate.swift in Sources */,
 				E0860A832161C1C3003375A7 /* RearMenuTableViewController.swift in Sources */,
+				E0860A8921626C0F003375A7 /* PublicSignInViewController.swift in Sources */,
+				E0860A87216267C7003375A7 /* FrontViewController.swift in Sources */,
 				E0860A852161CDC9003375A7 /* PaceRidesConstants.swift in Sources */,
 				E0860A782161B1B8003375A7 /* UserModel.swift in Sources */,
 				E0860A742161B104003375A7 /* PublicViewController.swift in Sources */,
@@ -703,7 +725,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = L5696BKBGY;
 				INFOPLIST_FILE = PaceRides/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -726,7 +748,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = L5696BKBGY;
 				INFOPLIST_FILE = PaceRides/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
