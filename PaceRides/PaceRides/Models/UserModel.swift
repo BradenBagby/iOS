@@ -69,8 +69,9 @@ class UserModel: NSObject {
                 return sp
             }
             if let curUser = Auth.auth().currentUser {
+                
                 if curUser.email != nil {
-                    self.updateSchoolProfile(withAuthResult: curUser)
+                    self.updateSchoolProfile(curUser)
                     return self._schoolProfile
                 }
                 
@@ -99,7 +100,14 @@ class UserModel: NSObject {
         let newPublicProfile = UserProfile(uid: user.uid)
         newPublicProfile.providerId = user.providerID
         newPublicProfile.displayName = user.displayName
-        newPublicProfile.photoUrl = user.photoURL
+        for providerData in user.providerData {
+            if providerData.providerID.lowercased().contains("facebook") {
+                newPublicProfile.photoUrl
+                    = URL(string: "https://graph.facebook.com/\(providerData.uid)/picture?width=300&height=300")
+                print(providerData.uid)
+            }
+        }
+        
         
         self.publicProfile = newPublicProfile
     }
@@ -117,7 +125,7 @@ class UserModel: NSObject {
                 return
             }
             
-            self.updateSchoolProfile(withAuthResult: authResult)
+            self.updateSchoolProfile(authResult)
         }
     }
     
@@ -161,7 +169,11 @@ class UserModel: NSObject {
             return
         }
         
-        self.updateSchoolProfile(withAuthResult: user)
+        if !user.isEmailVerified {
+            self.sendVerificationEmail()
+        }
+        
+        self.updateSchoolProfile(user)
         
     }
     
@@ -180,15 +192,11 @@ class UserModel: NSObject {
         }
     }
     
-    func updateSchoolProfile(withAuthResult authResult: User) {
+    func updateSchoolProfile(_ authResult: User) {
         let newSchoolProfile = UserProfile(uid: authResult.uid)
         newSchoolProfile.emailVerified = authResult.isEmailVerified
         newSchoolProfile.providerId = authResult.email
         newSchoolProfile.displayName = authResult.displayName
-        
-        if !authResult.isEmailVerified {
-            self.sendVerificationEmail()
-        }
         
         self.schoolProfile = newSchoolProfile
     }
@@ -215,12 +223,24 @@ class UserModel: NSObject {
     
     func reloadFirebaseUser(completion: UserProfileChangeCallback? = nil) {
         if let currentUser = Auth.auth().currentUser {
+            if let _ = currentUser.email {
+                self.updateSchoolProfile(currentUser)
+            }
+            for providerData in currentUser.providerData {
+                if providerData.providerID.lowercased().contains("facebook") {
+                    self.updatePublicProfile(currentUser)
+                }
+            }
             currentUser.reload(completion: completion)
         }
     }
     
-    func sendVerificationEmail() {
-        self.reloadFirebaseUser() { error in
+    func sendVerificationEmail(reloadFirst: Bool = false) {
+        if reloadFirst {
+            self.reloadFirebaseUser() { error in
+                self._sendVerificationEmail()
+            }
+        } else {
             self._sendVerificationEmail()
         }
     }

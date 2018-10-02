@@ -248,14 +248,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profileIcon" translatesAutoresizingMaskIntoConstraints="NO" id="mZ5-Pe-3mJ">
-                                <rect key="frame" x="225" y="52" width="50" height="50"/>
+                                <rect key="frame" x="175" y="52" width="150" height="150"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="9E1-WL-OOp"/>
-                                    <constraint firstAttribute="width" constant="50" id="UQO-u6-Gmn"/>
+                                    <constraint firstAttribute="height" constant="150" id="9E1-WL-OOp"/>
+                                    <constraint firstAttribute="width" constant="150" id="UQO-u6-Gmn"/>
                                 </constraints>
                             </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="SnI-Cv-wmo">
-                                <rect key="frame" x="125" y="150" width="250" height="517"/>
+                                <rect key="frame" x="125" y="274" width="250" height="393"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="250" id="CZJ-00-50o"/>
@@ -285,7 +285,7 @@
                                 </connections>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4IO-3L-EoL">
-                                <rect key="frame" x="141" y="110" width="218" height="32"/>
+                                <rect key="frame" x="141" y="234" width="218" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="218" id="07q-fE-IK3"/>
                                 </constraints>
@@ -297,12 +297,12 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="mZ5-Pe-3mJ" firstAttribute="top" secondItem="3cm-o0-gLm" secondAttribute="top" constant="32" id="16E-ii-UOs"/>
-                            <constraint firstItem="3cm-o0-gLm" firstAttribute="trailing" secondItem="mZ5-Pe-3mJ" secondAttribute="trailing" constant="100" id="7dW-ih-7Ri"/>
+                            <constraint firstItem="3cm-o0-gLm" firstAttribute="trailing" secondItem="mZ5-Pe-3mJ" secondAttribute="trailing" constant="50" id="7dW-ih-7Ri"/>
                             <constraint firstItem="SnI-Cv-wmo" firstAttribute="top" secondItem="4IO-3L-EoL" secondAttribute="bottom" constant="8" id="CeU-QC-YbZ"/>
                             <constraint firstItem="3cm-o0-gLm" firstAttribute="trailing" secondItem="SnI-Cv-wmo" secondAttribute="trailing" id="TDy-UP-sUu"/>
                             <constraint firstItem="3cm-o0-gLm" firstAttribute="bottom" secondItem="SnI-Cv-wmo" secondAttribute="bottom" id="TIg-RG-jhL"/>
                             <constraint firstItem="3cm-o0-gLm" firstAttribute="trailing" secondItem="4IO-3L-EoL" secondAttribute="trailing" constant="16" id="caa-WT-jAa"/>
-                            <constraint firstItem="4IO-3L-EoL" firstAttribute="top" secondItem="mZ5-Pe-3mJ" secondAttribute="bottom" constant="8" id="yuS-SV-sjW"/>
+                            <constraint firstItem="4IO-3L-EoL" firstAttribute="top" secondItem="mZ5-Pe-3mJ" secondAttribute="bottom" constant="32" id="yuS-SV-sjW"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="3cm-o0-gLm"/>
                     </view>
