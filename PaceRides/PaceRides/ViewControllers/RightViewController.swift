@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class RightViewController: UIViewController {
 
@@ -65,6 +66,16 @@ class RightViewController: UIViewController {
         }
         
         self.nameLabel.text = userDisplayName
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if let _ = Auth.auth().currentUser {
+            print("current user exists")
+        } else {
+            print("No current user")
+        }
     }
     
     func userProfileDataChanged(_: Notification? = nil) {

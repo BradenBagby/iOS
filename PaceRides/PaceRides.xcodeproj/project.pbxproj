@@ -27,6 +27,7 @@
 		E0C1A97E21629CFD006C4DF6 /* SchoolSignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0C1A97D21629CFD006C4DF6 /* SchoolSignInViewController.swift */; };
 		E0C1A9802162AC97006C4DF6 /* SchoolViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0C1A97F2162AC97006C4DF6 /* SchoolViewController.swift */; };
 		E0C1A9822162B7AD006C4DF6 /* RightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0C1A9812162B7AD006C4DF6 /* RightViewController.swift */; };
+		E0C1A9842162C65B006C4DF6 /* VerifyEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0C1A9832162C65B006C4DF6 /* VerifyEmailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +82,7 @@
 		E0C1A97D21629CFD006C4DF6 /* SchoolSignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolSignInViewController.swift; sourceTree = "<group>"; };
 		E0C1A97F2162AC97006C4DF6 /* SchoolViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolViewController.swift; sourceTree = "<group>"; };
 		E0C1A9812162B7AD006C4DF6 /* RightViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightViewController.swift; sourceTree = "<group>"; };
+		E0C1A9832162C65B006C4DF6 /* VerifyEmailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyEmailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -235,6 +237,7 @@
 			children = (
 				E0C1A97F2162AC97006C4DF6 /* SchoolViewController.swift */,
 				E0C1A97D21629CFD006C4DF6 /* SchoolSignInViewController.swift */,
+				E0C1A9832162C65B006C4DF6 /* VerifyEmailViewController.swift */,
 			);
 			path = School;
 			sourceTree = "<group>";
@@ -569,6 +572,7 @@
 				E0860A852161CDC9003375A7 /* PaceRidesConstants.swift in Sources */,
 				E0860A782161B1B8003375A7 /* UserModel.swift in Sources */,
 				E0860A742161B104003375A7 /* PublicViewController.swift in Sources */,
+				E0C1A9842162C65B006C4DF6 /* VerifyEmailViewController.swift in Sources */,
 				E0860A7F2161B867003375A7 /* SWRevealViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

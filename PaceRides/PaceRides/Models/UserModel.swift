@@ -14,6 +14,7 @@ import FBSDKLoginKit
 extension NSNotification.Name {
     public static let UserPublicProfileDidChange = Notification.Name("UserPublicProfileDidChange")
     public static let UserSchoolProfileDidChange = Notification.Name("UserSchoolProfileDidChange")
+    public static let UserSchoolEmailVerifiedDidChange = Notification.Name("UserSchoolEmailVerifiedDidChange")
 }
 
 class UserProfile {
@@ -39,6 +40,17 @@ class UserModel: NSObject {
     private var _publicProfile: UserProfile? = nil
     var publicProfile: UserProfile? {
         get {
+            if let pubProf = self._publicProfile {
+                return pubProf
+            }
+            if let curUser = Auth.auth().currentUser {
+                for providerData in curUser.providerData {
+                    if providerData.providerID.lowercased().contains("facebook") {
+                        self.updatePublicProfile(curUser)
+                        return self._publicProfile
+                    }
+                }
+            }
             if let currentAccessToken = FBSDKAccessToken.current() {
                 self.userLoggedInWithAccessToken(token: currentAccessToken.tokenString)
             }
@@ -57,8 +69,20 @@ class UserModel: NSObject {
                 return sp
             }
             if let curUser = Auth.auth().currentUser {
-                self.updateSchoolProfile(withAuthResult: curUser)
+                if curUser.email != nil {
+                    self.updateSchoolProfile(withAuthResult: curUser)
+                    return self._schoolProfile
+                }
+                
+                if curUser.providerData.count <= 0 {
+                    do {
+                        try Auth.auth().signOut()
+                    } catch let error as NSError {
+                        print(error)
+                    }
+                }
             }
+            
             return self._schoolProfile
         }
         set {
@@ -69,6 +93,15 @@ class UserModel: NSObject {
     
     private override init() {
         super.init()
+    }
+    
+    func updatePublicProfile(_ user: User) {
+        let newPublicProfile = UserProfile(uid: user.uid)
+        newPublicProfile.providerId = user.providerID
+        newPublicProfile.displayName = user.displayName
+        newPublicProfile.photoUrl = user.photoURL
+        
+        self.publicProfile = newPublicProfile
     }
     
     private func createUser(withEmail email: String, andPassword password: String) {
@@ -88,26 +121,62 @@ class UserModel: NSObject {
         }
     }
     
-    func signIn(withEmail email: String, andPassword password: String) {
-        Auth.auth().signIn(withEmail: email, password: password) { (authResult, error) in
-            
-            guard error == nil else {
-                if let err = error as NSError? {
-                    if err.code == 17011 {
-                        self.createUser(withEmail: email, andPassword: password)
+    func emailCompletionCallback(user: User?, error: Error?, email: String, password: String) {
+        
+        guard error == nil else {
+            if let err = error as NSError? {
+                if err.code == 17011 {
+                    self.createUser(withEmail: email, andPassword: password)
+                } else if err.code == 17014 {
+                    
+                    if let currentUser = Auth.auth().currentUser {
+                        let fbCredential = FacebookAuthProvider.credential(
+                            withAccessToken: FBSDKAccessToken.current()!.tokenString
+                        )
+                        currentUser.reauthenticate(with: fbCredential) { error in
+                            
+                            guard error == nil else {
+                                print("Could not reauthenticate")
+                                print(error!.localizedDescription)
+                                return
+                            }
+                            
+                            self.signIn(withEmail: email, andPassword: password)
+                            return
+                        }
                     }
-                } else {
+                    
+                    return
+                }else {
                     print(error!)
                 }
-                return
+            } else {
+                print(error!)
             }
-            
-            guard let authResult = authResult else {
-                print("Invalid auth result")
-                return
+            return
+        }
+        
+        guard let user = user else {
+            print("Invalid auth result")
+            return
+        }
+        
+        self.updateSchoolProfile(withAuthResult: user)
+        
+    }
+    
+    
+    func signIn(withEmail email: String, andPassword password: String) {
+        let credential = EmailAuthProvider.credential(withEmail: email, password: password)
+        if let currentUser = Auth.auth().currentUser {
+            currentUser.linkAndRetrieveData(with: credential) { (authResult, error) in
+                self.emailCompletionCallback(user: authResult?.user, error: error, email: email, password: password)
             }
-            
-            self.updateSchoolProfile(withAuthResult: authResult)
+            return
+        }
+        
+        Auth.auth().signIn(with: credential) { (authResult, error) in
+            self.emailCompletionCallback(user: authResult, error: error, email: email, password: password)
         }
     }
     
@@ -116,9 +185,45 @@ class UserModel: NSObject {
         newSchoolProfile.emailVerified = authResult.isEmailVerified
         newSchoolProfile.providerId = authResult.email
         newSchoolProfile.displayName = authResult.displayName
+        
+        if !authResult.isEmailVerified {
+            self.sendVerificationEmail()
+        }
+        
         self.schoolProfile = newSchoolProfile
     }
     
+    private func _sendVerificationEmail() {
+        if let currentUser = Auth.auth().currentUser {
+            if !currentUser.isEmailVerified {
+                currentUser.sendEmailVerification() { error in
+                    
+                    guard error == nil else {
+                        print(error!.localizedDescription)
+                        return
+                    }
+                }
+            } else {
+                self.schoolProfile?.emailVerified = true
+                self.notificationCenter.post(
+                    name: .UserSchoolEmailVerifiedDidChange,
+                    object: self
+                )
+            }
+        }
+    }
+    
+    func reloadFirebaseUser(completion: UserProfileChangeCallback? = nil) {
+        if let currentUser = Auth.auth().currentUser {
+            currentUser.reload(completion: completion)
+        }
+    }
+    
+    func sendVerificationEmail() {
+        self.reloadFirebaseUser() { error in
+            self._sendVerificationEmail()
+        }
+    }
 }
 
 extension UserModel: FBSDKLoginButtonDelegate {
@@ -133,27 +238,34 @@ extension UserModel: FBSDKLoginButtonDelegate {
         userLoggedInWithAccessToken(token: result.token.tokenString)
     }
     
+    private func fbAuthenticationCallback(user: User?, error: Error?) {
+        
+        guard error == nil else {
+            print(error!)
+            return
+        }
+        
+        guard let user = user else {
+            print("User invalid")
+            return
+        }
+        
+        self.updatePublicProfile(user)
+    }
     
-    func userLoggedInWithAccessToken(token: String) {
+    
+    private func userLoggedInWithAccessToken(token: String) {
         let fbCredential = FacebookAuthProvider.credential(withAccessToken: token)
+        
+        if let currentUser = Auth.auth().currentUser {
+            currentUser.linkAndRetrieveData(with: fbCredential) { (authResult, error) in
+                self.fbAuthenticationCallback(user: authResult?.user, error: error)
+            }
+            return
+        }
+        
         Auth.auth().signIn(with: fbCredential) { (authResult, error) in
-            
-            guard error == nil else {
-                print(error!)
-                return
-            }
-            
-            guard let authResult = authResult else {
-                print("Auth result invalid")
-                return
-            }
-            
-            let newPublicProfile = UserProfile(uid: authResult.uid)
-            newPublicProfile.providerId = authResult.providerID
-            newPublicProfile.displayName = authResult.displayName
-            newPublicProfile.photoUrl = authResult.photoURL
-            
-            self.publicProfile = newPublicProfile
+            self.fbAuthenticationCallback(user: authResult, error: error)
         }
     }
     

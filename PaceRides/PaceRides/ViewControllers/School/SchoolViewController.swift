@@ -11,6 +11,7 @@ import UIKit
 class SchoolViewController: FrontViewController {
     
     @IBOutlet weak var primaryLabel: UILabel!
+    @IBOutlet weak var verifyEmailView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +23,13 @@ class SchoolViewController: FrontViewController {
             queue: OperationQueue.main,
             using: self.userSchoolProfileDidChange
         )
+        
+        NotificationCenter.default.addObserver(
+            forName: .UserSchoolEmailVerifiedDidChange,
+            object: nil,
+            queue: OperationQueue.main,
+            using: self.userSchoolProfileDidChange
+        )
     }
     
     func userSchoolProfileDidChange(_: Notification? = nil) {
@@ -29,11 +37,19 @@ class SchoolViewController: FrontViewController {
         if let userSchoolProfile = UserModel.sharedInstance.schoolProfile {
             self.signInView.isHidden = true
             
+            if userSchoolProfile.emailVerified {
+                self.verifyEmailView.isHidden = true
+            } else {
+                self.verifyEmailView.isHidden = false
+                return
+            }
+            
             self.primaryLabel.text = userSchoolProfile.displayName
                 ?? userSchoolProfile.providerId
                 ?? userSchoolProfile.uid
         } else {
             self.signInView.isHidden = false
+            self.verifyEmailView.isHidden = true
         }
         
     }

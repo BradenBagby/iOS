@@ -108,8 +108,14 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YNB-PD-r78">
+                            <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Au1-tO-zWe">
                                 <rect key="frame" x="0.0" y="116" width="375" height="551"/>
+                                <connections>
+                                    <segue destination="axv-Ob-mS0" kind="embed" id="Uaq-hR-Gra"/>
+                                </connections>
+                            </containerView>
+                            <containerView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YNB-PD-r78">
+                                <rect key="frame" x="153" y="430" width="375" height="551"/>
                                 <connections>
                                     <segue destination="nD0-nC-yEZ" kind="embed" id="Yxy-mU-msR"/>
                                 </connections>
@@ -117,10 +123,14 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="Au1-tO-zWe" firstAttribute="top" secondItem="zKN-qo-IMm" secondAttribute="top" id="91f-YT-lZT"/>
                             <constraint firstItem="zKN-qo-IMm" firstAttribute="trailing" secondItem="9xS-he-LPt" secondAttribute="trailing" constant="16" id="C1y-0E-26f"/>
                             <constraint firstItem="9xS-he-LPt" firstAttribute="top" secondItem="zKN-qo-IMm" secondAttribute="top" constant="16" id="CTn-jj-ICZ"/>
                             <constraint firstItem="9xS-he-LPt" firstAttribute="leading" secondItem="zKN-qo-IMm" secondAttribute="leading" constant="16" id="CVf-u3-Cvr"/>
+                            <constraint firstItem="zKN-qo-IMm" firstAttribute="bottom" secondItem="Au1-tO-zWe" secondAttribute="bottom" id="F9H-6N-4kN"/>
+                            <constraint firstItem="Au1-tO-zWe" firstAttribute="leading" secondItem="zKN-qo-IMm" secondAttribute="leading" id="Il1-za-PNd"/>
                             <constraint firstItem="zKN-qo-IMm" firstAttribute="trailing" secondItem="YNB-PD-r78" secondAttribute="trailing" id="Je5-6z-zqw"/>
+                            <constraint firstItem="zKN-qo-IMm" firstAttribute="trailing" secondItem="Au1-tO-zWe" secondAttribute="trailing" id="LsN-ms-gtI"/>
                             <constraint firstItem="zKN-qo-IMm" firstAttribute="bottom" secondItem="YNB-PD-r78" secondAttribute="bottom" id="ip0-wN-ugH"/>
                             <constraint firstItem="YNB-PD-r78" firstAttribute="top" secondItem="zKN-qo-IMm" secondAttribute="top" id="x6o-7k-c5Q"/>
                             <constraint firstItem="YNB-PD-r78" firstAttribute="leading" secondItem="zKN-qo-IMm" secondAttribute="leading" id="y0m-2b-hhh"/>
@@ -136,6 +146,7 @@
                         <outlet property="primaryLabel" destination="9xS-he-LPt" id="WS1-2P-Zlw"/>
                         <outlet property="profileBarButtonItem" destination="XuV-Dg-UrN" id="FYL-8e-xtw"/>
                         <outlet property="signInView" destination="YNB-PD-r78" id="cAC-F1-0Cm"/>
+                        <outlet property="verifyEmailView" destination="Au1-tO-zWe" id="jlk-xg-qsp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S5B-ck-bjK" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -431,6 +442,58 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JIm-Cn-54B" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2528.8000000000002" y="1487.4062968515743"/>
+        </scene>
+        <!--Verify Email View Controller-->
+        <scene sceneID="rSF-l0-Xdx">
+            <objects>
+                <viewController id="axv-Ob-mS0" customClass="VerifyEmailViewController" customModule="PaceRides" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="fHF-ec-6Cf">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Verify Your Email" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ISl-93-QnN">
+                                <rect key="frame" x="16" y="20" width="343" height="32"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You need to verify your email before you continue" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DIy-9x-JVW">
+                                <rect key="frame" x="16" y="60" width="343" height="43"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pPi-3x-8se">
+                                <rect key="frame" x="16" y="111" width="343" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Verified"/>
+                                <connections>
+                                    <action selector="verifiedButtonPressed" destination="axv-Ob-mS0" eventType="touchUpInside" id="UpZ-mM-BIy"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8co-jx-Zd6">
+                                <rect key="frame" x="16" y="149" width="343" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Resend Verification Email"/>
+                                <connections>
+                                    <action selector="resendVerificationEmailButtonPressed" destination="axv-Ob-mS0" eventType="touchUpInside" id="m1C-bh-WFq"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="ISl-93-QnN" firstAttribute="top" secondItem="fHF-ec-6Cf" secondAttribute="top" constant="20" id="0K2-uO-S5u"/>
+                            <constraint firstItem="DIy-9x-JVW" firstAttribute="top" secondItem="ISl-93-QnN" secondAttribute="bottom" constant="8" id="AIN-Oc-D84"/>
+                            <constraint firstItem="ISl-93-QnN" firstAttribute="leading" secondItem="fHF-ec-6Cf" secondAttribute="leading" constant="16" id="JRu-EM-PO1"/>
+                            <constraint firstAttribute="trailing" secondItem="DIy-9x-JVW" secondAttribute="trailing" constant="16" id="ShE-Zn-eG2"/>
+                            <constraint firstAttribute="trailing" secondItem="ISl-93-QnN" secondAttribute="trailing" constant="16" id="ZcW-Ee-DjJ"/>
+                            <constraint firstItem="DIy-9x-JVW" firstAttribute="leading" secondItem="fHF-ec-6Cf" secondAttribute="leading" constant="16" id="dla-m4-rVn"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OIW-pL-IIA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3248.8000000000002" y="1485.6071964017992"/>
         </scene>
     </scenes>
     <resources>
