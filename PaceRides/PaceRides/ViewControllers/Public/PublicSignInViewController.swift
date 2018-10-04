@@ -18,7 +18,7 @@ class PublicSignInViewController: UIViewController {
         let loginButton = FBSDKLoginButton()
         loginButton.readPermissions = ["public_profile"]
         loginButton.center = self.view.center
-        loginButton.delegate = UserModel.sharedInstance
+        loginButton.delegate = UserModel.fbLoginDelegate
         self.view.addSubview(loginButton)
     }
 }

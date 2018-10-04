@@ -397,9 +397,8 @@
                                     <outlet property="delegate" destination="nD0-nC-yEZ" id="hJP-i3-zsR"/>
                                 </connections>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GS1-Gj-ITU">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GS1-Gj-ITU">
                                 <rect key="frame" x="16" y="260" width="343" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Submit"/>
                                 <connections>
                                     <action selector="submitButtonPressed" destination="nD0-nC-yEZ" eventType="touchUpInside" id="ed7-uY-OVU"/>
@@ -411,12 +410,20 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Jf6-BP-kfr">
+                                <rect key="frame" x="177.5" y="298" width="20" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="20" id="keU-md-rnZ"/>
+                                </constraints>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="MyG-9Z-nlN" firstAttribute="trailing" secondItem="GS1-Gj-ITU" secondAttribute="trailing" constant="16" id="5dg-lD-Cwz"/>
                             <constraint firstItem="qVI-no-naC" firstAttribute="top" secondItem="zeq-Gq-2sa" secondAttribute="bottom" constant="8" id="B5i-Bh-0Ur"/>
                             <constraint firstItem="QpO-i2-tm7" firstAttribute="top" secondItem="OLx-qq-kNf" secondAttribute="bottom" constant="8" id="Dhq-86-iAK"/>
                             <constraint firstAttribute="trailing" secondItem="qVI-no-naC" secondAttribute="trailing" constant="16" id="FGx-cm-2ZC"/>
+                            <constraint firstItem="Jf6-BP-kfr" firstAttribute="top" secondItem="GS1-Gj-ITU" secondAttribute="bottom" constant="8" id="LgV-6s-vVC"/>
                             <constraint firstItem="qVI-no-naC" firstAttribute="leading" secondItem="LL1-RI-8Ps" secondAttribute="leading" constant="16" id="MMr-MW-G9X"/>
                             <constraint firstItem="ZEY-mi-ddT" firstAttribute="leading" secondItem="LL1-RI-8Ps" secondAttribute="leading" constant="16" id="TZV-2s-JlC"/>
                             <constraint firstItem="zeq-Gq-2sa" firstAttribute="leading" secondItem="LL1-RI-8Ps" secondAttribute="leading" constant="16" id="WrG-RI-fpQ"/>
@@ -426,15 +433,20 @@
                             <constraint firstAttribute="trailing" secondItem="RZH-pa-mgk" secondAttribute="trailing" constant="16" id="gDK-WC-k0o"/>
                             <constraint firstAttribute="trailing" secondItem="ZEY-mi-ddT" secondAttribute="trailing" constant="16" id="iD3-Gw-B69"/>
                             <constraint firstItem="QpO-i2-tm7" firstAttribute="leading" secondItem="LL1-RI-8Ps" secondAttribute="leading" constant="16" id="lgo-ju-LF7"/>
+                            <constraint firstItem="Jf6-BP-kfr" firstAttribute="centerX" secondItem="MyG-9Z-nlN" secondAttribute="centerX" id="oeR-gQ-ClT"/>
+                            <constraint firstItem="GS1-Gj-ITU" firstAttribute="top" secondItem="QpO-i2-tm7" secondAttribute="bottom" constant="5" id="otT-2c-act"/>
                             <constraint firstItem="RZH-pa-mgk" firstAttribute="leading" secondItem="LL1-RI-8Ps" secondAttribute="leading" constant="16" id="pLJ-dL-bCP"/>
                             <constraint firstItem="RZH-pa-mgk" firstAttribute="top" secondItem="LL1-RI-8Ps" secondAttribute="top" constant="16" id="r0E-QR-v2z"/>
+                            <constraint firstItem="GS1-Gj-ITU" firstAttribute="leading" secondItem="MyG-9Z-nlN" secondAttribute="leading" constant="16" id="rEr-0N-ENU"/>
                             <constraint firstItem="zeq-Gq-2sa" firstAttribute="top" secondItem="ZEY-mi-ddT" secondAttribute="bottom" constant="32" id="x67-do-IlM"/>
                             <constraint firstItem="ZEY-mi-ddT" firstAttribute="top" secondItem="RZH-pa-mgk" secondAttribute="bottom" constant="8" id="ykh-HQ-x0k"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="MyG-9Z-nlN"/>
                     </view>
                     <connections>
                         <outlet property="emailLabel" destination="zeq-Gq-2sa" id="RCt-eD-z4Y"/>
                         <outlet property="emailTextField" destination="qVI-no-naC" id="uWX-n9-og6"/>
+                        <outlet property="loadingIndicator" destination="Jf6-BP-kfr" id="FJM-JD-7H8"/>
                         <outlet property="passwordLabel" destination="OLx-qq-kNf" id="yYR-07-Xn9"/>
                         <outlet property="passwordTextField" destination="QpO-i2-tm7" id="4TU-0T-Sgl"/>
                     </connections>
@@ -489,6 +501,7 @@
                             <constraint firstAttribute="trailing" secondItem="ISl-93-QnN" secondAttribute="trailing" constant="16" id="ZcW-Ee-DjJ"/>
                             <constraint firstItem="DIy-9x-JVW" firstAttribute="leading" secondItem="fHF-ec-6Cf" secondAttribute="leading" constant="16" id="dla-m4-rVn"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="37v-AG-ltb"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OIW-pL-IIA" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -16,9 +16,9 @@ class PublicViewController: FrontViewController {
         super.viewDidLoad()
         
         self.userPublicProfileDidChange()
-        UserModel.sharedInstance.notificationCenter.addObserver(
-            forName: .UserPublicProfileDidChange,
-            object: UserModel.sharedInstance,
+        UserModel.notificationCenter.addObserver(
+            forName: .NewPaceUserData,
+            object: nil,
             queue: OperationQueue.main,
             using: self.userPublicProfileDidChange
         )
@@ -26,9 +26,17 @@ class PublicViewController: FrontViewController {
     
     func userPublicProfileDidChange(_: Notification? = nil) {
         
-        if let userPublicProfile = UserModel.sharedInstance.publicProfile {
+        if let paceUser = UserModel.sharedInstance(), let paceUserPublicProfile = paceUser.publicProfile() {
+            
+            print("Public user info")
+            print("Display Name: \(paceUserPublicProfile.displayName)")
+            print("Facebook Id: \(paceUserPublicProfile.facebookId)")
+            print("Uid: \(paceUserPublicProfile.uid)")
+            
             self.signInView.isHidden = true
-            self.primaryLabel.text = userPublicProfile.displayName ?? userPublicProfile.uid
+            self.primaryLabel.text
+                = paceUserPublicProfile.displayName
+                ?? paceUser.uid
         } else {
             self.signInView.isHidden = false
         }

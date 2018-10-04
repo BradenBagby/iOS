@@ -17,15 +17,8 @@ class SchoolViewController: FrontViewController {
         super.viewDidLoad()
 
         self.userSchoolProfileDidChange()
-        UserModel.sharedInstance.notificationCenter.addObserver(
-            forName: .UserSchoolProfileDidChange,
-            object: UserModel.sharedInstance,
-            queue: OperationQueue.main,
-            using: self.userSchoolProfileDidChange
-        )
-        
-        NotificationCenter.default.addObserver(
-            forName: .UserSchoolEmailVerifiedDidChange,
+        UserModel.notificationCenter.addObserver(
+            forName: .NewPaceUserData,
             object: nil,
             queue: OperationQueue.main,
             using: self.userSchoolProfileDidChange
@@ -34,19 +27,20 @@ class SchoolViewController: FrontViewController {
     
     func userSchoolProfileDidChange(_: Notification? = nil) {
         
-        if let userSchoolProfile = UserModel.sharedInstance.schoolProfile {
+        if let paceUser = UserModel.sharedInstance(), let paceUserSchoolProfile = paceUser.schoolProfile() {
             self.signInView.isHidden = true
             
-            if userSchoolProfile.emailVerified {
+            if paceUserSchoolProfile.isEmailVerified {
                 self.verifyEmailView.isHidden = true
             } else {
                 self.verifyEmailView.isHidden = false
                 return
             }
             
-            self.primaryLabel.text = userSchoolProfile.displayName
-                ?? userSchoolProfile.providerId
-                ?? userSchoolProfile.uid
+            self.primaryLabel.text
+                = paceUserSchoolProfile.email
+                ?? paceUserSchoolProfile.displayName
+                ?? paceUserSchoolProfile.uid
         } else {
             self.signInView.isHidden = false
             self.verifyEmailView.isHidden = true

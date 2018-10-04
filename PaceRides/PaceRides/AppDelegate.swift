@@ -19,6 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         super.init()
         
         FirebaseApp.configure()
+        
+        Auth.auth().addStateDidChangeListener(UserModel.firebaseAuthStateChangeListener)
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {

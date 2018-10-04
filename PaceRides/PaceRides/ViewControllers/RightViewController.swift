@@ -18,16 +18,9 @@ class RightViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        UserModel.sharedInstance.notificationCenter.addObserver(
-            forName: .UserPublicProfileDidChange,
-            object: UserModel.sharedInstance,
-            queue: OperationQueue.main,
-            using: self.userProfileDataChanged
-        )
-        
-        UserModel.sharedInstance.notificationCenter.addObserver(
-            forName: .UserSchoolProfileDidChange,
-            object: UserModel.sharedInstance,
+        UserModel.notificationCenter.addObserver(
+            forName: .NewPaceUserData,
+            object: nil,
             queue: OperationQueue.main,
             using: self.userProfileDataChanged
         )
@@ -44,36 +37,40 @@ class RightViewController: UIViewController {
         
         var userDisplayName: String? = nil
         
-        if let userPublicProfile = UserModel.sharedInstance.publicProfile {
-            if let userProfileImageUrl = userPublicProfile.photoUrl {
-                getData(from: userProfileImageUrl) { data, response, error in
-                    
-                    guard error == nil else {
-                        print(error!.localizedDescription)
-                        return
-                    }
-                    
-                    guard let data = data else {
-                        print("No data returned from image url")
-                        return
-                    }
-                    
-                    DispatchQueue.main.async {
-                        self.profileImageView.image = UIImage(data: data)
+        if let paceUser = UserModel.sharedInstance() {
+            if let paceUserPublicProfile = paceUser.publicProfile() {
+                if let userProfileImageUrl = paceUserPublicProfile.photoUrl {
+                    getData(from: userProfileImageUrl) { data, response, error in
+                        
+                        guard error == nil else {
+                            print(error!.localizedDescription)
+                            return
+                        }
+                        
+                        guard let data = data else {
+                            print("No data returned from image url")
+                            return
+                        }
+                        
+                        DispatchQueue.main.async {
+                            self.profileImageView.image = UIImage(data: data)
+                        }
                     }
                 }
-            }
             
-            if let userPublicDisplayName = userPublicProfile.displayName {
-                userDisplayName = userPublicDisplayName
+                if let userPublicDisplayName = paceUserPublicProfile.displayName {
+                    userDisplayName = userPublicDisplayName
+                }
+                
+                if userDisplayName == nil,
+                    let userSchoolProfile = paceUser.schoolProfile(),
+                    let userSchoolDisplayName = userSchoolProfile.displayName {
+                    userDisplayName = userSchoolDisplayName
+                }
             }
         }
         
-        if userDisplayName == nil,
-            let userSchoolProfile = UserModel.sharedInstance.schoolProfile,
-            let userSchoolDisplayName = userSchoolProfile.displayName {
-            userDisplayName = userSchoolDisplayName
-        }
+        
         
         self.nameLabel.text = userDisplayName
     }
@@ -101,12 +98,14 @@ extension RightViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var totalCount = 0
         
-        if let _ = UserModel.sharedInstance.publicProfile {
-            totalCount += 1
-        }
-        
-        if let _ = UserModel.sharedInstance.schoolProfile {
-            totalCount += 1
+        if let paceUser = UserModel.sharedInstance() {
+            if let _ = paceUser.publicProfile() {
+                totalCount += 1
+            }
+            
+            if let _ = paceUser.schoolProfile() {
+                totalCount += 1
+            }
         }
         
         return totalCount
@@ -117,23 +116,28 @@ extension RightViewController: UITableViewDataSource {
         
         if indexPath.row == 0 {
             
-            if let userPublicProfile = UserModel.sharedInstance.publicProfile {
-                defaultCell.textLabel!.text = userPublicProfile.displayName
-                    ?? userPublicProfile.providerId
-                    ?? userPublicProfile.uid
-            } else if let userSchoolProfile = UserModel.sharedInstance.schoolProfile {
-                defaultCell.textLabel!.text = userSchoolProfile.providerId
-                    ?? "Email not verified"
-            } else {
-                print("Error")
+            if let paceUser = UserModel.sharedInstance() {
+                if let userPublicProfile = paceUser.publicProfile() {
+                    defaultCell.textLabel!.text = userPublicProfile.displayName
+                        ?? userPublicProfile.facebookId
+                        ?? userPublicProfile.uid
+                } else if let userSchoolProfile = paceUser.schoolProfile() {
+                    defaultCell.textLabel!.text
+                        = (userSchoolProfile.isEmailVerified ? userSchoolProfile.email : "Email not verified")
+                } else {
+                    print("Error")
+                    defaultCell.textLabel!.text = "Error"
+                }
             }
             
         } else if indexPath.row == 1 {
-            if let userSchoolProfile = UserModel.sharedInstance.schoolProfile {
-                defaultCell.textLabel!.text = userSchoolProfile.providerId
-                    ?? "Email not verified"
+            if let paceUser = UserModel.sharedInstance(), let userSchoolProfile = paceUser.schoolProfile() {
+                defaultCell.textLabel!.text
+                    = userSchoolProfile.email
+                    ?? "Email error"
             } else {
                 print("Error")
+                defaultCell.textLabel!.text = "Error"
             }
         }
         

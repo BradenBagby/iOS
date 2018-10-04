@@ -14,6 +14,7 @@ class SchoolSignInViewController: UIViewController {
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordLabel: UILabel!
     @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,7 +45,42 @@ class SchoolSignInViewController: UIViewController {
                 passwordLabel.textColor = .black
             }
             
-            UserModel.sharedInstance.signIn(withEmail: emailText, andPassword: passwordText)
+            self.emailLabel.isEnabled = false
+            self.passwordLabel.isEnabled = false
+            self.loadingIndicator.isHidden = false
+            self.loadingIndicator.startAnimating()
+            UserModel.createUser(fromEmail: emailText, andPassword: passwordText) { paceUser, error in
+                
+                self.emailLabel.isEnabled = true
+                self.passwordLabel.isEnabled = true
+                self.passwordLabel.text = ""
+                self.loadingIndicator.stopAnimating()
+                
+                guard error == nil else {
+                    // TODO: Handle
+                    print("Error creating user from email")
+                    print(error!.localizedDescription)
+                    return
+                }
+                
+                if let paceUser = paceUser, let userSchoolProfile = paceUser.schoolProfile() {
+                    
+                    // Check if verification email needs to be sent
+                    if !userSchoolProfile.isEmailVerified {
+                        userSchoolProfile.sendEmailVerification(completion: nil)
+                    }
+                    
+                    // Indicate that pace user auth data has changed
+                    UserModel.notificationCenter.post(
+                        name: .NewPaceUserData,
+                        object: nil
+                    )
+                    
+                } else {
+                    
+                }
+                
+            }
         }
     }
 }

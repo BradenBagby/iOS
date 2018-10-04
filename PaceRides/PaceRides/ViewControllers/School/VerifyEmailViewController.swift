@@ -15,23 +15,36 @@ class VerifyEmailViewController: UIViewController {
     }
     
     @IBAction func verifiedButtonPressed() {
-        UserModel.sharedInstance.reloadFirebaseUser() { error in
-            
-            guard error == nil else {
-                print(error!.localizedDescription)
-                return
+        if let paceUser = UserModel.sharedInstance() {
+            paceUser.reload() { error in
+                
+                guard error == nil else {
+                    print(error!.localizedDescription)
+                    return
+                }
+                
+                NotificationCenter.default.post(
+                    name: .NewPaceUserData,
+                    object: self
+                )
+                
             }
-            
-            NotificationCenter.default.post(
-                name: .UserSchoolEmailVerifiedDidChange,
-                object: self
-            )
-            
         }
     }
     
     @IBAction func resendVerificationEmailButtonPressed() {
-        UserModel.sharedInstance.sendVerificationEmail(reloadFirst: true)
+        if let paceUser = UserModel.sharedInstance(), let paceUserSchoolProfile = paceUser.schoolProfile() {
+            paceUserSchoolProfile.sendEmailVerification() { error in
+                
+                guard error == nil else {
+                    
+                    print("Error resending verification email")
+                    print(error?.localizedDescription)
+                    
+                    return
+                }
+            }
+        }
     }
 
 }
