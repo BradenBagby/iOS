@@ -18,71 +18,60 @@ class RightViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // Make image view round
+        profileImageView.layer.borderWidth = 1
+        profileImageView.layer.masksToBounds = false
+        profileImageView.layer.borderColor = UIColor.white.cgColor
+        profileImageView.layer.cornerRadius = profileImageView.frame.height / 2
+        profileImageView.clipsToBounds = true
+        
+        // Update view when new data availible
+        userProfileDataChanged()
         UserModel.notificationCenter.addObserver(
             forName: .NewPaceUserData,
             object: nil,
             queue: OperationQueue.main,
             using: self.userProfileDataChanged
         )
-        
-        profileImageView.layer.borderWidth = 1
-        profileImageView.layer.masksToBounds = false
-        profileImageView.layer.borderColor = UIColor.white.cgColor
-        profileImageView.layer.cornerRadius = profileImageView.frame.height / 2
-        profileImageView.clipsToBounds = true
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        var userDisplayName: String? = nil
-        
-        if let paceUser = UserModel.sharedInstance() {
-            if let paceUserPublicProfile = paceUser.publicProfile() {
-                if let userProfileImageUrl = paceUserPublicProfile.photoUrl {
-                    getData(from: userProfileImageUrl) { data, response, error in
-                        
-                        guard error == nil else {
-                            print(error!.localizedDescription)
-                            return
-                        }
-                        
-                        guard let data = data else {
-                            print("No data returned from image url")
-                            return
-                        }
-                        
-                        DispatchQueue.main.async {
-                            self.profileImageView.image = UIImage(data: data)
-                        }
-                    }
-                }
-            
-                if let userPublicDisplayName = paceUserPublicProfile.displayName {
-                    userDisplayName = userPublicDisplayName
-                }
-                
-                if userDisplayName == nil,
-                    let userSchoolProfile = paceUser.schoolProfile(),
-                    let userSchoolDisplayName = userSchoolProfile.displayName {
-                    userDisplayName = userSchoolDisplayName
-                }
-            }
-        }
-        
-        
-        
-        self.nameLabel.text = userDisplayName
     }
     
     func userProfileDataChanged(_: Notification? = nil) {
+        
+        // Reload table view
         self.tableView.reloadData()
+        
+        // If there is a user
+        if let paceUser = UserModel.sharedInstance() {
+            
+            // If the user has a public profile
+            if let userPublicProfile = paceUser.publicProfile() {
+                
+                // Attempt to retrieve the user's profile picture
+                userPublicProfile.getProfilePicture() { userProfilePicture, _ in
+                    if let userProfilePicture = userProfilePicture {
+                        self.profileImageView.image = userProfilePicture
+                    }
+                }
+                
+                // Set the title to the user's name
+                if let displayName = userPublicProfile.displayName {
+                    self.nameLabel.text = displayName
+                } else if let userSchoolProfile = paceUser.schoolProfile() {
+                    self.nameLabel.text = userSchoolProfile.email
+                } else if let fbId = userPublicProfile.facebookId {
+                    self.nameLabel.text = fbId
+                } else {
+                    self.nameLabel.text = "Error"
+                }
+                
+            } else {
+                // TODO: Handle if no public profile
+            }
+            
+        } else {
+            // TODO: Handle if no user signed in
+        }
     }
-    
-    func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
-        URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
-    }
-
 }
 
 extension RightViewController: UITableViewDelegate {

@@ -23,7 +23,7 @@
                     <connections>
                         <segue destination="2in-V8-2dK" kind="custom" identifier="sw_rear" customClass="SWRevealViewControllerSegueSetController" id="cGK-CR-4yZ"/>
                         <segue destination="QSF-JH-Gcd" kind="custom" identifier="sw_right" customClass="SWRevealViewControllerSegueSetController" id="byM-op-sHN"/>
-                        <segue destination="5mK-QR-ogR" kind="custom" identifier="sw_front" customClass="SWRevealViewControllerSegueSetController" id="W44-zs-PPf"/>
+                        <segue destination="pNV-5f-0ux" kind="custom" identifier="sw_front" customClass="SWRevealViewControllerSegueSetController" id="Orh-8R-uEl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VlG-4a-IAB" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -514,6 +514,6 @@
         <image name="profileIcon" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="W44-zs-PPf"/>
+        <segue reference="Orh-8R-uEl"/>
     </inferredMetricsTieBreakers>
 </document>

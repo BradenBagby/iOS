@@ -28,10 +28,8 @@ class PublicViewController: FrontViewController {
         
         if let paceUser = UserModel.sharedInstance(), let paceUserPublicProfile = paceUser.publicProfile() {
             
-            print("Public user info")
-            print("Display Name: \(paceUserPublicProfile.displayName)")
-            print("Facebook Id: \(paceUserPublicProfile.facebookId)")
-            print("Uid: \(paceUserPublicProfile.uid)")
+            // Fetch the profile picture for future use
+            paceUserPublicProfile.getProfilePicture(completion: nil)
             
             self.signInView.isHidden = true
             self.primaryLabel.text

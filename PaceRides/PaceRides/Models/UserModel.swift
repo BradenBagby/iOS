@@ -64,6 +64,7 @@ class PaceFbLoginDelegate: NSObject, FBSDKLoginButtonDelegate {
 public enum PaceUserError: Error {
     case PublicProfileAlreadyExists
     case SchoolProfileAlreadyExists
+    case InvalidPhotoURL
 }
 
 
@@ -75,6 +76,8 @@ extension PaceUserError: LocalizedError {
             return NSLocalizedString("Public profile already exists for this user.", comment: "")
         case .SchoolProfileAlreadyExists:
             return NSLocalizedString("School profile already exists for this user.", comment: "")
+        case .InvalidPhotoURL:
+            return NSLocalizedString("Invalid photo url", comment: "")
         }
     }
     
@@ -84,7 +87,8 @@ extension PaceUserError: LocalizedError {
             return NSLocalizedString("There was an attempt to set a public profile when one already exists.", comment: "")
         case .SchoolProfileAlreadyExists:
             return NSLocalizedString("There was an attempt to set a school profile when one already exists.", comment: "")
-            
+        case .InvalidPhotoURL:
+            return NSLocalizedString("The photo url was not set or is invalid", comment: "")
         }
     }
     
@@ -94,6 +98,8 @@ extension PaceUserError: LocalizedError {
             return NSLocalizedString("Sign out existing user of unlink their existing public profile.", comment: "")
         case .SchoolProfileAlreadyExists:
             return NSLocalizedString("Sign out existing user of unlink their existing school profile.", comment: "")
+        case .InvalidPhotoURL:
+            return NSLocalizedString("Fix the photo url and then retry", comment: "")
         }
     }
 }
@@ -110,6 +116,8 @@ extension PaceUserError: CustomNSError {
             return 10101
         case .SchoolProfileAlreadyExists:
             return 10102
+        case .InvalidPhotoURL:
+            return 10103
         }
     }
     
@@ -118,6 +126,8 @@ extension PaceUserError: CustomNSError {
         case .PublicProfileAlreadyExists:
             return [:]
         case .SchoolProfileAlreadyExists:
+            return [:]
+        case .InvalidPhotoURL:
             return [:]
         }
     }
@@ -206,6 +216,10 @@ protocol PacePublicProfile {
     
     /// URL to facebook profile picture
     var photoUrl: URL? { get }
+    
+    
+    /// Get the picture from this objects photoUrl
+    func getProfilePicture(completion: ((UIImage?, Error?) -> Void)?)
 }
 
 
@@ -382,6 +396,10 @@ class UserModel: NSObject, PaceUser {
     /// Convienience to only loop through user provider data once
     private var _facebookId: String? = nil
     
+    /// Cached facebook profile picture
+    private var _profilePicture: UIImage? = nil
+    
+    
     var uid: String {
         get {
             return self._user.uid
@@ -498,6 +516,59 @@ extension UserModel: PacePublicProfile {
             return URL(string: "https://graph.facebook.com/\(fbId)/picture?width=300&height=300")
         }
         return nil
+    }
+    
+    
+    func getProfilePicture(completion: ((UIImage?, Error?) -> Void)? = nil) {
+        
+        // If profile picture is already cached, return the cached image
+        if let profilePicture = self._profilePicture {
+            if let completion = completion {
+                completion(profilePicture, nil)
+            }
+            return
+        }
+        
+        // If there is a photo url
+        if let url = self.photoUrl {
+            
+            // Fetch the data from the url
+            let task = URLSession.shared.dataTask(with: url) { data, urlResponse, error in
+                
+                // If data was returned
+                if let data = data {
+                    
+                    // Try to create image from the network data
+                    self._profilePicture = UIImage(data: data)
+                    if let completion = completion {
+                        DispatchQueue.main.async() {
+                            completion(self._profilePicture, error)
+                            UserModel.notificationCenter.post(
+                                name: .NewPaceUserData,
+                                object: nil
+                            )
+                        }
+                    }
+                }
+                
+                // Return with error if no data was returned
+                if let completion = completion {
+                    DispatchQueue.main.async() {
+                        completion(nil, error)
+                    }
+                }
+            }
+            task.resume()
+            
+        } else {
+            
+            // Indicate that there is not a photourl to completion handler
+            if let completion = completion {
+                DispatchQueue.main.async() {
+                    completion(nil, PaceUserError.InvalidPhotoURL)
+                }
+            }
+        }
     }
 }
 
