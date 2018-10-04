@@ -76,6 +76,16 @@ class RightViewController: UIViewController {
             
         } else {
             // TODO: Handle if no user signed in
+            self.profileImageView.image = UIImage(named: "profileIcon")
+            self.nameLabel.text = "Sign in"
+        }
+    }
+    
+    @IBAction func signOutButtonPressed() {
+        if let paceUser = UserModel.sharedInstance() {
+            if let err = paceUser.signOut() {
+                print(err.localizedDescription)
+            }
         }
     }
 }

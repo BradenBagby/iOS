@@ -50,14 +50,7 @@ class PaceFbLoginDelegate: NSObject, FBSDKLoginButtonDelegate {
     }
     
     func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) {
-        do {
-            try Auth.auth().signOut()
-        } catch let error as NSError {
-            // TODO: Handle
-            print("After successful facebook logout, firebase failed to log out.")
-            print(error.localizedDescription)
-            print(error.code)
-        }
+        print("Facebook Logout")
     }
 }
 
@@ -195,6 +188,11 @@ protocol PaceUser {
     
     /// Reload the firebase user
     func reload(completion: ((Error?) -> Void)?)
+    
+    
+    /// Sign out the current user
+    func signOut() -> Error?
+    
 }
 
 
@@ -375,14 +373,14 @@ class UserModel: NSObject, PaceUser {
     static func firebaseAuthStateChangeListener(_: Auth, user: User?) {
         if let user = user {
             _sharedInstance = UserModel(forFirebaseUser: user)
-            
-            UserModel.notificationCenter.post(
-                name: .NewPaceUserData,
-                object: nil
-            )
         } else {
             _sharedInstance = nil
         }
+        
+        UserModel.notificationCenter.post(
+            name: .NewPaceUserData,
+            object: nil
+        )
     }
     
     
@@ -478,6 +476,19 @@ class UserModel: NSObject, PaceUser {
     
     func reload(completion: ((Error?) -> Void)? = nil) {
         self._user.reload(completion: completion)
+    }
+    
+    
+    func signOut() -> Error? {
+        
+        do {
+            try Auth.auth().signOut()
+        } catch let e as NSError {
+            return e
+        }
+        
+        FBSDKLoginManager().logOut()
+        return nil
     }
     
 }
