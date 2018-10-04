@@ -14,6 +14,7 @@ class RightViewController: UIViewController {
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,9 +48,14 @@ class RightViewController: UIViewController {
             if let userPublicProfile = paceUser.publicProfile() {
                 
                 // Attempt to retrieve the user's profile picture
+                self.loadingIndicator.isHidden = false
+                self.loadingIndicator.startAnimating()
                 userPublicProfile.getProfilePicture() { userProfilePicture, _ in
+                    self.loadingIndicator.stopAnimating()
                     if let userProfilePicture = userProfilePicture {
                         self.profileImageView.image = userProfilePicture
+                    } else {
+                        // TODO: Handle
                     }
                 }
                 

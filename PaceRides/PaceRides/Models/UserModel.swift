@@ -374,7 +374,6 @@ class UserModel: NSObject, PaceUser {
     /// Updates User Model's shared instance with the current firebase user
     static func firebaseAuthStateChangeListener(_: Auth, user: User?) {
         if let user = user {
-
             _sharedInstance = UserModel(forFirebaseUser: user)
             
             UserModel.notificationCenter.post(
