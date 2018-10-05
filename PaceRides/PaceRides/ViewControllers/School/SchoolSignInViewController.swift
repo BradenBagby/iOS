@@ -45,15 +45,15 @@ class SchoolSignInViewController: UIViewController {
                 passwordLabel.textColor = .black
             }
             
-            self.emailLabel.isEnabled = false
-            self.passwordLabel.isEnabled = false
+            self.emailTextField.isEnabled = false
+            self.passwordTextField.isEnabled = false
             self.loadingIndicator.isHidden = false
             self.loadingIndicator.startAnimating()
             UserModel.createUser(fromEmail: emailText, andPassword: passwordText) { paceUser, error in
                 
-                self.emailLabel.isEnabled = true
-                self.passwordLabel.isEnabled = true
-                self.passwordLabel.text = ""
+                self.emailTextField.isEnabled = true
+                self.passwordTextField.isEnabled = true
+                self.passwordTextField.text = ""
                 self.loadingIndicator.stopAnimating()
                 
                 guard error == nil else {

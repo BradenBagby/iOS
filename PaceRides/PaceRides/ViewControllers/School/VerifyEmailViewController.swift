@@ -39,7 +39,7 @@ class VerifyEmailViewController: UIViewController {
                 guard error == nil else {
                     
                     print("Error resending verification email")
-                    print(error?.localizedDescription)
+                    print(error!.localizedDescription)
                     
                     return
                 }

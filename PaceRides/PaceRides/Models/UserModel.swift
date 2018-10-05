@@ -54,6 +54,17 @@ class PaceFbLoginDelegate: NSObject, FBSDKLoginButtonDelegate {
     }
 }
 
+public enum DBKeys: String {
+    
+    case publicProfile = "publicProfile"
+    case displayName = "displayName"
+    case facebookId = "facebookId"
+    
+    case schoolProfile = "schoolProfile"
+    case email = "email"
+    case isEmailVerified = "isEmailVerified"
+}
+
 public enum PaceUserError: Error {
     case PublicProfileAlreadyExists
     case SchoolProfileAlreadyExists
@@ -261,6 +272,9 @@ class UserModel: NSObject, PaceUser {
     // MARK: Static members
     
     
+    private static let db = Firestore.firestore()
+    
+    
     /// The notification center used for all PaceUser functionality
     static let notificationCenter = NotificationCenter.default
     
@@ -324,6 +338,7 @@ class UserModel: NSObject, PaceUser {
                             
                             if let resultingFirebaseUser = user {
                                 UserModel._sharedInstance = UserModel(forFirebaseUser: resultingFirebaseUser)
+                                UserModel._sharedInstance!.pushToDatabase()
                                 newPaceUser = UserModel.sharedInstance()
                             }
                             
@@ -358,9 +373,8 @@ class UserModel: NSObject, PaceUser {
                 if let user = user {
                     // Set new user as shared instance
                     UserModel._sharedInstance = UserModel(forFirebaseUser: user)
+                    UserModel._sharedInstance!.pushToDatabase()
                     userModelForCallback = UserModel._sharedInstance
-                } else {
-                    userModelForCallback = nil
                 }
                 
                 completion(userModelForCallback, error)
@@ -417,6 +431,7 @@ class UserModel: NSObject, PaceUser {
     private func linkCredentials(_ credentials: AuthCredential, completion: PaceAuthResultCallback? = nil) {
         self._user.linkAndRetrieveData(with: credentials) { _, error in
             if let completion = completion {
+                self.pushToDatabase()
                 completion(self, error)
             }
         }
@@ -475,7 +490,20 @@ class UserModel: NSObject, PaceUser {
     
     
     func reload(completion: ((Error?) -> Void)? = nil) {
-        self._user.reload(completion: completion)
+        self._user.reload() { error in
+            
+            guard error == nil else {
+                if let completion = completion {
+                    completion(error)
+                }
+                return
+            }
+            
+            self.pushToDatabase()
+            if let completion = completion {
+                completion(error)
+            }
+        }
     }
     
     
@@ -491,6 +519,36 @@ class UserModel: NSObject, PaceUser {
         return nil
     }
     
+    
+    // MARK: - Database Management
+    
+    
+    private func pushToDatabase() {
+        
+        var dbData: [String: Any] = [:]
+        if let userPublicProfile = self.publicProfile() {
+            dbData[DBKeys.publicProfile.rawValue] = [
+                DBKeys.facebookId.rawValue: userPublicProfile.facebookId,
+                DBKeys.displayName.rawValue: userPublicProfile.displayName
+            ]
+        }
+        if let userSchoolProfile = self.schoolProfile() {
+            dbData[DBKeys.schoolProfile.rawValue] = [
+                DBKeys.email.rawValue: userSchoolProfile.email as Any,
+                DBKeys.isEmailVerified.rawValue: userSchoolProfile.isEmailVerified
+            ]
+        }
+        
+        UserModel.db.collection("users").document(self._user.uid).setData(dbData) { error in
+            
+            guard error == nil else {
+                print(error!.localizedDescription)
+                return
+            }
+            
+        }
+    }
+    
 }
 
 
@@ -501,7 +559,17 @@ extension UserModel: PacePublicProfile {
     /// The facebook given display name
     var displayName: String? {
         get {
-            return self._user.displayName
+            if let displayName = self._user.displayName {
+                return displayName
+            }
+            
+            // If email auth was executed first, email display name is defaulted
+            for userInfo in self._user.providerData {
+                if userInfo.providerID.lowercased().contains("facebook") {
+                    return userInfo.displayName
+                }
+            }
+            return nil
         }
     }
     
