@@ -16,6 +16,8 @@ class RightViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
+    var profileCellPlaceholders = [ProfileCellType]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -51,11 +53,13 @@ class RightViewController: UIViewController {
                 self.loadingIndicator.isHidden = false
                 self.loadingIndicator.startAnimating()
                 userPublicProfile.getProfilePicture() { userProfilePicture, _ in
+                    
                     self.loadingIndicator.stopAnimating()
                     if let userProfilePicture = userProfilePicture {
                         self.profileImageView.image = userProfilePicture
                     } else {
-                        // TODO: Handle
+                        // TODO: Handle nil profile picture
+                        // Note: Might already be a valid image in profileImageView
                     }
                 }
                 
@@ -70,12 +74,13 @@ class RightViewController: UIViewController {
                     self.nameLabel.text = "Error"
                 }
                 
+            } else if let userSchoolProfile = paceUser.schoolProfile() {
+                self.nameLabel.text = userSchoolProfile.email ?? "Error"
             } else {
-                // TODO: Handle if no public profile
+                // Signed in, but no public or school profile
             }
             
         } else {
-            // TODO: Handle if no user signed in
             self.profileImageView.image = UIImage(named: "profileIcon")
             self.nameLabel.text = "Sign in"
         }
@@ -90,6 +95,12 @@ class RightViewController: UIViewController {
     }
 }
 
+enum ProfileCellType {
+    case Basic
+    case PublicProfile
+    case SchoolProfile
+}
+
 extension RightViewController: UITableViewDelegate {
     
 }
@@ -100,53 +111,60 @@ extension RightViewController: UITableViewDataSource {
         return 1
     }
     
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Connected Profiles"
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        var totalCount = 0
+        
+        self.profileCellPlaceholders.removeAll()
         
         if let paceUser = UserModel.sharedInstance() {
             if let _ = paceUser.publicProfile() {
-                totalCount += 1
+                profileCellPlaceholders.append(.PublicProfile)
             }
             
             if let _ = paceUser.schoolProfile() {
-                totalCount += 1
+                profileCellPlaceholders.append(.SchoolProfile)
             }
         }
         
-        return totalCount
+        return self.profileCellPlaceholders.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let defaultCell = tableView.dequeueReusableCell(withIdentifier: "default_cell", for: indexPath)
         
-        if indexPath.row == 0 {
+        switch self.profileCellPlaceholders[indexPath.row] {
+        case .Basic:
             
-            if let paceUser = UserModel.sharedInstance() {
-                if let userPublicProfile = paceUser.publicProfile() {
-                    defaultCell.textLabel!.text = userPublicProfile.displayName
-                        ?? userPublicProfile.facebookId
-                        ?? userPublicProfile.uid
-                } else if let userSchoolProfile = paceUser.schoolProfile() {
-                    defaultCell.textLabel!.text
-                        = (userSchoolProfile.isEmailVerified ? userSchoolProfile.email : "Email not verified")
-                } else {
-                    print("Error")
-                    defaultCell.textLabel!.text = "Error"
-                }
-            }
+            let basicCell = tableView.dequeueReusableCell(withIdentifier: "default_cell", for: indexPath)
+            basicCell.textLabel!.text = "Error"
+            return basicCell
             
-        } else if indexPath.row == 1 {
-            if let paceUser = UserModel.sharedInstance(), let userSchoolProfile = paceUser.schoolProfile() {
-                defaultCell.textLabel!.text
-                    = userSchoolProfile.email
-                    ?? "Email error"
-            } else {
-                print("Error")
-                defaultCell.textLabel!.text = "Error"
-            }
+        case .PublicProfile:
+            
+            let publicCell = tableView.dequeueReusableCell(
+                withIdentifier: "PacePublicProfileTableViewCell",
+                for: indexPath
+            ) as! PacePublicProfileTableViewCell
+            
+            publicCell.userPublicProfile = UserModel.sharedInstance()!.publicProfile()
+            
+            return publicCell
+            
+        case .SchoolProfile:
+            
+            let schoolCell = tableView.dequeueReusableCell(
+                withIdentifier: "PaceSchoolProfileTableViewCell",
+                for: indexPath
+                ) as! PaceSchoolProfileTableViewCell
+            
+            schoolCell.userSchoolProfile = UserModel.sharedInstance()!.schoolProfile()
+            
+            return schoolCell
+            
+            break
         }
-        
-        return defaultCell
     }
     
     
