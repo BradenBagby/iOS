@@ -95,17 +95,21 @@ class RightViewController: UIViewController {
     }
 }
 
+
 enum ProfileCellType {
     case Basic
     case PublicProfile
     case SchoolProfile
 }
 
+
 extension RightViewController: UITableViewDelegate {
     
 }
 
+
 extension RightViewController: UITableViewDataSource {
+    
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -114,6 +118,7 @@ extension RightViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return "Connected Profiles"
     }
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -131,6 +136,7 @@ extension RightViewController: UITableViewDataSource {
         
         return self.profileCellPlaceholders.count
     }
+    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
@@ -162,10 +168,6 @@ extension RightViewController: UITableViewDataSource {
             schoolCell.userSchoolProfile = UserModel.sharedInstance()!.schoolProfile()
             
             return schoolCell
-            
-            break
         }
     }
-    
-    
 }

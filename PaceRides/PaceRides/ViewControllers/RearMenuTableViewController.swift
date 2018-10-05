@@ -48,6 +48,10 @@ extension RearMenuTableViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Ride Options"
+    }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.menuOptions.count
@@ -68,6 +72,8 @@ extension RearMenuTableViewController: UITableViewDataSource {
 extension RearMenuTableViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        tableView.deselectRow(at: indexPath, animated: true)
         
         if indexPath.section == 0 {
             if indexPath.row == 0 {
