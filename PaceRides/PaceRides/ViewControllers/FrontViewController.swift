@@ -54,6 +54,10 @@ class FrontViewController: UIViewController {
                     navCon.navigationBar.tintColor = accentColor
                     navCon.navigationBar.titleTextAttributes
                         = [NSAttributedString.Key.foregroundColor: textColor]
+                    if #available(iOS 11.0, *) {
+                        navCon.navigationBar.largeTitleTextAttributes
+                            = [NSAttributedString.Key.foregroundColor: textColor]
+                    } 
 
                 }
                 
