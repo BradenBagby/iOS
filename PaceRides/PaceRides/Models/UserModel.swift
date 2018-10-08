@@ -259,6 +259,9 @@ protocol PaceSchoolProfile {
     /// Reload the firebase user
     func reload(completion: UserProfileChangeCallback?)
     
+    
+    /// Get any university related data
+    func getUniversityModel(completion: UniversityCompletionHandler?)
 }
 
 
@@ -410,6 +413,9 @@ class UserModel: NSObject, PaceUser {
     /// Cached facebook profile picture
     private var _profilePicture: UIImage? = nil
     
+    
+    // Cached university model
+    private var _universityModel: UniversityModel? = nil
     
     var uid: String {
         get {
@@ -668,6 +674,34 @@ extension UserModel: PaceSchoolProfile {
         if !self.isEmailVerified {
             self._user.sendEmailVerification(completion: nil)
             
+        }
+    }
+    
+    
+    func getUniversityModel(completion: UniversityCompletionHandler? = nil) {
+        if let univModel = self._universityModel, let completion = completion {
+            completion(univModel, nil)
+            return
+        }
+        
+        if let email = self.email {
+            UniversityModel.getUniversity(
+                withEmailDomain: String(email.split(separator: "@")[1])
+            ) { university, error in
+                
+                if let university = university {
+                    self._universityModel = university
+                }
+                
+                if let completion = completion {
+                    completion(university, error)
+                }
+            }
+        } else {
+            // Email should never be nil, as email would have to be non-nil in order to retrieve a school profile
+            if let completion = completion {
+                completion(nil, NSError(domain: "PaceUser", code: 1, userInfo: nil))
+            }
         }
     }
 }

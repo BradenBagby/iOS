@@ -40,9 +40,7 @@ class SchoolViewController: FrontViewController {
             if let userEmail = paceUserSchoolProfile.email {
                 self.primaryLabel.text = userEmail
                 
-                UniversityModel.getUniversity(
-                    withEmailDomain: String(userEmail.split(separator: "@")[1])
-                ) { university, error in
+                paceUserSchoolProfile.getUniversityModel() { university, error in
                     
                     guard error == nil else {
                         self.primaryLabel.text = error!.localizedDescription
