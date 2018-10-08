@@ -26,5 +26,28 @@ class FrontViewController: UIViewController {
         
         view.addGestureRecognizer(self.revealViewController()!.panGestureRecognizer())
         view.addGestureRecognizer(self.revealViewController()!.tapGestureRecognizer())
+        
+        self.paceUserUniversityDataDidChanged()
+        UserModel.notificationCenter.addObserver(
+            forName: .PaceUserUniversityDataDidChanged,
+            object: nil,
+            queue: OperationQueue.main,
+            using: self.paceUserUniversityDataDidChanged
+        )
+    }
+    
+    func paceUserUniversityDataDidChanged(_ : Notification? = nil) {
+        if let paceUser = UserModel.sharedInstance(), let userSchoolProfile = paceUser.schoolProfile() {
+            userSchoolProfile.getUniversityModel() { university, _ in
+                
+                guard let university = university else {
+                    return
+                }
+                
+                print("University shorthand: \(university.shorthand ?? "No Shorthand")")
+                
+            }
+            
+        }
     }
 }

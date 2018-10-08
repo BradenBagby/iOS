@@ -15,6 +15,7 @@ import FBSDKLoginKit
 
 extension NSNotification.Name {
     public static let NewPaceUserData = Notification.Name("NewPaceUserData")
+    public static let PaceUserUniversityDataDidChanged = Notification.Name("PaceUserUniversityDataDidChanged")
 }
 
 
@@ -40,12 +41,6 @@ class PaceFbLoginDelegate: NSObject, FBSDKLoginButtonDelegate {
                 
                 return
             }
-            
-            UserModel.notificationCenter.post(
-                name: .NewPaceUserData,
-                object: nil
-            )
-            
         }
     }
     
@@ -181,16 +176,8 @@ protocol PaceUser {
     var uid: String { get }
     
     
-    /// Takes a facebook token and creates a public profile
-    func setPublicProfile(facebookTokenString: String, completion: PaceAuthResultCallback?)
-    
-    
     /// Returns the public profile information if the user is signed into a public profile, nil otherwise
     func publicProfile() -> PacePublicProfile?
-    
-    
-    /// Takes a facebook token and creates a public profile
-    func setSchoolProfile(email: String, password: String, completion: PaceAuthResultCallback?)
     
     
     /// Returns the public profile information if the user is signed into a public profile, nil otherwise
@@ -378,6 +365,11 @@ class UserModel: NSObject, PaceUser {
                     UserModel._sharedInstance = UserModel(forFirebaseUser: user)
                     UserModel._sharedInstance!.pushToDatabase()
                     userModelForCallback = UserModel._sharedInstance
+
+                    UserModel.notificationCenter.post(
+                        name: .NewPaceUserData,
+                        object: nil
+                    )
                 }
                 
                 completion(userModelForCallback, error)
@@ -415,7 +407,14 @@ class UserModel: NSObject, PaceUser {
     
     
     // Cached university model
-    private var _universityModel: UniversityModel? = nil
+    private var _universityModel: UniversityModel? = nil {
+        didSet {
+            UserModel.notificationCenter.post(
+                name: .PaceUserUniversityDataDidChanged,
+                object: nil
+            )
+        }
+    }
     
     var uid: String {
         get {
@@ -430,6 +429,17 @@ class UserModel: NSObject, PaceUser {
         self._user = user
         
         super.init()
+        
+        UserModel.notificationCenter.addObserver(
+            forName: .NewPaceUserData,
+            object: nil,
+            queue: nil
+        ) { _ in
+            
+            if let paceUser = UserModel.sharedInstance(), let userSchoolProfile = paceUser.schoolProfile() {
+                userSchoolProfile.getUniversityModel(completion: nil)
+            }
+        }
     }
     
     
@@ -437,6 +447,17 @@ class UserModel: NSObject, PaceUser {
     private func linkCredentials(_ credentials: AuthCredential, completion: PaceAuthResultCallback? = nil) {
         self._user.linkAndRetrieveData(with: credentials) { _, error in
             if let completion = completion {
+                
+                guard error == nil else {
+                    completion(nil, error)
+                    return
+                }
+                
+                UserModel.notificationCenter.post(
+                    name: .NewPaceUserData,
+                    object: nil
+                )
+                
                 self.pushToDatabase()
                 completion(self, error)
             }

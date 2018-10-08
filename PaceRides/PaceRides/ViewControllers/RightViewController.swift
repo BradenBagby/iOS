@@ -116,7 +116,7 @@ extension RightViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Connected Profiles"
+        return nil
     }
     
     
