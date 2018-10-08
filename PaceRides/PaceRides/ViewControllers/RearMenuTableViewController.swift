@@ -11,8 +11,8 @@ import UIKit
 
 class MenuOption {
     
-    let text: String
-    let image: UIImage?
+    var text: String
+    var image: UIImage?
     
     init(text: String) {
         self.text = text
@@ -30,7 +30,9 @@ class RearMenuTableViewController: UIViewController {
 
     let menuOptions: [MenuOption] = [
         MenuOption(text: "Public"),
-        MenuOption(text: "School")
+        MenuOption(text: "School"),
+        MenuOption(text: "Settings"),
+        MenuOption(text: "Report a Problem")
     ]
     
     @IBOutlet weak var headerLabel: UILabel!
@@ -40,6 +42,44 @@ class RearMenuTableViewController: UIViewController {
         super.viewDidLoad()
         
         self.headerLabel.text = APPLICATION_TITLE
+        
+        self.paceUserUniversityDataDidChanged()
+        UserModel.notificationCenter.addObserver(
+            forName: .PaceUserUniversityDataDidChanged,
+            object: nil,
+            queue: OperationQueue.main,
+            using: self.paceUserUniversityDataDidChanged
+        )
+    }
+    
+    
+    func paceUserUniversityDataDidChanged(_: Notification? = nil) {
+        if let pU = UserModel.sharedInstance(), let userSchoolProfile = pU.schoolProfile() {
+            userSchoolProfile.getUniversityModel() { university, error in
+                
+                guard error == nil else {
+                    return
+                }
+                
+                guard let university = university else {
+                    return
+                }
+                
+                if let primaryColor = university.primaryColor,
+                    let textColor = university.textColor {
+                    
+                    self.view.backgroundColor = primaryColor
+                    self.tableView.backgroundColor = primaryColor
+                    self.headerLabel.textColor = textColor
+                    
+                }
+                
+                if let universityShorthand = university.shorthand {
+                    self.menuOptions[1].text = universityShorthand
+                    self.tableView.reloadData()
+                }
+            }
+        }
     }
 }
 
@@ -50,7 +90,7 @@ extension RearMenuTableViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Ride Options"
+        return nil
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

@@ -15,6 +15,9 @@ enum UniversityDBKeys: String {
     case schoolEmails = "school-emails"
     case name = "name"
     case shorthand = "shorthand"
+    case primaryColor = "primaryColor"
+    case accentColor = "accentColor"
+    case textColor = "textColor"
 }
 
 
@@ -59,6 +62,61 @@ class UniversityModel {
              return self.documentData[UniversityDBKeys.shorthand.rawValue] as? String
         }
     }
+    
+    var primaryColor: UIColor? {
+        get {
+            if let primaryColorData = self.documentData[UniversityDBKeys.primaryColor.rawValue] as? [String:Any],
+                    let r = primaryColorData["red"] as? Double,
+                    let g = primaryColorData["green"] as? Double,
+                    let b = primaryColorData["blue"] as? Double {
+                
+                return UIColor(
+                    red: CGFloat(r / 255.0),
+                    green: CGFloat(g / 255.0),
+                    blue: CGFloat(b / 255.0),
+                    alpha: 1.0
+                )
+            }
+            return nil
+        }
+    }
+    
+    var accentColor: UIColor? {
+        get {
+            if let accentColorData = self.documentData[UniversityDBKeys.accentColor.rawValue] as? [String:Any],
+                let r = accentColorData["red"] as? Double,
+                let g = accentColorData["green"] as? Double,
+                let b = accentColorData["blue"] as? Double {
+                
+                return UIColor(
+                    red: CGFloat(r / 255.0),
+                    green: CGFloat(g / 255.0),
+                    blue: CGFloat(b / 255.0),
+                    alpha: 1.0
+                )
+            }
+            return nil
+        }
+    }
+    
+    var textColor: UIColor? {
+        get {
+            if let textColorData = self.documentData[UniversityDBKeys.textColor.rawValue] as? [String:Any],
+                let r = textColorData["red"] as? Double,
+                let g = textColorData["green"] as? Double,
+                let b = textColorData["blue"] as? Double {
+                
+                return UIColor(
+                    red: CGFloat(r / 255.0),
+                    green: CGFloat(g / 255.0),
+                    blue: CGFloat(b / 255.0),
+                    alpha: 1.0
+                )
+            }
+            return nil
+        }
+    }
+    
     
     private init?(fromDocument document: DocumentSnapshot) {
         if let data = document.data() {

@@ -15,6 +15,7 @@ class RightViewController: UIViewController {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var signOutButton: UIButton!
     
     var profileCellPlaceholders = [ProfileCellType]()
     
@@ -35,6 +36,14 @@ class RightViewController: UIViewController {
             object: nil,
             queue: OperationQueue.main,
             using: self.userProfileDataChanged
+        )
+        
+        self.paceUserUniversityDataDidChanged()
+        UserModel.notificationCenter.addObserver(
+            forName: .PaceUserUniversityDataDidChanged,
+            object: nil,
+            queue: OperationQueue.main,
+            using: self.paceUserUniversityDataDidChanged
         )
     }
     
@@ -83,6 +92,30 @@ class RightViewController: UIViewController {
         } else {
             self.profileImageView.image = UIImage(named: "profileIcon")
             self.nameLabel.text = "Sign in"
+        }
+    }
+    
+    func paceUserUniversityDataDidChanged(_: Notification? = nil) {
+        if let pU = UserModel.sharedInstance(), let userSchoolProfile = pU.schoolProfile() {
+            userSchoolProfile.getUniversityModel() { university, error in
+                
+                guard error == nil else {
+                    return
+                }
+                
+                guard let university = university else {
+                    return
+                }
+                
+                if let primaryColor = university.primaryColor,
+                        let textColor = university.textColor {
+                    self.view.backgroundColor = primaryColor
+                    
+                    self.tableView.backgroundColor = primaryColor
+                    self.nameLabel.textColor = textColor
+                    self.signOutButton.setTitleColor(textColor, for: .normal)
+                }
+            }
         }
     }
     

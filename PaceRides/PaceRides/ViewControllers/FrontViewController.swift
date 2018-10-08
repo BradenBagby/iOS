@@ -18,8 +18,10 @@ class FrontViewController: UIViewController {
         super.viewDidLoad()
         
         self.revealViewController()!.rightViewRevealWidth = 250
-        self.OpenMenuBarButtonItem.target = self.revealViewController()
-        self.OpenMenuBarButtonItem.action = #selector(SWRevealViewController.revealToggle(_:))
+        if let openMenuBarButtonItem = self.OpenMenuBarButtonItem {
+            openMenuBarButtonItem.target = self.revealViewController()
+            openMenuBarButtonItem.action = #selector(SWRevealViewController.revealToggle(_:))
+        }
         
         self.profileBarButtonItem.target = self.revealViewController()
         self.profileBarButtonItem.action = #selector(SWRevealViewController.rightRevealToggle(_:))
@@ -44,7 +46,16 @@ class FrontViewController: UIViewController {
                     return
                 }
                 
-                print("University shorthand: \(university.shorthand ?? "No Shorthand")")
+                if let navCon = self.navigationController,
+                        let primaryColor = university.primaryColor,
+                        let accentColor = university.accentColor,
+                        let textColor = university.textColor {
+                    navCon.navigationBar.barTintColor = primaryColor
+                    navCon.navigationBar.tintColor = accentColor
+                    navCon.navigationBar.titleTextAttributes
+                        = [NSAttributedString.Key.foregroundColor: textColor]
+
+                }
                 
             }
             

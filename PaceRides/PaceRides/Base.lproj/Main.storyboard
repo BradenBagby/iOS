@@ -34,7 +34,7 @@
         <scene sceneID="hSw-Ek-vky">
             <objects>
                 <navigationController id="pNV-5f-0ux" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="gFC-Qh-tx7">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" largeTitles="YES" id="gFC-Qh-tx7">
                         <rect key="frame" x="0.0" y="20" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -51,17 +51,17 @@
             <objects>
                 <viewController id="gAa-KZ-X53" customClass="PublicViewController" customModule="PaceRides" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="oro-Ql-5oH">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Signed In" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EaX-50-jKe">
-                                <rect key="frame" x="16" y="132" width="343" height="31.5"/>
+                                <rect key="frame" x="16" y="16" width="343" height="31.5"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I8L-HL-pDi">
-                                <rect key="frame" x="0.0" y="116" width="375" height="551"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
                                 <connections>
                                     <segue destination="UkQ-nM-rXr" kind="embed" id="CoR-32-Exj"/>
                                 </connections>
@@ -79,12 +79,12 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="9YZ-0l-d8z"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Public" id="00C-Xi-BBV">
-                        <barButtonItem key="leftBarButtonItem" title="Menu" image="hamburgerMenuIcon" id="wuN-NY-LUl"/>
-                        <barButtonItem key="rightBarButtonItem" title="Item" image="profileIcon" id="oTS-PY-sfv"/>
+                    <navigationItem key="navigationItem" title="Public" leftItemsSupplementBackButton="YES" id="00C-Xi-BBV">
+                        <barButtonItem key="leftBarButtonItem" image="hamburgerMenuIcon" id="wuN-NY-LUl"/>
+                        <barButtonItem key="rightBarButtonItem" image="profileIcon" id="oTS-PY-sfv"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="OpenMenuBarButtonItem" destination="wuN-NY-LUl" id="6dP-jP-tvG"/>
+                        <outlet property="OpenMenuBarButtonItem" destination="wuN-NY-LUl" id="1Hq-29-RjR"/>
                         <outlet property="primaryLabel" destination="EaX-50-jKe" id="o8q-Nn-uLw"/>
                         <outlet property="profileBarButtonItem" destination="oTS-PY-sfv" id="L46-fu-ZGh"/>
                         <outlet property="signInView" destination="I8L-HL-pDi" id="2Qq-ds-pl8"/>
@@ -99,23 +99,23 @@
             <objects>
                 <viewController id="9i9-KQ-PRT" customClass="SchoolViewController" customModule="PaceRides" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dqT-ci-K8K">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9xS-he-LPt">
-                                <rect key="frame" x="16" y="132" width="343" height="31.5"/>
+                                <rect key="frame" x="16" y="16" width="343" height="31.5"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Au1-tO-zWe">
-                                <rect key="frame" x="0.0" y="116" width="375" height="551"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
                                 <connections>
                                     <segue destination="axv-Ob-mS0" kind="embed" id="Uaq-hR-Gra"/>
                                 </connections>
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YNB-PD-r78">
-                                <rect key="frame" x="0.0" y="116" width="375" height="551"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
                                 <connections>
                                     <segue destination="nD0-nC-yEZ" kind="embed" id="Yxy-mU-msR"/>
                                 </connections>
@@ -138,8 +138,8 @@
                         <viewLayoutGuide key="safeArea" id="zKN-qo-IMm"/>
                     </view>
                     <navigationItem key="navigationItem" title="School" id="51g-CY-Vmh">
-                        <barButtonItem key="leftBarButtonItem" title="Menu" image="hamburgerMenuIcon" id="m3b-u8-UJJ"/>
-                        <barButtonItem key="rightBarButtonItem" title="Item" image="profileIcon" id="XuV-Dg-UrN"/>
+                        <barButtonItem key="leftBarButtonItem" image="hamburgerMenuIcon" id="m3b-u8-UJJ"/>
+                        <barButtonItem key="rightBarButtonItem" image="profileIcon" id="XuV-Dg-UrN"/>
                     </navigationItem>
                     <connections>
                         <outlet property="OpenMenuBarButtonItem" destination="m3b-u8-UJJ" id="C2B-6r-6lr"/>
@@ -158,7 +158,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="5mK-QR-ogR" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="eId-cJ-8aM">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" largeTitles="YES" id="eId-cJ-8aM">
                         <rect key="frame" x="0.0" y="20" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -395,6 +395,7 @@
                         <outlet property="loadingIndicator" destination="FQd-2F-rjo" id="YHM-BG-pCJ"/>
                         <outlet property="nameLabel" destination="4IO-3L-EoL" id="451-dH-Qvh"/>
                         <outlet property="profileImageView" destination="mZ5-Pe-3mJ" id="ocu-Bq-SpZ"/>
+                        <outlet property="signOutButton" destination="mJD-gb-aVb" id="hSk-Mi-Cqv"/>
                         <outlet property="tableView" destination="SnI-Cv-wmo" id="QiZ-gn-gqw"/>
                     </connections>
                 </viewController>
