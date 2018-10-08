@@ -37,10 +37,29 @@ class SchoolViewController: FrontViewController {
                 return
             }
             
-            self.primaryLabel.text
-                = paceUserSchoolProfile.email
-                ?? paceUserSchoolProfile.displayName
-                ?? paceUserSchoolProfile.uid
+            if let userEmail = paceUserSchoolProfile.email {
+                self.primaryLabel.text = userEmail
+                
+                UniversityModel.getUniversity(
+                    withEmailDomain: String(userEmail.split(separator: "@")[1])
+                ) { university, error in
+                    
+                    guard error == nil else {
+                        self.primaryLabel.text = error!.localizedDescription
+                        return
+                    }
+                    
+                    guard let university = university else {
+                        self.primaryLabel.text = "No university data"
+                        return
+                    }
+                    
+                    self.primaryLabel.text = university.shorthand ?? "nil"
+                    
+                }
+            } else {
+                self.primaryLabel.text = "Error"
+            }
         } else {
             self.signInView.isHidden = false
             self.verifyEmailView.isHidden = true

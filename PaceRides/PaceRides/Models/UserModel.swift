@@ -54,7 +54,7 @@ class PaceFbLoginDelegate: NSObject, FBSDKLoginButtonDelegate {
     }
 }
 
-public enum DBKeys: String {
+public enum UserDBKeys: String {
     
     case publicProfile = "publicProfile"
     case displayName = "displayName"
@@ -527,15 +527,15 @@ class UserModel: NSObject, PaceUser {
         
         var dbData: [String: Any] = [:]
         if let userPublicProfile = self.publicProfile() {
-            dbData[DBKeys.publicProfile.rawValue] = [
-                DBKeys.facebookId.rawValue: userPublicProfile.facebookId,
-                DBKeys.displayName.rawValue: userPublicProfile.displayName
+            dbData[UserDBKeys.publicProfile.rawValue] = [
+                UserDBKeys.facebookId.rawValue: userPublicProfile.facebookId,
+                UserDBKeys.displayName.rawValue: userPublicProfile.displayName
             ]
         }
         if let userSchoolProfile = self.schoolProfile() {
-            dbData[DBKeys.schoolProfile.rawValue] = [
-                DBKeys.email.rawValue: userSchoolProfile.email as Any,
-                DBKeys.isEmailVerified.rawValue: userSchoolProfile.isEmailVerified
+            dbData[UserDBKeys.schoolProfile.rawValue] = [
+                UserDBKeys.email.rawValue: userSchoolProfile.email as Any,
+                UserDBKeys.isEmailVerified.rawValue: userSchoolProfile.isEmailVerified
             ]
         }
         

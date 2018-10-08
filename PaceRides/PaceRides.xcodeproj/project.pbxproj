@@ -12,6 +12,7 @@
 		A8737F286A9BBFB497BD5620 /* Pods_PaceRides.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26BDF7F891739D7D0B305928 /* Pods_PaceRides.framework */; };
 		E0246DF02167021C00DB3CC8 /* PacePublicProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0246DEF2167021C00DB3CC8 /* PacePublicProfileTableViewCell.swift */; };
 		E0246DF22167024300DB3CC8 /* PaceSchoolProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0246DF12167024300DB3CC8 /* PaceSchoolProfileTableViewCell.swift */; };
+		E07FBFEA216BD188009BA7FD /* UniversityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07FBFE9216BD188009BA7FD /* UniversityModel.swift */; };
 		E0860A442161A9E5003375A7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0860A432161A9E5003375A7 /* AppDelegate.swift */; };
 		E0860A4B2161A9E5003375A7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E0860A492161A9E5003375A7 /* Main.storyboard */; };
 		E0860A4D2161A9E6003375A7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E0860A4C2161A9E6003375A7 /* Assets.xcassets */; };
@@ -61,6 +62,7 @@
 		D11902CAC4075A23A8DA9911 /* Pods-PaceRidesUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PaceRidesUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PaceRidesUITests/Pods-PaceRidesUITests.release.xcconfig"; sourceTree = "<group>"; };
 		E0246DEF2167021C00DB3CC8 /* PacePublicProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacePublicProfileTableViewCell.swift; sourceTree = "<group>"; };
 		E0246DF12167024300DB3CC8 /* PaceSchoolProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaceSchoolProfileTableViewCell.swift; sourceTree = "<group>"; };
+		E07FBFE9216BD188009BA7FD /* UniversityModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniversityModel.swift; sourceTree = "<group>"; };
 		E0860A402161A9E5003375A7 /* PaceRides.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PaceRides.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0860A432161A9E5003375A7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E0860A4A2161A9E5003375A7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -214,6 +216,7 @@
 			isa = PBXGroup;
 			children = (
 				E0860A772161B1B8003375A7 /* UserModel.swift */,
+				E07FBFE9216BD188009BA7FD /* UniversityModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -583,6 +586,7 @@
 				E0860A832161C1C3003375A7 /* RearMenuTableViewController.swift in Sources */,
 				E0860A8921626C0F003375A7 /* PublicSignInViewController.swift in Sources */,
 				E0860A87216267C7003375A7 /* FrontViewController.swift in Sources */,
+				E07FBFEA216BD188009BA7FD /* UniversityModel.swift in Sources */,
 				E0860A852161CDC9003375A7 /* PaceRidesConstants.swift in Sources */,
 				E0860A782161B1B8003375A7 /* UserModel.swift in Sources */,
 				E0860A742161B104003375A7 /* PublicViewController.swift in Sources */,
