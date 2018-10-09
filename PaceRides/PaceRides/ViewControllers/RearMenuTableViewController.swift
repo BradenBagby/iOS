@@ -44,7 +44,7 @@ class RearMenuTableViewController: UIViewController {
         
         self.newPaceUserData()
         UserModel.notificationCenter.addObserver(
-            forName: .NewPaceUserData,
+            forName: .NewPaceUserAuthData,
             object: nil,
             queue: OperationQueue.main,
             using: self.newPaceUserData

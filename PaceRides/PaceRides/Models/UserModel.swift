@@ -14,7 +14,7 @@ import FBSDKLoginKit
 // MARK: External extensions
 
 extension NSNotification.Name {
-    public static let NewPaceUserData = Notification.Name("NewPaceUserData")
+    public static let NewPaceUserAuthData = Notification.Name("NewPaceUserData")
     public static let PaceUserUniversityDataDidChanged = Notification.Name("PaceUserUniversityDataDidChanged")
 }
 
@@ -367,7 +367,7 @@ class UserModel: NSObject, PaceUser {
                     userModelForCallback = UserModel._sharedInstance
 
                     UserModel.notificationCenter.post(
-                        name: .NewPaceUserData,
+                        name: .NewPaceUserAuthData,
                         object: nil
                     )
                 }
@@ -392,7 +392,7 @@ class UserModel: NSObject, PaceUser {
         }
         
         UserModel.notificationCenter.post(
-            name: .NewPaceUserData,
+            name: .NewPaceUserAuthData,
             object: nil
         )
     }
@@ -436,7 +436,7 @@ class UserModel: NSObject, PaceUser {
         super.init()
         
         UserModel.notificationCenter.addObserver(
-            forName: .NewPaceUserData,
+            forName: .NewPaceUserAuthData,
             object: nil,
             queue: nil
         ) { _ in
@@ -459,7 +459,7 @@ class UserModel: NSObject, PaceUser {
                 }
                 
                 UserModel.notificationCenter.post(
-                    name: .NewPaceUserData,
+                    name: .NewPaceUserAuthData,
                     object: nil
                 )
                 
@@ -654,7 +654,7 @@ extension UserModel: PacePublicProfile {
                         DispatchQueue.main.async() {
                             completion(self._profilePicture, error)
                             UserModel.notificationCenter.post(
-                                name: .NewPaceUserData,
+                                name: .NewPaceUserAuthData,
                                 object: nil
                             )
                         }

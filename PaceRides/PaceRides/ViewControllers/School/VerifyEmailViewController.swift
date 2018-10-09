@@ -24,7 +24,7 @@ class VerifyEmailViewController: UIViewController {
                 }
                 
                 NotificationCenter.default.post(
-                    name: .NewPaceUserData,
+                    name: .NewPaceUserAuthData,
                     object: self
                 )
                 

@@ -32,7 +32,7 @@ class RightViewController: UIViewController {
         // Update view when new data availible
         userProfileDataChanged()
         UserModel.notificationCenter.addObserver(
-            forName: .NewPaceUserData,
+            forName: .NewPaceUserAuthData,
             object: nil,
             queue: OperationQueue.main,
             using: self.userProfileDataChanged

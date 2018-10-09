@@ -72,7 +72,7 @@ class SchoolSignInViewController: UIViewController {
                     
                     // Indicate that pace user auth data has changed
                     UserModel.notificationCenter.post(
-                        name: .NewPaceUserData,
+                        name: .NewPaceUserAuthData,
                         object: nil
                     )
                     

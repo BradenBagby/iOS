@@ -17,7 +17,7 @@ class PublicViewController: FrontViewController {
         
         self.userPublicProfileDidChange()
         UserModel.notificationCenter.addObserver(
-            forName: .NewPaceUserData,
+            forName: .NewPaceUserAuthData,
             object: nil,
             queue: OperationQueue.main,
             using: self.userPublicProfileDidChange
