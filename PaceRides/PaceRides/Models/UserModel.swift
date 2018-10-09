@@ -14,8 +14,10 @@ import FBSDKLoginKit
 // MARK: External extensions
 
 extension NSNotification.Name {
-    public static let NewPaceUserAuthData = Notification.Name("NewPaceUserData")
+    public static let NewPaceUserAuthData = Notification.Name("NewPaceUserAuthData")
+    public static let NewPaceUserData = Notification.Name("NewPaceUserData")
     public static let PaceUserUniversityDataDidChanged = Notification.Name("PaceUserUniversityDataDidChanged")
+    public static let UserDatabaseSynconizationError = Notification.Name("UserDatabaseSynconizationError")
 }
 
 
@@ -54,6 +56,9 @@ public enum UserDBKeys: String {
     case publicProfile = "publicProfile"
     case displayName = "displayName"
     case facebookId = "facebookId"
+    case organizations = "organizations"
+    case organizationTitle = "title"
+    case organizationReference = "reference"
     
     case schoolProfile = "schoolProfile"
     case email = "email"
@@ -216,6 +221,10 @@ protocol PacePublicProfile {
     
     /// Get the picture from this objects photoUrl
     func getProfilePicture(completion: ((UIImage?, Error?) -> Void)?)
+    
+    
+    /// Gets all organizations the user is a part of, if any
+    func organizations() -> [ShallowOrganizationModel]
 }
 
 
@@ -328,7 +337,6 @@ class UserModel: NSObject, PaceUser {
                             
                             if let resultingFirebaseUser = user {
                                 UserModel._sharedInstance = UserModel(forFirebaseUser: resultingFirebaseUser)
-                                UserModel._sharedInstance!.pushToDatabase()
                                 newPaceUser = UserModel.sharedInstance()
                             }
                             
@@ -363,7 +371,6 @@ class UserModel: NSObject, PaceUser {
                 if let user = user {
                     // Set new user as shared instance
                     UserModel._sharedInstance = UserModel(forFirebaseUser: user)
-                    UserModel._sharedInstance!.pushToDatabase()
                     userModelForCallback = UserModel._sharedInstance
 
                     UserModel.notificationCenter.post(
@@ -427,6 +434,8 @@ class UserModel: NSObject, PaceUser {
         }
     }
     
+    private var userData: [String: Any]! = nil
+    private var userDataListener: ListenerRegistration? = nil
     
     /// Only construct UserModel object from within UserModel class
     private init(forFirebaseUser user: User) {
@@ -438,13 +447,52 @@ class UserModel: NSObject, PaceUser {
         UserModel.notificationCenter.addObserver(
             forName: .NewPaceUserAuthData,
             object: nil,
-            queue: nil
-        ) { _ in
-            
-            if let paceUser = UserModel.sharedInstance(), let userSchoolProfile = paceUser.schoolProfile() {
-                userSchoolProfile.getUniversityModel(completion: nil)
-            }
+            queue: nil,
+            using: self.userAuthDataChanged
+        )
+    }
+    
+    
+    // Called when new auth data is availible
+    private func userAuthDataChanged(_: Notification? = nil) {
+        
+        if let paceUser = UserModel.sharedInstance(), let userSchoolProfile = paceUser.schoolProfile() {
+            userSchoolProfile.getUniversityModel(completion: nil)
         }
+     
+        // Push base auth data to database
+        self.pushAuthDataToDatabase()
+        
+        if let listener = self.userDataListener {
+            listener.remove()
+        }
+        
+        // Listen for updates
+        self.userDataListener = UserModel.db.collection("users").document(self.uid).addSnapshotListener(
+            self.onUserDocumentUpdate
+        )
+    }
+    
+    private func onUserDocumentUpdate(userDocSnap: DocumentSnapshot?, error: Error?) {
+     
+        guard error == nil else {
+            print(error!.localizedDescription)
+            return
+        }
+        
+        guard let userDocSnap = userDocSnap, let userData = userDocSnap.data() else {
+            print("Error, no user document")
+            return
+        }
+        
+        self.userData = userData
+        
+        let orgs = self.organizations()
+        
+        UserModel.notificationCenter.post(
+            name: .NewPaceUserData,
+            object: nil
+        )
     }
     
     
@@ -463,7 +511,6 @@ class UserModel: NSObject, PaceUser {
                     object: nil
                 )
                 
-                self.pushToDatabase()
                 completion(self, error)
             }
         }
@@ -531,7 +578,11 @@ class UserModel: NSObject, PaceUser {
                 return
             }
             
-            self.pushToDatabase()
+            UserModel.notificationCenter.post(
+                name: .NewPaceUserAuthData,
+                object: nil
+            )
+            
             if let completion = completion {
                 completion(error)
             }
@@ -555,7 +606,7 @@ class UserModel: NSObject, PaceUser {
     // MARK: - Database Management
     
     
-    private func pushToDatabase() {
+    private func pushAuthDataToDatabase() {
         
         var dbData: [String: Any] = [:]
         if let userPublicProfile = self.publicProfile() {
@@ -571,13 +622,13 @@ class UserModel: NSObject, PaceUser {
             ]
         }
         
-        UserModel.db.collection("users").document(self._user.uid).setData(dbData) { error in
-            
+        UserModel.db.collection("users").document(self._user.uid).setData(dbData, options: SetOptions.merge()) { error in
+
             guard error == nil else {
                 print(error!.localizedDescription)
                 return
             }
-            
+
         }
     }
     
@@ -679,6 +730,22 @@ extension UserModel: PacePublicProfile {
                 }
             }
         }
+    }
+    
+    
+    func organizations() -> [ShallowOrganizationModel] {
+        var result = [ShallowOrganizationModel]()
+        if let publicProfileData = self.userData[UserDBKeys.publicProfile.rawValue] as? [String: Any] {
+            if let organizations = publicProfileData[UserDBKeys.organizations.rawValue] as? [[String: Any]] {
+                for org in organizations {
+                    if let orgTitle = org[UserDBKeys.organizationTitle.rawValue] as? String,
+                            let orgRef = org[UserDBKeys.organizationReference.rawValue] as? DocumentReference {
+                        result.append(ShallowOrganizationModel(withTitle: orgTitle, andReference: orgRef))
+                    }
+                }
+            }
+        }
+        return result
     }
 }
 
