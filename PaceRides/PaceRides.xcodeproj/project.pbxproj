@@ -30,7 +30,6 @@
 		E0860A8C216281A6003375A7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E0860A8B216281A6003375A7 /* GoogleService-Info.plist */; };
 		E0C1A97E21629CFD006C4DF6 /* SchoolSignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0C1A97D21629CFD006C4DF6 /* SchoolSignInViewController.swift */; };
 		E0C1A9802162AC97006C4DF6 /* SchoolViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0C1A97F2162AC97006C4DF6 /* SchoolViewController.swift */; };
-		E0C1A9822162B7AD006C4DF6 /* RightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0C1A9812162B7AD006C4DF6 /* RightViewController.swift */; };
 		E0C1A9842162C65B006C4DF6 /* VerifyEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0C1A9832162C65B006C4DF6 /* VerifyEmailViewController.swift */; };
 		E0E44B45216C25810069DAEE /* MenuItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0E44B44216C25810069DAEE /* MenuItemTableViewCell.swift */; };
 		E0E44B48216C25EA0069DAEE /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0E44B47216C25EA0069DAEE /* MenuItem.swift */; };
@@ -91,7 +90,6 @@
 		E0860A8B216281A6003375A7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E0C1A97D21629CFD006C4DF6 /* SchoolSignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolSignInViewController.swift; sourceTree = "<group>"; };
 		E0C1A97F2162AC97006C4DF6 /* SchoolViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolViewController.swift; sourceTree = "<group>"; };
-		E0C1A9812162B7AD006C4DF6 /* RightViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightViewController.swift; sourceTree = "<group>"; };
 		E0C1A9832162C65B006C4DF6 /* VerifyEmailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyEmailViewController.swift; sourceTree = "<group>"; };
 		E0E44B44216C25810069DAEE /* MenuItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemTableViewCell.swift; sourceTree = "<group>"; };
 		E0E44B47216C25EA0069DAEE /* MenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
@@ -210,7 +208,6 @@
 			children = (
 				E0860A822161C1C3003375A7 /* RearMenuTableViewController.swift */,
 				E0860A86216267C7003375A7 /* FrontViewController.swift */,
-				E0C1A9812162B7AD006C4DF6 /* RightViewController.swift */,
 				E0860A8A21626D63003375A7 /* Public */,
 				E0C1A97C21629CED006C4DF6 /* School */,
 				E0AB6E882166FCC500D9022D /* TableViewCells */,
@@ -601,7 +598,6 @@
 				E0860A442161A9E5003375A7 /* AppDelegate.swift in Sources */,
 				E0C1A97E21629CFD006C4DF6 /* SchoolSignInViewController.swift in Sources */,
 				E0C1A9802162AC97006C4DF6 /* SchoolViewController.swift in Sources */,
-				E0C1A9822162B7AD006C4DF6 /* RightViewController.swift in Sources */,
 				E0860A832161C1C3003375A7 /* RearMenuTableViewController.swift in Sources */,
 				E0860A8921626C0F003375A7 /* PublicSignInViewController.swift in Sources */,
 				E0860A87216267C7003375A7 /* FrontViewController.swift in Sources */,
