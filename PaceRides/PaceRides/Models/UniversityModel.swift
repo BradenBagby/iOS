@@ -18,6 +18,7 @@ enum UniversityDBKeys: String {
     case primaryColor = "primaryColor"
     case accentColor = "accentColor"
     case textColor = "textColor"
+    case unselectedColor = "unselectedColor"
 }
 
 
@@ -105,6 +106,24 @@ class UniversityModel {
                 let r = textColorData["red"] as? Double,
                 let g = textColorData["green"] as? Double,
                 let b = textColorData["blue"] as? Double {
+                
+                return UIColor(
+                    red: CGFloat(r / 255.0),
+                    green: CGFloat(g / 255.0),
+                    blue: CGFloat(b / 255.0),
+                    alpha: 1.0
+                )
+            }
+            return nil
+        }
+    }
+    
+    var unselectedColor: UIColor? {
+        get {
+            if let unselectedColor = self.documentData[UniversityDBKeys.unselectedColor.rawValue] as? [String:Any],
+                let r = unselectedColor["red"] as? Double,
+                let g = unselectedColor["green"] as? Double,
+                let b = unselectedColor["blue"] as? Double {
                 
                 return UIColor(
                     red: CGFloat(r / 255.0),

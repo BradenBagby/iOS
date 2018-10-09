@@ -10,7 +10,7 @@ import UIKit
 
 class PublicViewController: FrontViewController {
     
-    @IBOutlet weak var primaryLabel: UILabel!
+    @IBOutlet weak var publicTabBarControllerView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +22,7 @@ class PublicViewController: FrontViewController {
             queue: OperationQueue.main,
             using: self.userPublicProfileDidChange
         )
+        
     }
     
     func userPublicProfileDidChange(_: Notification? = nil) {
@@ -32,13 +33,18 @@ class PublicViewController: FrontViewController {
             paceUserPublicProfile.getProfilePicture(completion: nil)
             
             self.signInView.isHidden = true
-            self.primaryLabel.text
-                = paceUserPublicProfile.displayName
-                ?? paceUser.uid
+            self.publicTabBarControllerView.isHidden = false
         } else {
             self.signInView.isHidden = false
+            self.publicTabBarControllerView.isHidden = true
         }
         
     }
 
+}
+
+extension PublicViewController: UITabBarDelegate {
+    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        print("Selected item \(item.title ?? "No title")")
+    }
 }
