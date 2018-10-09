@@ -384,6 +384,11 @@ class UserModel: NSObject, PaceUser {
             _sharedInstance = UserModel(forFirebaseUser: user)
         } else {
             _sharedInstance = nil
+            
+            UserModel.notificationCenter.post(
+                name: .PaceUserUniversityDataDidChanged,
+                object: nil
+            )
         }
         
         UserModel.notificationCenter.post(

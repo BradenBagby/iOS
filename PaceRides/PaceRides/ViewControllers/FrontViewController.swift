@@ -11,20 +11,17 @@ import UIKit
 class FrontViewController: UIViewController {
 
     @IBOutlet weak var OpenMenuBarButtonItem: UIBarButtonItem!
-    @IBOutlet var profileBarButtonItem: UIBarButtonItem!
     @IBOutlet weak var signInView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.revealViewController()!.rearViewRevealWidth = 300
         self.revealViewController()!.rightViewRevealWidth = 250
         if let openMenuBarButtonItem = self.OpenMenuBarButtonItem {
             openMenuBarButtonItem.target = self.revealViewController()
             openMenuBarButtonItem.action = #selector(SWRevealViewController.revealToggle(_:))
         }
-        
-        self.profileBarButtonItem.target = self.revealViewController()
-        self.profileBarButtonItem.action = #selector(SWRevealViewController.rightRevealToggle(_:))
         
         view.addGestureRecognizer(self.revealViewController()!.panGestureRecognizer())
         view.addGestureRecognizer(self.revealViewController()!.tapGestureRecognizer())
@@ -39,6 +36,18 @@ class FrontViewController: UIViewController {
     }
     
     func paceUserUniversityDataDidChanged(_ : Notification? = nil) {
+        
+        if let navCon = self.navigationController {
+            navCon.navigationBar.barTintColor = nil
+            navCon.navigationBar.tintColor = self.view.tintColor
+            navCon.navigationBar.titleTextAttributes
+                = [NSAttributedString.Key.foregroundColor: UIColor.darkText]
+            if #available(iOS 11.0, *) {
+                navCon.navigationBar.largeTitleTextAttributes
+                    = [NSAttributedString.Key.foregroundColor: UIColor.darkText]
+            }
+        }
+        
         if let paceUser = UserModel.sharedInstance(), let userSchoolProfile = paceUser.schoolProfile() {
             userSchoolProfile.getUniversityModel() { university, _ in
                 
@@ -57,7 +66,7 @@ class FrontViewController: UIViewController {
                     if #available(iOS 11.0, *) {
                         navCon.navigationBar.largeTitleTextAttributes
                             = [NSAttributedString.Key.foregroundColor: textColor]
-                    } 
+                    }
 
                 }
                 
