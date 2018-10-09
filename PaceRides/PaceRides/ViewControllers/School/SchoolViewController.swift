@@ -11,6 +11,7 @@ import UIKit
 class SchoolViewController: FrontViewController {
     
     @IBOutlet weak var primaryLabel: UILabel!
+    @IBOutlet weak var secondaryLabel: UILabel!
     @IBOutlet weak var verifyEmailView: UIView!
     
     override func viewDidLoad() {
@@ -26,6 +27,8 @@ class SchoolViewController: FrontViewController {
     }
     
     func userSchoolProfileDidChange(_: Notification? = nil) {
+        
+        self.title = "School"
         
         if let paceUser = UserModel.sharedInstance(), let paceUserSchoolProfile = paceUser.schoolProfile() {
             self.signInView.isHidden = true
@@ -52,7 +55,15 @@ class SchoolViewController: FrontViewController {
                         return
                     }
                     
-                    self.primaryLabel.text = university.shorthand ?? "nil"
+                    if let universityShorthand = university.shorthand {
+                        self.title = universityShorthand
+                        
+                        self.primaryLabel.text = "Not Quite Yet"
+                        self.secondaryLabel.text = """
+                            For the time being, \(universityShorthand) isn't using Pace Rides.\n
+                            In the mean time, click the Public tab in the main menu to view community events.
+                        """
+                    }
                     
                 }
             } else {

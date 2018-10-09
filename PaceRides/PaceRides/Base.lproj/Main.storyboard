@@ -105,18 +105,24 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Au1-tO-zWe">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
+                            <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Au1-tO-zWe">
+                                <rect key="frame" x="-239" y="435" width="375" height="551"/>
                                 <connections>
                                     <segue destination="axv-Ob-mS0" kind="embed" id="Uaq-hR-Gra"/>
                                 </connections>
                             </containerView>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YNB-PD-r78">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
+                            <containerView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YNB-PD-r78">
+                                <rect key="frame" x="283" y="463" width="375" height="551"/>
                                 <connections>
                                     <segue destination="nD0-nC-yEZ" kind="embed" id="Yxy-mU-msR"/>
                                 </connections>
                             </containerView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jse-kA-cVl">
+                                <rect key="frame" x="16" y="275.5" width="343" height="0.0"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -128,7 +134,10 @@
                             <constraint firstItem="Au1-tO-zWe" firstAttribute="leading" secondItem="zKN-qo-IMm" secondAttribute="leading" id="Il1-za-PNd"/>
                             <constraint firstItem="zKN-qo-IMm" firstAttribute="trailing" secondItem="YNB-PD-r78" secondAttribute="trailing" id="Je5-6z-zqw"/>
                             <constraint firstItem="zKN-qo-IMm" firstAttribute="trailing" secondItem="Au1-tO-zWe" secondAttribute="trailing" id="LsN-ms-gtI"/>
+                            <constraint firstItem="Jse-kA-cVl" firstAttribute="leading" secondItem="zKN-qo-IMm" secondAttribute="leading" constant="16" id="QuO-zD-1c2"/>
+                            <constraint firstItem="Jse-kA-cVl" firstAttribute="centerY" secondItem="zKN-qo-IMm" secondAttribute="centerY" id="i9m-L8-aB6"/>
                             <constraint firstItem="zKN-qo-IMm" firstAttribute="bottom" secondItem="YNB-PD-r78" secondAttribute="bottom" id="ip0-wN-ugH"/>
+                            <constraint firstItem="zKN-qo-IMm" firstAttribute="trailing" secondItem="Jse-kA-cVl" secondAttribute="trailing" constant="16" id="kEF-Hg-Ah2"/>
                             <constraint firstItem="YNB-PD-r78" firstAttribute="top" secondItem="zKN-qo-IMm" secondAttribute="top" id="x6o-7k-c5Q"/>
                             <constraint firstItem="YNB-PD-r78" firstAttribute="leading" secondItem="zKN-qo-IMm" secondAttribute="leading" id="y0m-2b-hhh"/>
                         </constraints>
@@ -140,6 +149,7 @@
                     <connections>
                         <outlet property="OpenMenuBarButtonItem" destination="m3b-u8-UJJ" id="C2B-6r-6lr"/>
                         <outlet property="primaryLabel" destination="9xS-he-LPt" id="WS1-2P-Zlw"/>
+                        <outlet property="secondaryLabel" destination="Jse-kA-cVl" id="6hf-NV-nJj"/>
                         <outlet property="signInView" destination="YNB-PD-r78" id="cAC-F1-0Cm"/>
                         <outlet property="verifyEmailView" destination="Au1-tO-zWe" id="jlk-xg-qsp"/>
                     </connections>
