@@ -59,6 +59,18 @@ class OrganizationListViewController: PaceTabViewController {
 
 extension OrganizationListViewController: UITableViewDataSource {
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch section {
+        case 0:
+            return "Your Organizations"
+        default:
+            return nil
+        }
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let paceUser = UserModel.sharedInstance(), let userPublicProfile = paceUser.publicProfile() {

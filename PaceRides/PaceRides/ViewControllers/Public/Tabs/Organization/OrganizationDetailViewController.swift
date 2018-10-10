@@ -19,8 +19,21 @@ class OrganizationDetailViewController: UIViewController {
     
     func newOrganizationData(_: Notification? = nil) {
         
+        guard let paceUser = UserModel.sharedInstance() else {
+            print("No user")
+            return
+        }
+        
         self.title = self.organizationModel.title
-        print("Subscription: \(self.organizationModel.subscription ?? -1)")
+        
+        if let orgAdmin = self.organizationModel.administrators {
+            for admin in orgAdmin {
+                if paceUser.uid == admin.uid {
+                    print("User is admin")
+                    break
+                }
+            }
+        }
         
     }
 }
