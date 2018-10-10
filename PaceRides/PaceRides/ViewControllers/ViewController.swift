@@ -1,23 +1,19 @@
 //
-//  FrontViewController.swift
+//  ViewController.swift
 //  PaceRides
 //
-//  Created by Grant Broadwater on 10/1/18.
+//  Created by Grant Broadwater on 10/9/18.
 //  Copyright © 2018 PaceRides. All rights reserved.
 //
 
 import UIKit
 
-class FrontViewController: UIViewController {
-
-    @IBOutlet weak var OpenMenuBarButtonItem: UIBarButtonItem!
-    @IBOutlet weak var signInView: UIView!
+extension UIViewController {
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
+    func setAsRearNavigationItem(_ openMenuBarButtonItem: UIBarButtonItem?, forView view: UIView) {
+     
         self.revealViewController()!.rearViewRevealWidth = 300
-        if let openMenuBarButtonItem = self.OpenMenuBarButtonItem {
+        if let openMenuBarButtonItem = openMenuBarButtonItem {
             openMenuBarButtonItem.target = self.revealViewController()
             openMenuBarButtonItem.action = #selector(SWRevealViewController.revealToggle(_:))
         }
@@ -25,16 +21,10 @@ class FrontViewController: UIViewController {
         view.addGestureRecognizer(self.revealViewController()!.panGestureRecognizer())
         view.addGestureRecognizer(self.revealViewController()!.tapGestureRecognizer())
         
-        self.paceUserUniversityDataDidChanged()
-        UserModel.notificationCenter.addObserver(
-            forName: .PaceUserUniversityDataDidChanged,
-            object: nil,
-            queue: OperationQueue.main,
-            using: self.paceUserUniversityDataDidChanged
-        )
     }
     
-    func paceUserUniversityDataDidChanged(_ : Notification? = nil) {
+    
+    func setNavigationBarColors(_: Notification? = nil) {
         
         if let navCon = self.navigationController {
             navCon.navigationBar.barTintColor = nil
@@ -55,9 +45,9 @@ class FrontViewController: UIViewController {
                 }
                 
                 if let navCon = self.navigationController,
-                        let primaryColor = university.primaryColor,
-                        let accentColor = university.accentColor,
-                        let textColor = university.textColor {
+                    let primaryColor = university.primaryColor,
+                    let accentColor = university.accentColor,
+                    let textColor = university.textColor {
                     navCon.navigationBar.barTintColor = primaryColor
                     navCon.navigationBar.tintColor = accentColor
                     navCon.navigationBar.titleTextAttributes
@@ -66,9 +56,7 @@ class FrontViewController: UIViewController {
                         navCon.navigationBar.largeTitleTextAttributes
                             = [NSAttributedString.Key.foregroundColor: textColor]
                     }
-
                 }
-                
             }
         }
     }

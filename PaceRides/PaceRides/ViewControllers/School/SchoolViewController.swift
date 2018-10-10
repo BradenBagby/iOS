@@ -8,15 +8,27 @@
 
 import UIKit
 
-class SchoolViewController: FrontViewController {
+class SchoolViewController: UIViewController {
     
+    @IBOutlet weak var openMenuBarButtonItem: UIBarButtonItem!
     @IBOutlet weak var primaryLabel: UILabel!
     @IBOutlet weak var secondaryLabel: UILabel!
+    @IBOutlet weak var signInView: UIView!
     @IBOutlet weak var verifyEmailView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.setAsRearNavigationItem(self.openMenuBarButtonItem, forView: self.view)
+        
+        self.setNavigationBarColors()
+        UserModel.notificationCenter.addObserver(
+            forName: .PaceUserUniversityDataDidChanged,
+            object: nil,
+            queue: OperationQueue.main,
+            using: self.setNavigationBarColors
+        )
+        
         self.userSchoolProfileDidChange()
         UserModel.notificationCenter.addObserver(
             forName: .NewPaceUserAuthData,
@@ -73,6 +85,5 @@ class SchoolViewController: FrontViewController {
             self.signInView.isHidden = false
             self.verifyEmailView.isHidden = true
         }
-        
     }
 }

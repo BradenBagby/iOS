@@ -22,28 +22,12 @@
                     </view>
                     <connections>
                         <segue destination="2in-V8-2dK" kind="custom" identifier="sw_rear" customClass="SWRevealViewControllerSegueSetController" id="cGK-CR-4yZ"/>
-                        <segue destination="pNV-5f-0ux" kind="custom" identifier="sw_front" customClass="SWRevealViewControllerSegueSetController" id="Orh-8R-uEl"/>
+                        <segue destination="cDd-Je-cBl" kind="custom" identifier="sw_front" customClass="SWRevealViewControllerSegueSetController" id="J8c-CJ-kSm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VlG-4a-IAB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="105" y="-56"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="hSw-Ek-vky">
-            <objects>
-                <navigationController id="pNV-5f-0ux" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" largeTitles="YES" id="gFC-Qh-tx7">
-                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="f0o-9w-igM" kind="relationship" relationship="rootViewController" id="rpw-ko-2zs"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="LuH-PW-mdS" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1049" y="-57"/>
         </scene>
         <!--School-->
         <scene sceneID="mod-aR-wCZ">
@@ -102,9 +86,10 @@
                     </navigationItem>
                     <connections>
                         <outlet property="OpenMenuBarButtonItem" destination="m3b-u8-UJJ" id="C2B-6r-6lr"/>
+                        <outlet property="openMenuBarButtonItem" destination="m3b-u8-UJJ" id="osO-8D-Eo6"/>
                         <outlet property="primaryLabel" destination="9xS-he-LPt" id="WS1-2P-Zlw"/>
                         <outlet property="secondaryLabel" destination="Jse-kA-cVl" id="6hf-NV-nJj"/>
-                        <outlet property="signInView" destination="YNB-PD-r78" id="cAC-F1-0Cm"/>
+                        <outlet property="signInView" destination="YNB-PD-r78" id="FVn-YY-BSJ"/>
                         <outlet property="verifyEmailView" destination="Au1-tO-zWe" id="jlk-xg-qsp"/>
                     </connections>
                 </viewController>
@@ -115,66 +100,101 @@
         <!--Events-->
         <scene sceneID="0wF-Ex-ogy">
             <objects>
-                <viewController id="rfo-t0-ySn" sceneMemberID="viewController">
+                <viewController id="rfo-t0-ySn" customClass="EventsViewController" customModule="PaceRides" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2ax-QN-rzI">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="FAv-Cc-i42"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Events" image="eventIcon" id="slt-h4-um8"/>
+                    <navigationItem key="navigationItem" title="Events" id="qeX-4t-ONd">
+                        <barButtonItem key="leftBarButtonItem" image="hamburgerMenuIcon" id="wj1-DH-VFs"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="openMenuBarButtonItem" destination="wj1-DH-VFs" id="QPY-Rt-gjo"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bvv-Ta-9ki" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3505" y="-57"/>
+            <point key="canvasLocation" x="4444" y="-57.121439280359823"/>
         </scene>
         <!--Drive-->
         <scene sceneID="i1U-8X-hRB">
             <objects>
-                <viewController id="xTG-ak-9PI" sceneMemberID="viewController">
+                <viewController id="xTG-ak-9PI" customClass="DriveViewController" customModule="PaceRides" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="yFP-se-cnT">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="xnm-hY-sq7"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Drive" image="steeringWheelIcon" id="nOh-RG-OnE"/>
+                    <navigationItem key="navigationItem" title="Drive" id="1B7-a7-NCh">
+                        <barButtonItem key="leftBarButtonItem" image="hamburgerMenuIcon" id="1sO-px-IN5"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="openMenuBarButtonItem" destination="1sO-px-IN5" id="cv2-o7-u7g"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rP5-kn-rDh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3505" y="1496"/>
+            <point key="canvasLocation" x="4444" y="1495.5022488755624"/>
         </scene>
         <!--Ride-->
         <scene sceneID="yMv-wO-GTj">
             <objects>
-                <viewController id="ijE-SN-3HT" sceneMemberID="viewController">
+                <viewController id="ijE-SN-3HT" customClass="RideViewController" customModule="PaceRides" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="p7O-S1-ij7">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="UhR-5L-Z0d"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Ride" image="carIcon" id="JA0-di-DW1"/>
+                    <navigationItem key="navigationItem" title="Ride" id="n9Z-Jt-bmr">
+                        <barButtonItem key="leftBarButtonItem" image="hamburgerMenuIcon" id="2PF-IR-ffx"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="openMenuBarButtonItem" destination="2PF-IR-ffx" id="9s6-4v-g7s"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jct-MA-jWO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3505" y="743"/>
+            <point key="canvasLocation" x="4444" y="742.5787106446777"/>
         </scene>
         <!--Organization-->
         <scene sceneID="Rfg-wK-w1b">
             <objects>
-                <viewController id="3Om-Wq-F0J" sceneMemberID="viewController">
+                <viewController id="3Om-Wq-F0J" customClass="OrganizationViewController" customModule="PaceRides" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="kKu-yp-yqw">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="y1l-U8-6ax"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Organization" image="organizationIcon" id="DDb-OM-eew"/>
+                    <navigationItem key="navigationItem" title="Organization" id="4ms-k6-eSY">
+                        <barButtonItem key="leftBarButtonItem" image="hamburgerMenuIcon" id="oil-YQ-KZx"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="openMenuBarButtonItem" destination="oil-YQ-KZx" id="5DR-Qw-bIn"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kVx-Ur-BOb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3505" y="-833"/>
+            <point key="canvasLocation" x="4444" y="-833.43328335832086"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Tw6-Mw-oQT">
+            <objects>
+                <navigationController navigationBarHidden="YES" id="cDd-Je-cBl" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="T16-iO-AU9">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="f0o-9w-igM" kind="relationship" relationship="rootViewController" id="aQt-gZ-TXt"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mjj-w0-b7O" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1009" y="-56"/>
         </scene>
         <!--Public-->
         <scene sceneID="8Rr-bS-mGk">
@@ -190,10 +210,10 @@
                     </tabBar>
                     <connections>
                         <outlet property="openMenuBarButtonItem" destination="hto-bC-lwT" id="Qj2-Be-UIA"/>
-                        <segue destination="3Om-Wq-F0J" kind="relationship" relationship="viewControllers" id="JsY-9M-6iW"/>
-                        <segue destination="rfo-t0-ySn" kind="relationship" relationship="viewControllers" id="XjQ-hY-GqK"/>
-                        <segue destination="ijE-SN-3HT" kind="relationship" relationship="viewControllers" id="nam-Ub-Tsg"/>
-                        <segue destination="xTG-ak-9PI" kind="relationship" relationship="viewControllers" id="z3s-ad-kiY"/>
+                        <segue destination="YiV-3J-Oyp" kind="relationship" relationship="viewControllers" id="JsY-9M-6iW"/>
+                        <segue destination="aSw-oX-ZDa" kind="relationship" relationship="viewControllers" id="XjQ-hY-GqK"/>
+                        <segue destination="Sgz-hM-zMw" kind="relationship" relationship="viewControllers" id="nam-Ub-Tsg"/>
+                        <segue destination="0nK-Cq-7q8" kind="relationship" relationship="viewControllers" id="z3s-ad-kiY"/>
                         <segue destination="GtZ-Pz-qFY" kind="presentation" identifier="showSignIn" customClass="SWRevealViewControllerSeguePushController" modalTransitionStyle="coverVertical" id="N93-cv-4qs"/>
                     </connections>
                 </tabBarController>
@@ -339,8 +359,8 @@
                         <outlet property="profileImageView" destination="w8E-N5-xSK" id="oQ9-FB-g1Y"/>
                         <outlet property="signOutButton" destination="eXy-al-mlr" id="DlM-uS-8pT"/>
                         <outlet property="tableView" destination="H43-8O-IiE" id="H3x-LA-h6N"/>
-                        <segue destination="pNV-5f-0ux" kind="custom" identifier="showPublic" customClass="SWRevealViewControllerSeguePushController" id="O36-Rz-1tC"/>
                         <segue destination="5mK-QR-ogR" kind="custom" identifier="showSchool" customClass="SWRevealViewControllerSeguePushController" id="K4d-5Y-w14"/>
+                        <segue destination="cDd-Je-cBl" kind="custom" identifier="showPublic" customClass="SWRevealViewControllerSeguePushController" id="0jr-UU-XuU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HEq-0L-pjI" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -384,7 +404,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="openMenuBarButtonItem" destination="kmk-4b-GMi" id="YpW-wm-XCw"/>
-                        <segue destination="pNV-5f-0ux" kind="custom" identifier="showPublicTabBarController" customClass="SWRevealViewControllerSeguePushController" id="O8z-sg-vDd"/>
+                        <segue destination="cDd-Je-cBl" kind="custom" identifier="showPublicTabBarController" customClass="SWRevealViewControllerSeguePushController" id="T3t-vN-uJH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fCl-Uh-2yE" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -564,6 +584,82 @@
             </objects>
             <point key="canvasLocation" x="1049" y="-833"/>
         </scene>
+        <!--Organization-->
+        <scene sceneID="RFy-Io-NM8">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="YiV-3J-Oyp" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Organization" image="organizationIcon" id="DDb-OM-eew"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="hHe-lF-5aW">
+                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="3Om-Wq-F0J" kind="relationship" relationship="rootViewController" id="xfT-Rt-5wO"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4f6-Nj-svI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3504.8000000000002" y="-833.43328335832086"/>
+        </scene>
+        <!--Events-->
+        <scene sceneID="ihA-Of-y6Y">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="aSw-oX-ZDa" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Events" image="eventIcon" id="slt-h4-um8"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="41J-B9-ea3">
+                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="rfo-t0-ySn" kind="relationship" relationship="rootViewController" id="HDR-Xq-pas"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="poX-Mf-FH9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3504.8000000000002" y="-57.121439280359823"/>
+        </scene>
+        <!--Ride-->
+        <scene sceneID="852-re-GXp">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Sgz-hM-zMw" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Ride" image="carIcon" id="JA0-di-DW1"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="9hV-Id-mHL">
+                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="ijE-SN-3HT" kind="relationship" relationship="rootViewController" id="4Rm-n3-xgs"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QbR-Wf-Fb6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3504.8000000000002" y="742.5787106446777"/>
+        </scene>
+        <!--Drive-->
+        <scene sceneID="91j-AS-W9r">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="0nK-Cq-7q8" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Drive" image="steeringWheelIcon" id="nOh-RG-OnE"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="4sT-8B-y5o">
+                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="xTG-ak-9PI" kind="relationship" relationship="rootViewController" id="Kr2-Py-WRR"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mZG-30-UwW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3504.8000000000002" y="1495.5022488755624"/>
+        </scene>
     </scenes>
     <resources>
         <image name="carIcon" width="24" height="24"/>
@@ -574,6 +670,6 @@
         <image name="steeringWheelIcon" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="O8z-sg-vDd"/>
+        <segue reference="J8c-CJ-kSm"/>
     </inferredMetricsTieBreakers>
 </document>
