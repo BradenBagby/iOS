@@ -14,5 +14,13 @@ class OrganizationDetailViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         self.title = self.organizationModel.title ?? self.organizationModel.uid
+        self.organizationModel.subscribe(using: self.newOrganizationData)
+    }
+    
+    func newOrganizationData(_: Notification? = nil) {
+        
+        self.title = self.organizationModel.title
+        print("Subscription: \(self.organizationModel.subscription ?? -1)")
+        
     }
 }
