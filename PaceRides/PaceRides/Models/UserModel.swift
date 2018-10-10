@@ -224,7 +224,7 @@ protocol PacePublicProfile {
     
     
     /// Gets all organizations the user is a part of, if any
-    func organizations() -> [ShallowOrganizationModel]
+    func organizations() -> [OrganizationModel]
 }
 
 
@@ -487,8 +487,6 @@ class UserModel: NSObject, PaceUser {
         
         self.userData = userData
         
-        let orgs = self.organizations()
-        
         UserModel.notificationCenter.post(
             name: .NewPaceUserData,
             object: nil
@@ -733,14 +731,19 @@ extension UserModel: PacePublicProfile {
     }
     
     
-    func organizations() -> [ShallowOrganizationModel] {
-        var result = [ShallowOrganizationModel]()
+    func organizations() -> [OrganizationModel] {
+        var result = [OrganizationModel]()
+        
+        guard self.userData != nil else {
+            return result
+        }
+        
         if let publicProfileData = self.userData[UserDBKeys.publicProfile.rawValue] as? [String: Any] {
             if let organizations = publicProfileData[UserDBKeys.organizations.rawValue] as? [[String: Any]] {
                 for org in organizations {
                     if let orgTitle = org[UserDBKeys.organizationTitle.rawValue] as? String,
                             let orgRef = org[UserDBKeys.organizationReference.rawValue] as? DocumentReference {
-                        result.append(ShallowOrganizationModel(withTitle: orgTitle, andReference: orgRef))
+                        result.append(OrganizationModel(withTitle: orgTitle, andReference: orgRef))
                     }
                 }
             }

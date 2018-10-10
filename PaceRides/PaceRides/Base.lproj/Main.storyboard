@@ -160,26 +160,78 @@
             </objects>
             <point key="canvasLocation" x="4444" y="742.5787106446777"/>
         </scene>
-        <!--Organization-->
+        <!--Organizations-->
         <scene sceneID="Rfg-wK-w1b">
             <objects>
-                <viewController id="3Om-Wq-F0J" customClass="OrganizationViewController" customModule="PaceRides" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="3Om-Wq-F0J" customClass="OrganizationListViewController" customModule="PaceRides" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="kKu-yp-yqw">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="Pjg-ob-MK4">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="default_cell" textLabel="gW0-BC-ffs" style="IBUITableViewCellStyleDefault" id="mZc-pQ-mks">
+                                        <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="mZc-pQ-mks" id="hRe-ge-y0U">
+                                            <rect key="frame" x="0.0" y="0.0" width="342" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gW0-BC-ffs">
+                                                    <rect key="frame" x="15" y="0.0" width="325" height="43.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="3Om-Wq-F0J" id="6ZG-Xi-LqN"/>
+                                    <outlet property="delegate" destination="3Om-Wq-F0J" id="CJf-ag-naY"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="y1l-U8-6ax" firstAttribute="trailing" secondItem="Pjg-ob-MK4" secondAttribute="trailing" id="6jo-Uf-Bac"/>
+                            <constraint firstItem="Pjg-ob-MK4" firstAttribute="top" secondItem="kKu-yp-yqw" secondAttribute="top" id="GlU-Io-VE6"/>
+                            <constraint firstItem="Pjg-ob-MK4" firstAttribute="leading" secondItem="y1l-U8-6ax" secondAttribute="leading" id="P7i-xg-NJG"/>
+                            <constraint firstItem="y1l-U8-6ax" firstAttribute="bottom" secondItem="Pjg-ob-MK4" secondAttribute="bottom" id="cUs-Qa-rHe"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="y1l-U8-6ax"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Organization" id="4ms-k6-eSY">
+                    <navigationItem key="navigationItem" title="Organizations" id="4ms-k6-eSY">
                         <barButtonItem key="leftBarButtonItem" image="hamburgerMenuIcon" id="oil-YQ-KZx"/>
                     </navigationItem>
                     <connections>
                         <outlet property="openMenuBarButtonItem" destination="oil-YQ-KZx" id="5DR-Qw-bIn"/>
+                        <outlet property="tableView" destination="Pjg-ob-MK4" id="eHR-XB-VbI"/>
+                        <segue destination="qWh-fM-hMF" kind="show" identifier="showOrganizationDetail" id="Pxc-tm-ns0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kVx-Ur-BOb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4444" y="-833.43328335832086"/>
+        </scene>
+        <!--Organization Detail View Controller-->
+        <scene sceneID="4D6-o2-2ej">
+            <objects>
+                <viewController id="qWh-fM-hMF" customClass="OrganizationDetailViewController" customModule="PaceRides" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="qGj-3L-tjJ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="75d-1j-dSq"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MVg-Xg-bj7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5399" y="-833"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Tw6-Mw-oQT">

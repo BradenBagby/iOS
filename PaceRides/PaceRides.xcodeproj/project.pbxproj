@@ -14,7 +14,7 @@
 		E0246DF22167024300DB3CC8 /* PaceSchoolProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0246DF12167024300DB3CC8 /* PaceSchoolProfileTableViewCell.swift */; };
 		E07754C6216D2462008421CE /* PublicTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07754C5216D2462008421CE /* PublicTabBarController.swift */; };
 		E07754C8216D4560008421CE /* OrganizationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07754C7216D4560008421CE /* OrganizationModel.swift */; };
-		E07754CA216DA85A008421CE /* OrganizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07754C9216DA85A008421CE /* OrganizationViewController.swift */; };
+		E07754CA216DA85A008421CE /* OrganizationListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07754C9216DA85A008421CE /* OrganizationListViewController.swift */; };
 		E07754CC216DAF50008421CE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07754CB216DAF50008421CE /* ViewController.swift */; };
 		E07754CE216DB417008421CE /* PaceTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07754CD216DB417008421CE /* PaceTabViewController.swift */; };
 		E07754D0216DB5D6008421CE /* EventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07754CF216DB5D6008421CE /* EventsViewController.swift */; };
@@ -36,6 +36,7 @@
 		E0C1A97E21629CFD006C4DF6 /* SchoolSignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0C1A97D21629CFD006C4DF6 /* SchoolSignInViewController.swift */; };
 		E0C1A9802162AC97006C4DF6 /* SchoolViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0C1A97F2162AC97006C4DF6 /* SchoolViewController.swift */; };
 		E0C1A9842162C65B006C4DF6 /* VerifyEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0C1A9832162C65B006C4DF6 /* VerifyEmailViewController.swift */; };
+		E0DF8801216E6C8200B88D05 /* OrganizationDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0DF8800216E6C8200B88D05 /* OrganizationDetailViewController.swift */; };
 		E0E44B45216C25810069DAEE /* MenuItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0E44B44216C25810069DAEE /* MenuItemTableViewCell.swift */; };
 		E0E44B48216C25EA0069DAEE /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0E44B47216C25EA0069DAEE /* MenuItem.swift */; };
 /* End PBXBuildFile section */
@@ -71,7 +72,7 @@
 		E0246DF12167024300DB3CC8 /* PaceSchoolProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaceSchoolProfileTableViewCell.swift; sourceTree = "<group>"; };
 		E07754C5216D2462008421CE /* PublicTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicTabBarController.swift; sourceTree = "<group>"; };
 		E07754C7216D4560008421CE /* OrganizationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationModel.swift; sourceTree = "<group>"; };
-		E07754C9216DA85A008421CE /* OrganizationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationViewController.swift; sourceTree = "<group>"; };
+		E07754C9216DA85A008421CE /* OrganizationListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationListViewController.swift; sourceTree = "<group>"; };
 		E07754CB216DAF50008421CE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		E07754CD216DB417008421CE /* PaceTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaceTabViewController.swift; sourceTree = "<group>"; };
 		E07754CF216DB5D6008421CE /* EventsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsViewController.swift; sourceTree = "<group>"; };
@@ -101,6 +102,7 @@
 		E0C1A97D21629CFD006C4DF6 /* SchoolSignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolSignInViewController.swift; sourceTree = "<group>"; };
 		E0C1A97F2162AC97006C4DF6 /* SchoolViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolViewController.swift; sourceTree = "<group>"; };
 		E0C1A9832162C65B006C4DF6 /* VerifyEmailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyEmailViewController.swift; sourceTree = "<group>"; };
+		E0DF8800216E6C8200B88D05 /* OrganizationDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationDetailViewController.swift; sourceTree = "<group>"; };
 		E0E44B44216C25810069DAEE /* MenuItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemTableViewCell.swift; sourceTree = "<group>"; };
 		E0E44B47216C25EA0069DAEE /* MenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -160,7 +162,7 @@
 			isa = PBXGroup;
 			children = (
 				E07754CD216DB417008421CE /* PaceTabViewController.swift */,
-				E07754C9216DA85A008421CE /* OrganizationViewController.swift */,
+				E0DF87FF216E69A100B88D05 /* Organization */,
 				E07754CF216DB5D6008421CE /* EventsViewController.swift */,
 				E07754D1216DB618008421CE /* RideViewController.swift */,
 				E07754D3216DB626008421CE /* DriveViewController.swift */,
@@ -286,6 +288,15 @@
 				E0C1A9832162C65B006C4DF6 /* VerifyEmailViewController.swift */,
 			);
 			path = School;
+			sourceTree = "<group>";
+		};
+		E0DF87FF216E69A100B88D05 /* Organization */ = {
+			isa = PBXGroup;
+			children = (
+				E07754C9216DA85A008421CE /* OrganizationListViewController.swift */,
+				E0DF8800216E6C8200B88D05 /* OrganizationDetailViewController.swift */,
+			);
+			path = Organization;
 			sourceTree = "<group>";
 		};
 		E0E44B46216C25D10069DAEE /* ViewModels */ = {
@@ -620,8 +631,9 @@
 				E07754CC216DAF50008421CE /* ViewController.swift in Sources */,
 				E0E44B48216C25EA0069DAEE /* MenuItem.swift in Sources */,
 				E0860A442161A9E5003375A7 /* AppDelegate.swift in Sources */,
+				E0DF8801216E6C8200B88D05 /* OrganizationDetailViewController.swift in Sources */,
 				E0C1A97E21629CFD006C4DF6 /* SchoolSignInViewController.swift in Sources */,
-				E07754CA216DA85A008421CE /* OrganizationViewController.swift in Sources */,
+				E07754CA216DA85A008421CE /* OrganizationListViewController.swift in Sources */,
 				E07754C8216D4560008421CE /* OrganizationModel.swift in Sources */,
 				E0C1A9802162AC97006C4DF6 /* SchoolViewController.swift in Sources */,
 				E07754D2216DB618008421CE /* RideViewController.swift in Sources */,
