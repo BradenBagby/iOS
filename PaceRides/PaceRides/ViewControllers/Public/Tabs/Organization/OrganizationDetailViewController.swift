@@ -13,6 +13,6 @@ class OrganizationDetailViewController: UIViewController {
     var organizationModel: OrganizationModel!
     
     override func viewWillAppear(_ animated: Bool) {
-        self.title = self.organizationModel.title
+        self.title = self.organizationModel.title ?? self.organizationModel.uid
     }
 }

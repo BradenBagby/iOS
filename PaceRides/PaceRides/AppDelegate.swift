@@ -10,11 +10,17 @@ import UIKit
 import Firebase
 import FBSDKCoreKit
 
+enum TransitionDestination {
+    case organization(String)
+}
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
 
     var window: UIWindow?
 
+    var transitionDestination: TransitionDestination? = nil
+    
     override init() {
         super.init()
         
@@ -37,6 +43,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
             annotation: options[UIApplication.OpenURLOptionsKey.annotation]
         )
         return handled
+    }
+    
+    
+    private func queryParameters(from url: URL) -> [String: String] {
+        let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
+        var queryParams = [String: String]()
+        for queryItem: URLQueryItem in (urlComponents?.queryItems)! {
+            if queryItem.value == nil {
+                continue
+            }
+            queryParams[queryItem.name] = queryItem.value
+        }
+        return queryParams
+    }
+    
+    
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+        
+        if userActivity.activityType == NSUserActivityTypeBrowsingWeb {
+            if let url = userActivity.webpageURL {
+                
+                guard let host = url.host, host.lowercased() == "pacerides.com" else {
+                    return true
+                }
+                
+                if url.path.lowercased().contains("organization"), let orgId = queryParameters(from: url)["id"] {
+                    self.transitionDestination = TransitionDestination.organization(orgId)
+                }
+                
+                let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let revealVC = mainStoryboard.instantiateInitialViewController()
+                self.window?.rootViewController = revealVC
+                self.window?.makeKeyAndVisible()
+            }
+        }
+        
+        return true
     }
     
     func applicationWillResignActive(_ application: UIApplication) {

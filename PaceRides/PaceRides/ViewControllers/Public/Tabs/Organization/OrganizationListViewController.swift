@@ -17,6 +17,15 @@ class OrganizationListViewController: PaceTabViewController {
     override func viewDidLoad() {
         super.viewDidLoad(self.view)
         
+        if let transitionDestination = self.appDelegate().transitionDestination {
+            switch transitionDestination {
+            case .organization(let orgId):
+                self.selectedOrganization = OrganizationModel(withId: orgId)
+                self.performSegue(withIdentifier: "showOrganizationDetail", sender: self)
+                return
+            }
+        }
+        
         self.newPaceUserData()
         UserModel.notificationCenter.addObserver(
             forName: .NewPaceUserData,

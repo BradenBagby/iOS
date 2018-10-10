@@ -13,7 +13,7 @@
         <!--Reveal View Controller-->
         <scene sceneID="LMz-pw-30D">
             <objects>
-                <viewController id="PbX-2I-lAq" customClass="SWRevealViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RevealVC" id="PbX-2I-lAq" customClass="SWRevealViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="FNz-Wv-kzE">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

@@ -103,6 +103,7 @@
 		E0C1A97F2162AC97006C4DF6 /* SchoolViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolViewController.swift; sourceTree = "<group>"; };
 		E0C1A9832162C65B006C4DF6 /* VerifyEmailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyEmailViewController.swift; sourceTree = "<group>"; };
 		E0DF8800216E6C8200B88D05 /* OrganizationDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationDetailViewController.swift; sourceTree = "<group>"; };
+		E0DF8802216E84FA00B88D05 /* PaceRides.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PaceRides.entitlements; sourceTree = "<group>"; };
 		E0E44B44216C25810069DAEE /* MenuItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemTableViewCell.swift; sourceTree = "<group>"; };
 		E0E44B47216C25EA0069DAEE /* MenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -195,6 +196,7 @@
 		E0860A422161A9E5003375A7 /* PaceRides */ = {
 			isa = PBXGroup;
 			children = (
+				E0DF8802216E84FA00B88D05 /* PaceRides.entitlements */,
 				E0860A8B216281A6003375A7 /* GoogleService-Info.plist */,
 				E0860A512161A9E6003375A7 /* Info.plist */,
 				E0860A432161A9E5003375A7 /* AppDelegate.swift */,
@@ -385,6 +387,11 @@
 					E0860A3F2161A9E5003375A7 = {
 						CreatedOnToolsVersion = 10.0;
 						LastSwiftMigration = 1000;
+						SystemCapabilities = {
+							com.apple.SafariKeychain = {
+								enabled = 1;
+							};
+						};
 					};
 					E0860A552161A9E6003375A7 = {
 						CreatedOnToolsVersion = 10.0;
@@ -826,6 +833,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = PaceRides/PaceRides.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = L5696BKBGY;
 				INFOPLIST_FILE = PaceRides/Info.plist;
@@ -849,6 +857,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = PaceRides/PaceRides.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = L5696BKBGY;
 				INFOPLIST_FILE = PaceRides/Info.plist;
