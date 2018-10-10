@@ -27,7 +27,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VlG-4a-IAB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="105" y="1"/>
+            <point key="canvasLocation" x="105" y="-56"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="hSw-Ek-vky">
@@ -38,59 +38,12 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="gAa-KZ-X53" kind="relationship" relationship="rootViewController" id="Wo0-DP-zs9"/>
+                        <segue destination="f0o-9w-igM" kind="relationship" relationship="rootViewController" id="rpw-ko-2zs"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LuH-PW-mdS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1049" y="0.0"/>
-        </scene>
-        <!--Public-->
-        <scene sceneID="n5M-Pb-eu3">
-            <objects>
-                <viewController id="gAa-KZ-X53" customClass="PublicViewController" customModule="PaceRides" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="oro-Ql-5oH">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I8L-HL-pDi">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
-                                <connections>
-                                    <segue destination="UkQ-nM-rXr" kind="embed" id="CoR-32-Exj"/>
-                                </connections>
-                            </containerView>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oe6-mf-J7R">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
-                                <connections>
-                                    <segue destination="f0o-9w-igM" kind="embed" id="DCM-UA-Auf"/>
-                                </connections>
-                            </containerView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="9YZ-0l-d8z" firstAttribute="trailing" secondItem="Oe6-mf-J7R" secondAttribute="trailing" id="4Y4-uK-SYd"/>
-                            <constraint firstItem="9YZ-0l-d8z" firstAttribute="trailing" secondItem="I8L-HL-pDi" secondAttribute="trailing" id="6YU-Xl-pMN"/>
-                            <constraint firstItem="I8L-HL-pDi" firstAttribute="leading" secondItem="9YZ-0l-d8z" secondAttribute="leading" id="Gs7-IK-8qg"/>
-                            <constraint firstItem="I8L-HL-pDi" firstAttribute="top" secondItem="9YZ-0l-d8z" secondAttribute="top" id="J4l-H5-O3x"/>
-                            <constraint firstItem="Oe6-mf-J7R" firstAttribute="top" secondItem="9YZ-0l-d8z" secondAttribute="top" id="Zts-bu-yco"/>
-                            <constraint firstItem="Oe6-mf-J7R" firstAttribute="leading" secondItem="9YZ-0l-d8z" secondAttribute="leading" id="tfX-Ai-SFP"/>
-                            <constraint firstItem="9YZ-0l-d8z" firstAttribute="bottom" secondItem="Oe6-mf-J7R" secondAttribute="bottom" id="xQi-Au-s3d"/>
-                            <constraint firstItem="9YZ-0l-d8z" firstAttribute="bottom" secondItem="I8L-HL-pDi" secondAttribute="bottom" id="zrz-BD-Bdb"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="9YZ-0l-d8z"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="Public" leftItemsSupplementBackButton="YES" id="00C-Xi-BBV">
-                        <barButtonItem key="leftBarButtonItem" image="hamburgerMenuIcon" id="wuN-NY-LUl"/>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="OpenMenuBarButtonItem" destination="wuN-NY-LUl" id="1Hq-29-RjR"/>
-                        <outlet property="publicTabBarControllerView" destination="Oe6-mf-J7R" id="hKc-fW-SqG"/>
-                        <outlet property="signInView" destination="I8L-HL-pDi" id="2Qq-ds-pl8"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="SV9-EH-xe6" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1862" y="0.0"/>
+            <point key="canvasLocation" x="1049" y="-57"/>
         </scene>
         <!--School-->
         <scene sceneID="mod-aR-wCZ">
@@ -173,7 +126,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bvv-Ta-9ki" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3505" y="53"/>
+            <point key="canvasLocation" x="3505" y="-57"/>
         </scene>
         <!--Drive-->
         <scene sceneID="i1U-8X-hRB">
@@ -189,7 +142,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rP5-kn-rDh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3505" y="1245"/>
+            <point key="canvasLocation" x="3505" y="1496"/>
         </scene>
         <!--Ride-->
         <scene sceneID="yMv-wO-GTj">
@@ -205,7 +158,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jct-MA-jWO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3505" y="646"/>
+            <point key="canvasLocation" x="3505" y="743"/>
         </scene>
         <!--Organization-->
         <scene sceneID="Rfg-wK-w1b">
@@ -221,27 +174,32 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kVx-Ur-BOb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3505" y="-564"/>
+            <point key="canvasLocation" x="3505" y="-833"/>
         </scene>
-        <!--Public Tab Bar Controller-->
+        <!--Public-->
         <scene sceneID="8Rr-bS-mGk">
             <objects>
                 <tabBarController id="f0o-9w-igM" customClass="PublicTabBarController" customModule="PaceRides" customModuleProvider="target" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" title="Public" id="Uqa-e7-9Mx">
+                        <barButtonItem key="leftBarButtonItem" image="hamburgerMenuIcon" id="hto-bC-lwT"/>
+                    </navigationItem>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="l9A-93-Zi6">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
+                        <outlet property="openMenuBarButtonItem" destination="hto-bC-lwT" id="Qj2-Be-UIA"/>
                         <segue destination="3Om-Wq-F0J" kind="relationship" relationship="viewControllers" id="JsY-9M-6iW"/>
                         <segue destination="rfo-t0-ySn" kind="relationship" relationship="viewControllers" id="XjQ-hY-GqK"/>
                         <segue destination="ijE-SN-3HT" kind="relationship" relationship="viewControllers" id="nam-Ub-Tsg"/>
                         <segue destination="xTG-ak-9PI" kind="relationship" relationship="viewControllers" id="z3s-ad-kiY"/>
+                        <segue destination="GtZ-Pz-qFY" kind="presentation" identifier="showSignIn" customClass="SWRevealViewControllerSeguePushController" modalTransitionStyle="coverVertical" id="N93-cv-4qs"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Aeg-AI-Mbq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2647" y="52"/>
+            <point key="canvasLocation" x="1862" y="-57"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="VgQ-6q-YuN">
@@ -389,22 +347,22 @@
             </objects>
             <point key="canvasLocation" x="105" y="744"/>
         </scene>
-        <!--Public Sign In View Controller-->
+        <!--Public-->
         <scene sceneID="PKp-Y3-Owy">
             <objects>
                 <viewController id="UkQ-nM-rXr" customClass="PublicSignInViewController" customModule="PaceRides" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="kMT-tR-hvz">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign In" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bda-VC-Q7T">
-                                <rect key="frame" x="16" y="16" width="333" height="32"/>
+                                <rect key="frame" x="16" y="148" width="333" height="32"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You need to sign in with Facebook before you can use Pace Rides." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aYg-9p-h4f">
-                                <rect key="frame" x="16" y="56" width="333" height="41"/>
+                                <rect key="frame" x="16" y="188" width="333" height="41"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -413,7 +371,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="aYg-9p-h4f" firstAttribute="top" secondItem="Bda-VC-Q7T" secondAttribute="bottom" constant="8" id="8B5-7r-prX"/>
-                            <constraint firstItem="Bda-VC-Q7T" firstAttribute="top" secondItem="kMT-tR-hvz" secondAttribute="top" constant="16" id="HMy-6K-SAY"/>
+                            <constraint firstItem="Bda-VC-Q7T" firstAttribute="top" secondItem="f4Z-T7-oF0" secondAttribute="top" constant="32" id="HMy-6K-SAY"/>
                             <constraint firstAttribute="trailing" secondItem="aYg-9p-h4f" secondAttribute="trailing" constant="26" id="LoJ-ZN-srJ"/>
                             <constraint firstAttribute="trailing" secondItem="Bda-VC-Q7T" secondAttribute="trailing" constant="26" id="cxC-LY-81O"/>
                             <constraint firstItem="aYg-9p-h4f" firstAttribute="leading" secondItem="kMT-tR-hvz" secondAttribute="leading" constant="16" id="jCV-1M-7jW"/>
@@ -421,10 +379,17 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="f4Z-T7-oF0"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Public" id="DiH-1O-3c6">
+                        <barButtonItem key="leftBarButtonItem" image="hamburgerMenuIcon" id="kmk-4b-GMi"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="openMenuBarButtonItem" destination="kmk-4b-GMi" id="YpW-wm-XCw"/>
+                        <segue destination="pNV-5f-0ux" kind="custom" identifier="showPublicTabBarController" customClass="SWRevealViewControllerSeguePushController" id="O8z-sg-vDd"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fCl-Uh-2yE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1862" y="-659"/>
+            <point key="canvasLocation" x="1862" y="-833"/>
         </scene>
         <!--School Sign In View Controller-->
         <scene sceneID="i0t-D0-8aD">
@@ -581,6 +546,24 @@
             </objects>
             <point key="canvasLocation" x="1862" y="1443"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="VYi-Nn-BKd">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="GtZ-Pz-qFY" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="Yq8-sX-yRV">
+                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="UkQ-nM-rXr" kind="relationship" relationship="rootViewController" id="3NH-15-YE7"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LMW-ll-ENt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1049" y="-833"/>
+        </scene>
     </scenes>
     <resources>
         <image name="carIcon" width="24" height="24"/>
@@ -591,6 +574,6 @@
         <image name="steeringWheelIcon" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="O36-Rz-1tC"/>
+        <segue reference="O8z-sg-vDd"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -17,7 +17,6 @@ class FrontViewController: UIViewController {
         super.viewDidLoad()
         
         self.revealViewController()!.rearViewRevealWidth = 300
-        self.revealViewController()!.rightViewRevealWidth = 250
         if let openMenuBarButtonItem = self.OpenMenuBarButtonItem {
             openMenuBarButtonItem.target = self.revealViewController()
             openMenuBarButtonItem.action = #selector(SWRevealViewController.revealToggle(_:))
@@ -71,7 +70,6 @@ class FrontViewController: UIViewController {
                 }
                 
             }
-            
         }
     }
 }
