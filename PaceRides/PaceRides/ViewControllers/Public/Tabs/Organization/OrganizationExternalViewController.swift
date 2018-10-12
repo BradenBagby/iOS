@@ -19,7 +19,7 @@ class OrganizationExternalViewController: UIViewController {
         case NoRequest = "Request to Be a Member"
         case Sending = "Sending..."
         case Error = "Error!"
-        case CancelRequest = "Cancel Request"
+        case CancelRequest = "Cancel Membership Request"
     }
     
     override func viewWillAppear(_ animated: Bool) {

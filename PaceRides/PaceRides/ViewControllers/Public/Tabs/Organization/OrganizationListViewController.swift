@@ -11,6 +11,7 @@ import UIKit
 class OrganizationListViewController: PaceTabViewController {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var noOrganizationsView: UIView!
     
     private var selectedOrganization: OrganizationModel?
     
@@ -36,6 +37,15 @@ class OrganizationListViewController: PaceTabViewController {
     }
     
     func newPaceUserData(_: Notification? = nil) {
+        
+        self.noOrganizationsView.isHidden = true
+        if let paceUser = UserModel.sharedInstance(), let userPublicProfile = paceUser.publicProfile() {
+            if userPublicProfile.organizations().count == 0 {
+                self.noOrganizationsView.isHidden = false
+                return
+            }
+        }
+        
         self.tableView.reloadData()
     }
     
