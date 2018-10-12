@@ -697,7 +697,7 @@
         <scene sceneID="91j-AS-W9r">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="0nK-Cq-7q8" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Drive" image="steeringWheelIcon" id="nOh-RG-OnE"/>
+                    <tabBarItem key="tabBarItem" title="Drive" image="testSteeringWheel" id="nOh-RG-OnE"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="4sT-8B-y5o">
                         <rect key="frame" x="0.0" y="20" width="375" height="96"/>
@@ -719,7 +719,7 @@
         <image name="hamburgerMenuIcon" width="25" height="25"/>
         <image name="organizationIcon" width="24" height="24"/>
         <image name="profileIcon" width="66" height="66"/>
-        <image name="steeringWheelIcon" width="24" height="24"/>
+        <image name="testSteeringWheel" width="29" height="29"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="J8c-CJ-kSm"/>
