@@ -22,6 +22,17 @@ class OrganizationDetailViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         self.title = self.organizationModel.title ?? self.organizationModel.uid
         self.organizationModel.subscribe(using: self.newOrganizationData)
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "externalEmbed" {
+            if let destVC = segue.destination as? OrganizationExternalViewController {
+                destVC.organization = self.organizationModel
+            } else {
+                print("destVC not OrgExtVC")
+            }
+        }
     }
     
     func newOrganizationData(_: Notification? = nil) {
@@ -32,6 +43,7 @@ class OrganizationDetailViewController: UIViewController {
         }
         
         self.title = self.organizationModel.title
+        self.primaryLabel.text = self.organizationModel.title
         
         self._userIsAdmin = false
         self._userIsMember = false

@@ -186,6 +186,10 @@ protocol PaceUser {
     var uid: String { get }
     
     
+    /// Reference to users database space
+    var dbReference: DocumentReference { get }
+    
+    
     /// Returns the public profile information if the user is signed into a public profile, nil otherwise
     func publicProfile() -> PacePublicProfile?
     
@@ -210,6 +214,10 @@ protocol PacePublicProfile {
     
     /// Firebase unique identifier
     var uid: String { get }
+    
+    
+    /// Reference to users database space
+    var dbReference: DocumentReference { get }
     
     
     /// Facebook display name
@@ -239,6 +247,10 @@ protocol PaceSchoolProfile {
     
     /// Firebase unique identifier
     var uid: String { get }
+    
+    
+    /// Reference to users database space
+    var dbReference: DocumentReference { get }
     
     
     /// Email display name
@@ -436,6 +448,12 @@ class UserModel: NSObject, PaceUser {
     var uid: String {
         get {
             return self._user.uid
+        }
+    }
+    
+    var dbReference: DocumentReference {
+        get {
+            return UserModel.db.collection("users").document(self.uid)
         }
     }
     

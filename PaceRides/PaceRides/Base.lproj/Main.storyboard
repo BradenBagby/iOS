@@ -226,7 +226,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0qQ-xP-nDg">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0qQ-xP-nDg">
                                 <rect key="frame" x="16" y="140" width="343" height="31.5"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                 <nil key="textColor"/>
@@ -235,7 +235,7 @@
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hJl-F6-OA2">
                                 <rect key="frame" x="0.0" y="179.5" width="375" height="438.5"/>
                                 <connections>
-                                    <segue destination="CCn-Es-UMS" kind="embed" id="pi6-1J-rSr"/>
+                                    <segue destination="CCn-Es-UMS" kind="embed" identifier="externalEmbed" id="pi6-1J-rSr"/>
                                 </connections>
                             </containerView>
                             <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NSw-O6-Ep4">
@@ -758,20 +758,37 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="438.5"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Extenal" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9yr-v1-wXi">
-                                <rect key="frame" x="166" y="20" width="56" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You are not yet a member of this organization." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yqp-iE-ZDo">
+                                <rect key="frame" x="16" y="8" width="343" height="41"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4rE-PX-sxK">
+                                <rect key="frame" x="31" y="57" width="328" height="30"/>
+                                <state key="normal" title="Request to Be a Member"/>
+                                <connections>
+                                    <action selector="requestMemberButtonPressed" destination="CCn-Es-UMS" eventType="touchUpInside" id="PPF-Kj-bJD"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="4rE-PX-sxK" firstAttribute="top" secondItem="yqp-iE-ZDo" secondAttribute="bottom" constant="8" id="7ck-GZ-54c"/>
+                            <constraint firstItem="yqp-iE-ZDo" firstAttribute="leading" secondItem="XUp-F0-4EP" secondAttribute="leading" constant="16" id="IT1-y9-iH7"/>
+                            <constraint firstAttribute="trailing" secondItem="4rE-PX-sxK" secondAttribute="trailing" constant="16" id="fjc-r7-FJ7"/>
+                            <constraint firstItem="4rE-PX-sxK" firstAttribute="leading" secondItem="XUp-F0-4EP" secondAttribute="leading" constant="31" id="jty-cs-kFz"/>
+                            <constraint firstItem="yqp-iE-ZDo" firstAttribute="top" secondItem="XUp-F0-4EP" secondAttribute="top" constant="8" id="oeM-q8-rpN"/>
+                            <constraint firstAttribute="trailing" secondItem="yqp-iE-ZDo" secondAttribute="trailing" constant="16" id="xtB-tw-fDB"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="btnRequestMember" destination="4rE-PX-sxK" id="CPw-43-WR0"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gVw-Z0-9gH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6400.8000000000002" y="-1106.4467766116943"/>
+            <point key="canvasLocation" x="6400.8000000000002" y="-1106.8965517241379"/>
         </scene>
         <!--Organization Member View Controller-->
         <scene sceneID="Vfl-Yo-NKk">
