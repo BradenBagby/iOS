@@ -17,6 +17,8 @@ class OrganizationDetailViewController: UIViewController {
     @IBOutlet weak var primaryLabel: UILabel!
     @IBOutlet weak var memberView: UIView!
     @IBOutlet weak var externalView: UIView!
+    @IBOutlet weak var btnCopyLink: UIButton!
+    @IBOutlet weak var btnManageMembers: UIButton!
     
     
     override func viewWillAppear(_ animated: Bool) {
@@ -83,5 +85,17 @@ class OrganizationDetailViewController: UIViewController {
             self.memberView.isHidden = true
             
         }
+    }
+    
+    @IBAction func copyLinkButtonPressed() {
+        UIPasteboard.general.string = self.organizationModel.link
+        self.btnCopyLink.setTitle("✔️ Link Copied!", for: .normal)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            self.btnCopyLink.setTitle("Copy Link", for: .normal)
+        }
+    }
+    
+    @IBAction func manageMembersButtonPressed() {
+        
     }
 }

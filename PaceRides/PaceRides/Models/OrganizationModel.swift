@@ -81,6 +81,12 @@ class OrganizationModel {
         }
     }
     
+    var link: String {
+        get {
+            return "https://pacerides.com/organization?id=\(self.uid)"
+        }
+    }
+    
     
     init(withTitle title: String, andReference reference: DocumentReference) {
         self._title = title

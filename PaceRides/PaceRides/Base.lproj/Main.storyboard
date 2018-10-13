@@ -243,16 +243,30 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hJl-F6-OA2">
-                                <rect key="frame" x="0.0" y="179.5" width="375" height="438.5"/>
-                                <connections>
-                                    <segue destination="CCn-Es-UMS" kind="embed" identifier="externalEmbed" id="pi6-1J-rSr"/>
-                                </connections>
-                            </containerView>
                             <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NSw-O6-Ep4">
                                 <rect key="frame" x="0.0" y="179.5" width="375" height="438.5"/>
                                 <connections>
                                     <segue destination="V3J-TM-fIk" kind="embed" id="1MK-DM-6Ha"/>
+                                </connections>
+                            </containerView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e28-He-dw5">
+                                <rect key="frame" x="16" y="187.5" width="343" height="30"/>
+                                <state key="normal" title="Copy Link"/>
+                                <connections>
+                                    <action selector="copyLinkButtonPressed" destination="qWh-fM-hMF" eventType="touchUpInside" id="lZr-1C-h9Z"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K50-Gh-ufx">
+                                <rect key="frame" x="16" y="233.5" width="343" height="30"/>
+                                <state key="normal" title="Manage Members"/>
+                                <connections>
+                                    <action selector="manageMembersButtonPressed" destination="qWh-fM-hMF" eventType="touchUpInside" id="grL-j7-btK"/>
+                                </connections>
+                            </button>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hJl-F6-OA2">
+                                <rect key="frame" x="0.0" y="179.5" width="375" height="438.5"/>
+                                <connections>
+                                    <segue destination="CCn-Es-UMS" kind="embed" identifier="externalEmbed" id="pi6-1J-rSr"/>
                                 </connections>
                             </containerView>
                         </subviews>
@@ -263,16 +277,24 @@
                             <constraint firstItem="NSw-O6-Ep4" firstAttribute="leading" secondItem="75d-1j-dSq" secondAttribute="leading" id="6f7-uy-BBG"/>
                             <constraint firstItem="75d-1j-dSq" firstAttribute="bottom" secondItem="hJl-F6-OA2" secondAttribute="bottom" id="CJs-3l-JE5"/>
                             <constraint firstItem="0qQ-xP-nDg" firstAttribute="leading" secondItem="75d-1j-dSq" secondAttribute="leading" constant="16" id="DF6-3X-kz6"/>
+                            <constraint firstItem="75d-1j-dSq" firstAttribute="trailing" secondItem="e28-He-dw5" secondAttribute="trailing" constant="16" id="Eqy-S5-9Ko"/>
+                            <constraint firstItem="75d-1j-dSq" firstAttribute="trailing" secondItem="K50-Gh-ufx" secondAttribute="trailing" constant="16" id="Pvx-HN-0g9"/>
+                            <constraint firstItem="e28-He-dw5" firstAttribute="top" secondItem="0qQ-xP-nDg" secondAttribute="bottom" constant="16" id="QtZ-MV-F6B"/>
+                            <constraint firstItem="e28-He-dw5" firstAttribute="leading" secondItem="75d-1j-dSq" secondAttribute="leading" constant="16" id="QvG-Fg-XrO"/>
                             <constraint firstItem="NSw-O6-Ep4" firstAttribute="top" secondItem="0qQ-xP-nDg" secondAttribute="bottom" constant="8" id="XY3-LN-Dg1"/>
+                            <constraint firstItem="K50-Gh-ufx" firstAttribute="top" secondItem="e28-He-dw5" secondAttribute="bottom" constant="16" id="XrW-f0-QOm"/>
                             <constraint firstItem="75d-1j-dSq" firstAttribute="trailing" secondItem="hJl-F6-OA2" secondAttribute="trailing" id="gTc-Jn-PYd"/>
                             <constraint firstItem="hJl-F6-OA2" firstAttribute="top" secondItem="0qQ-xP-nDg" secondAttribute="bottom" constant="8" id="oh6-AC-r88"/>
                             <constraint firstItem="0qQ-xP-nDg" firstAttribute="top" secondItem="75d-1j-dSq" secondAttribute="top" constant="24" id="t7a-tP-4Nh"/>
+                            <constraint firstItem="K50-Gh-ufx" firstAttribute="leading" secondItem="75d-1j-dSq" secondAttribute="leading" constant="16" id="v64-7m-PNT"/>
                             <constraint firstItem="75d-1j-dSq" firstAttribute="trailing" secondItem="NSw-O6-Ep4" secondAttribute="trailing" id="y5S-2D-MRF"/>
                             <constraint firstItem="hJl-F6-OA2" firstAttribute="leading" secondItem="75d-1j-dSq" secondAttribute="leading" id="yPp-w5-lhe"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="75d-1j-dSq"/>
                     </view>
                     <connections>
+                        <outlet property="btnCopyLink" destination="e28-He-dw5" id="aQ3-uZ-wl1"/>
+                        <outlet property="btnManageMembers" destination="K50-Gh-ufx" id="k4x-3X-MUs"/>
                         <outlet property="externalView" destination="hJl-F6-OA2" id="jmX-Ub-Epb"/>
                         <outlet property="memberView" destination="NSw-O6-Ep4" id="Uze-EU-pfQ"/>
                         <outlet property="primaryLabel" destination="0qQ-xP-nDg" id="Xff-4k-feV"/>
