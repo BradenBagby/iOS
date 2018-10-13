@@ -97,6 +97,11 @@ extension OrganizationListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
         case 0:
+            if let paceUser = UserModel.sharedInstance(), let userPublicProfile = paceUser.publicProfile() {
+                if userPublicProfile.organizations().count == 0 {
+                    return nil
+                }
+            }
             return "Your Organizations"
         case 1:
             return "Recent Organizations"
@@ -152,7 +157,16 @@ extension OrganizationListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         if let paceUser = UserModel.sharedInstance(), let userPublicProfile = paceUser.publicProfile() {
-            self.selectedOrganization = userPublicProfile.organizations()[indexPath.row]
+            switch indexPath.section {
+            case 0:
+                self.selectedOrganization = userPublicProfile.organizations()[indexPath.row]
+                break
+            case 1:
+                self.selectedOrganization = recentOrganizations[indexPath.row]
+                break
+            default:
+                return
+            }
             self.performSegue(withIdentifier: "showOrganizationDetail", sender: self)
         }
     }
