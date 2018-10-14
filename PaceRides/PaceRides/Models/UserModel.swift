@@ -188,6 +188,10 @@ protocol PaceUser {
     
     /// Reference to users database space
     var dbReference: DocumentReference { get }
+
+    
+    /// Organizations the user is a part of
+    var organizations: [OrganizationModel] { get }
     
     
     /// Returns the public profile information if the user is signed into a public profile, nil otherwise
@@ -202,9 +206,12 @@ protocol PaceUser {
     func reload(completion: ((Error?) -> Void)?)
     
     
+    /// Removes organization from users organization list
+    func removeFromOrganizationList(organization: OrganizationModel, completion: ((Error?) -> Void)?)
+    
+    
     /// Sign out the current user
     func signOut() -> Error?
-    
 }
 
 
@@ -232,12 +239,12 @@ protocol PacePublicProfile {
     var photoUrl: URL? { get }
     
     
+    /// Organizations the user is a part of
+    var organizations: [OrganizationModel] { get }
+    
+    
     /// Get the picture from this objects photoUrl
     func getProfilePicture(completion: ((UIImage?, Error?) -> Void)?)
-    
-    
-    /// Gets all organizations the user is a part of, if any
-    func organizations() -> [OrganizationModel]
 }
 
 
@@ -457,8 +464,16 @@ class UserModel: NSObject, PaceUser {
         }
     }
     
+    private var _organizations = [OrganizationModel]()
+    var organizations: [OrganizationModel] {
+        get {
+            return self._organizations
+        }
+    }
+    
     private var userData: [String: Any]! = nil
     private var userDataListener: ListenerRegistration? = nil
+    private var userOrganizationsListener: ListenerRegistration? = nil
     
     /// Only construct UserModel object from within UserModel class
     private init(forFirebaseUser user: User) {
@@ -473,6 +488,12 @@ class UserModel: NSObject, PaceUser {
             queue: nil,
             using: self.userAuthDataChanged
         )
+    }
+
+    
+    func removeFromOrganizationList(organization: OrganizationModel, completion: ((Error?) -> Void)? = nil) {
+        self.dbReference.collection(UserDBKeys.organizations.rawValue).document(organization.uid)
+            .delete(completion: completion)
     }
     
     
@@ -491,9 +512,13 @@ class UserModel: NSObject, PaceUser {
         }
         
         // Listen for updates
-        self.userDataListener = UserModel.db.collection("users").document(self.uid).addSnapshotListener(
+        self.userDataListener = self.dbReference.addSnapshotListener(
             self.onUserDocumentUpdate
         )
+        
+        // Listen for organizations updates
+        self.userOrganizationsListener = self.dbReference.collection(UserDBKeys.organizations.rawValue)
+            .addSnapshotListener(self.onOrganizationsUpdate)
     }
     
     private func onUserDocumentUpdate(userDocSnap: DocumentSnapshot?, error: Error?) {
@@ -509,6 +534,33 @@ class UserModel: NSObject, PaceUser {
         }
         
         self.userData = userData
+        
+        UserModel.notificationCenter.post(
+            name: .NewPaceUserData,
+            object: nil
+        )
+    }
+    
+    
+    private func onOrganizationsUpdate(organizationsSnapshot: QuerySnapshot?, error: Error?) {
+        
+        guard error == nil else {
+            print(error!.localizedDescription)
+            return
+        }
+        
+        guard let organizations = organizationsSnapshot else {
+            print("Error, no user organization")
+            return
+        }
+        
+        self._organizations.removeAll()
+        for organization in organizations.documents {
+            if let title = organization.data()[UserDBKeys.organizationTitle.rawValue] as? String,
+                    let reference = organization.data()[UserDBKeys.organizationReference.rawValue] as? DocumentReference {
+                self._organizations.append(OrganizationModel(withTitle: title, andReference: reference))
+            }
+        }
         
         UserModel.notificationCenter.post(
             name: .NewPaceUserData,
@@ -751,27 +803,6 @@ extension UserModel: PacePublicProfile {
                 }
             }
         }
-    }
-    
-    
-    func organizations() -> [OrganizationModel] {
-        var result = [OrganizationModel]()
-        
-        guard self.userData != nil else {
-            return result
-        }
-        
-        if let publicProfileData = self.userData[UserDBKeys.publicProfile.rawValue] as? [String: Any] {
-            if let organizations = publicProfileData[UserDBKeys.organizations.rawValue] as? [[String: Any]] {
-                for org in organizations {
-                    if let orgTitle = org[UserDBKeys.organizationTitle.rawValue] as? String,
-                            let orgRef = org[UserDBKeys.organizationReference.rawValue] as? DocumentReference {
-                        result.append(OrganizationModel(withTitle: orgTitle, andReference: orgRef))
-                    }
-                }
-            }
-        }
-        return result
     }
 }
 

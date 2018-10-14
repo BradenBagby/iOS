@@ -24,6 +24,12 @@ class UserReference {
         return self.data[UserRefDBKeys.displayName.rawValue] as? String
     }
     
+    var reference: DocumentReference {
+        get {
+            return Firestore.firestore().collection("users").document(self.uid)
+        }
+    }
+    
     init?(fromDocument document: DocumentSnapshot) {
         
         guard let data = document.data() else {

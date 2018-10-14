@@ -39,12 +39,10 @@ class OrganizationExternalViewController: UIViewController {
         
         self.userHasRequestedMembership = false
         if let paceUser = UserModel.sharedInstance() {
-            if let membershipRequest = self.organization.membershipRequests {
-                for request in membershipRequest {
-                    if request.uid == paceUser.uid {
-                        self.userHasRequestedMembership = true
-                        break
-                    }
+            for request in self.organization.membershipRequests {
+                if request.uid == paceUser.uid {
+                    self.userHasRequestedMembership = true
+                    break
                 }
             }
         }
@@ -88,7 +86,7 @@ class OrganizationExternalViewController: UIViewController {
             } else {
                 
                 self.btnRequestMember.setTitle(RequsetButtonTitles.Sending.rawValue, for: .normal)
-                self.organization.cancelRequest(userPublicProfile) { error in
+                self.organization.cancelMembershipRequest(userPublicProfile) { error in
                     
                     guard error == nil else {
                         

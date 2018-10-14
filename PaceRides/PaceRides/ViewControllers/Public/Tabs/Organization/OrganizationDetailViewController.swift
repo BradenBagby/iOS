@@ -23,9 +23,16 @@ class OrganizationDetailViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         self.title = self.organizationModel.title ?? self.organizationModel.uid
-        self.organizationModel.subscribe(using: self.newOrganizationData)
         
+        OrganizationModel.notificationCenter.addObserver(
+            forName: OrganizationModel.NewMemberData,
+            object: self.organizationModel,
+            queue: OperationQueue.main,
+            using: self.newOrganizationMemberData
+        )
+        self.organizationModel.subscribe(using: self.newOrganizationData)
     }
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "externalEmbed" {
@@ -34,8 +41,21 @@ class OrganizationDetailViewController: UIViewController {
             } else {
                 print("destVC not OrgExtVC")
             }
+        } else if segue.identifier == "memberEmbed" {
+            if let destVC = segue.destination as? OrganizationMemberViewController {
+                destVC.organization = self.organizationModel
+            } else {
+                print("DestVC not OrganizationMemberVC")
+            }
+        } else if segue.identifier == "showOrganizationMembers" {
+            if let destVC = segue.destination as? OrganizationMembersTableViewController {
+                destVC.organization = self.organizationModel
+            } else {
+                print("destVC not OrgMemberVC")
+            }
         }
     }
+    
     
     func newOrganizationData(_: Notification? = nil) {
         
@@ -49,21 +69,45 @@ class OrganizationDetailViewController: UIViewController {
         
         self._userIsAdmin = false
         self._userIsMember = false
-        if let orgAdmin = self.organizationModel.administrators {
-            for admin in orgAdmin {
-                if paceUser.uid == admin.uid {
-                    self._userIsAdmin = true
+        for admin in self.organizationModel.administrators {
+            if paceUser.uid == admin.uid {
+                self._userIsAdmin = true
+                break
+            }
+        }
+        
+        if !_userIsAdmin {
+            for member in organizationModel.members {
+                if paceUser.uid == member.uid {
+                    self._userIsMember = true
                     break
                 }
             }
         }
         
-        if !_userIsAdmin {
-            // TODO: Check for member
-        }
-        
         self.updateUI()
     }
+    
+    
+    func newOrganizationMemberData(_: Notification? = nil) {
+        
+        guard let paceUser = UserModel.sharedInstance() else {
+            return
+        }
+        
+        self.newOrganizationData()
+        
+        if self.organizationModel.administrators.count > 0 && !_userIsAdmin && !_userIsMember {
+            paceUser.removeFromOrganizationList(organization: self.organizationModel) { error in
+                guard error == nil else {
+                    print(error!.localizedDescription)
+                    return
+                }
+            }
+            return
+        }
+    }
+    
     
     func updateUI() {
         
@@ -71,8 +115,6 @@ class OrganizationDetailViewController: UIViewController {
          
             self.externalView.isHidden = true
             self.memberView.isHidden = true
-            
-            
             
         } else if self._userIsMember {
             
@@ -95,7 +137,8 @@ class OrganizationDetailViewController: UIViewController {
         }
     }
     
+    
     @IBAction func manageMembersButtonPressed() {
-        
+        self.performSegue(withIdentifier: "showOrganizationMembers", sender: self)
     }
 }

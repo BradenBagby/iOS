@@ -12,6 +12,7 @@
 		A8737F286A9BBFB497BD5620 /* Pods_PaceRides.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26BDF7F891739D7D0B305928 /* Pods_PaceRides.framework */; };
 		E018D7C7217146310063A362 /* OrganizationExternalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E018D7C6217146310063A362 /* OrganizationExternalViewController.swift */; };
 		E018D7C92171463B0063A362 /* OrganizationMemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E018D7C82171463B0063A362 /* OrganizationMemberViewController.swift */; };
+		E018D7CB21718FC30063A362 /* OrganizationMembersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E018D7CA21718FC30063A362 /* OrganizationMembersTableViewController.swift */; };
 		E0246DF02167021C00DB3CC8 /* PacePublicProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0246DEF2167021C00DB3CC8 /* PacePublicProfileTableViewCell.swift */; };
 		E0246DF22167024300DB3CC8 /* PaceSchoolProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0246DF12167024300DB3CC8 /* PaceSchoolProfileTableViewCell.swift */; };
 		E07754C6216D2462008421CE /* PublicTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07754C5216D2462008421CE /* PublicTabBarController.swift */; };
@@ -73,6 +74,7 @@
 		D11902CAC4075A23A8DA9911 /* Pods-PaceRidesUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PaceRidesUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PaceRidesUITests/Pods-PaceRidesUITests.release.xcconfig"; sourceTree = "<group>"; };
 		E018D7C6217146310063A362 /* OrganizationExternalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationExternalViewController.swift; sourceTree = "<group>"; };
 		E018D7C82171463B0063A362 /* OrganizationMemberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationMemberViewController.swift; sourceTree = "<group>"; };
+		E018D7CA21718FC30063A362 /* OrganizationMembersTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationMembersTableViewController.swift; sourceTree = "<group>"; };
 		E0246DEF2167021C00DB3CC8 /* PacePublicProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacePublicProfileTableViewCell.swift; sourceTree = "<group>"; };
 		E0246DF12167024300DB3CC8 /* PaceSchoolProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaceSchoolProfileTableViewCell.swift; sourceTree = "<group>"; };
 		E07754C5216D2462008421CE /* PublicTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicTabBarController.swift; sourceTree = "<group>"; };
@@ -306,6 +308,7 @@
 				E0DF8800216E6C8200B88D05 /* OrganizationDetailViewController.swift */,
 				E018D7C6217146310063A362 /* OrganizationExternalViewController.swift */,
 				E018D7C82171463B0063A362 /* OrganizationMemberViewController.swift */,
+				E018D7CA21718FC30063A362 /* OrganizationMembersTableViewController.swift */,
 			);
 			path = Organization;
 			sourceTree = "<group>";
@@ -654,6 +657,7 @@
 				E07754CA216DA85A008421CE /* OrganizationListViewController.swift in Sources */,
 				E07754C8216D4560008421CE /* OrganizationModel.swift in Sources */,
 				E0C1A9802162AC97006C4DF6 /* SchoolViewController.swift in Sources */,
+				E018D7CB21718FC30063A362 /* OrganizationMembersTableViewController.swift in Sources */,
 				E07754D2216DB618008421CE /* RideViewController.swift in Sources */,
 				E0860A832161C1C3003375A7 /* RearMenuTableViewController.swift in Sources */,
 				E07754D0216DB5D6008421CE /* EventsViewController.swift in Sources */,

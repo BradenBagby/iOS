@@ -51,11 +51,11 @@ class OrganizationListViewController: PaceTabViewController {
         self.noOrganizationsView.isHidden = true
         if let paceUser = UserModel.sharedInstance(), let userPublicProfile = paceUser.publicProfile() {
             
-            if userPublicProfile.organizations().count == 0 && self.recentOrganizations.count == 0 {
+            if userPublicProfile.organizations.count == 0 && self.recentOrganizations.count == 0 {
                 self.noOrganizationsView.isHidden = false
                 return
-            } else if userPublicProfile.organizations().count == 1  && self.recentOrganizations.count == 0 {
-                self.selectedOrganization = userPublicProfile.organizations()[0]
+            } else if userPublicProfile.organizations.count == 1  && self.recentOrganizations.count == 0 {
+                self.selectedOrganization = userPublicProfile.organizations[0]
                 if !self.hasAlreadyDisplayedDetailPage {
                     self.performSegue(withIdentifier: "showOrganizationDetail", sender: self)
                 }
@@ -98,7 +98,7 @@ extension OrganizationListViewController: UITableViewDataSource {
         switch section {
         case 0:
             if let paceUser = UserModel.sharedInstance(), let userPublicProfile = paceUser.publicProfile() {
-                if userPublicProfile.organizations().count == 0 {
+                if userPublicProfile.organizations.count == 0 {
                     return nil
                 }
             }
@@ -115,7 +115,7 @@ extension OrganizationListViewController: UITableViewDataSource {
         switch section {
         case 0:
             if let paceUser = UserModel.sharedInstance(), let userPublicProfile = paceUser.publicProfile() {
-                return userPublicProfile.organizations().count
+                return userPublicProfile.organizations.count
             }
             break
         case 1:
@@ -135,7 +135,7 @@ extension OrganizationListViewController: UITableViewDataSource {
         case 0:
             if let paceUser = UserModel.sharedInstance() {
                 if let userPublicProfile = paceUser.publicProfile() {
-                    cell.textLabel?.text = userPublicProfile.organizations()[indexPath.row].title
+                    cell.textLabel?.text = userPublicProfile.organizations[indexPath.row].title
                 }
             }
             break
@@ -159,7 +159,7 @@ extension OrganizationListViewController: UITableViewDelegate {
         if let paceUser = UserModel.sharedInstance(), let userPublicProfile = paceUser.publicProfile() {
             switch indexPath.section {
             case 0:
-                self.selectedOrganization = userPublicProfile.organizations()[indexPath.row]
+                self.selectedOrganization = userPublicProfile.organizations[indexPath.row]
                 break
             case 1:
                 self.selectedOrganization = recentOrganizations[indexPath.row]

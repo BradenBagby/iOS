@@ -16,16 +16,44 @@ enum OrgDBKeys: String {
     case subscription = "subscription"
     
     case administrators = "administrators"
+    case members = "members"
     case memberRequsts = "requests"
     
     case userDisplayName = "displayName"
     case userReference = "reference"
 }
 
+enum PaceOrganizationErrors: Error {
+    case AdminSelfRemoveError
+}
+
+extension PaceOrganizationErrors: CustomNSError {
+    
+    public static var errorDomain: String {
+        return "PaceOrganizationErrors"
+    }
+    
+    public var errorCode: Int {
+        switch self {
+        case .AdminSelfRemoveError:
+            return 16001
+        }
+    }
+    
+    public var errorUserInfo: [String: Any] {
+        switch self {
+        case .AdminSelfRemoveError:
+            return [:]
+        }
+    }
+    
+}
+
 
 class OrganizationModel {
     
     static let NewData = Notification.Name("NewOrganizationData")
+    static let NewMemberData = Notification.Name("NewOrganizationMemberData")
     static let notificationCenter = NotificationCenter.default
     private static let db = Firestore.firestore()
     private static let ref = OrganizationModel.db.collection("organizations")
@@ -35,6 +63,8 @@ class OrganizationModel {
     private let reference: DocumentReference
     private var docListener: ListenerRegistration? = nil
     private var administratorsListener: ListenerRegistration? = nil
+    private var memberListener: ListenerRegistration? = nil
+    private var membersListener: ListenerRegistration? = nil
     private var membershipRequestsListener: ListenerRegistration? = nil
     
     private var _title: String?
@@ -67,15 +97,20 @@ class OrganizationModel {
         }
     }
     
-    private var _administrators: [UserReference]?
-    var administrators: [UserReference]? {
+    private var _administrators = [UserReference]()
+    var administrators: [UserReference] {
         get {
             return _administrators
         }
     }
     
-    private var _membershipRequests: [UserReference]?
-    var membershipRequests: [UserReference]? {
+    private var _members = [UserReference]()
+    var members: [UserReference] {
+        return _members
+    }
+    
+    private var _membershipRequests = [UserReference]()
+    var membershipRequests: [UserReference] {
         get {
             return _membershipRequests
         }
@@ -92,8 +127,6 @@ class OrganizationModel {
         self._title = title
         self.orgData = nil
         self.reference = reference
-        self._administrators = nil
-        self._membershipRequests = nil
     }
     
     
@@ -101,8 +134,6 @@ class OrganizationModel {
         self._title = nil
         self.orgData = nil
         self.reference = OrganizationModel.db.collection(OrgDBKeys.organizations.rawValue).document(id)
-        self._administrators = nil
-        self._membershipRequests = nil
     }
     
     
@@ -121,7 +152,11 @@ class OrganizationModel {
     /// Begins process of pulling down all data relevant to this organization
     func fetch() {
         
-        if orgData != nil {
+        guard self.docListener == nil else {
+            OrganizationModel.notificationCenter.post(
+                name: OrganizationModel.NewMemberData,
+                object: self
+            )
             OrganizationModel.notificationCenter.post(
                 name: OrganizationModel.NewData,
                 object: self
@@ -129,19 +164,11 @@ class OrganizationModel {
             return
         }
         
-        if let listener = self.docListener {
-            listener.remove()
-        }
-        
         docListener = self.reference.addSnapshotListener(self.snapshotListener)
-        
-        if let listener = self.administratorsListener {
-            listener.remove()
-        }
-        
         administratorsListener = self.reference.collection(OrgDBKeys.administrators.rawValue)
             .addSnapshotListener(self.administratorsCollectionListener)
-        
+        membersListener = self.reference.collection(OrgDBKeys.members.rawValue)
+            .addSnapshotListener(self.membersCollectionListener)
         membershipRequestsListener = self.reference.collection(OrgDBKeys.memberRequsts.rawValue)
             .addSnapshotListener(self.membershipRequestCollectionListener)
     }
@@ -158,9 +185,91 @@ class OrganizationModel {
             .document(userPublicProfile.uid).setData(requestData, options: SetOptions.merge(), completion: completion)
     }
     
-    func cancelRequest(_ userPublicProfile: PacePublicProfile, completion: ((Error?) -> Void)? = nil) {
-        OrganizationModel.ref.document(self.uid).collection(OrgDBKeys.memberRequsts.rawValue)
-            .document(userPublicProfile.uid).delete(completion: completion)
+    
+    func cancelMembershipRequest(_ userPublicProfile: PacePublicProfile, completion: ((Error?) -> Void)? = nil) {
+        self.reference.collection(OrgDBKeys.memberRequsts.rawValue).document(userPublicProfile.uid)
+            .delete(completion: completion)
+    }
+    
+    
+    func rejectMembershipRequest(_ user: UserReference, completion: ((Error?) -> Void)? = nil) {
+        self.reference.collection(OrgDBKeys.memberRequsts.rawValue).document(user.uid)
+            .delete(completion: completion)
+    }
+    
+    
+    func acceptMembershipRequest(_ user: UserReference, completion: ((Error?) -> Void)? = nil) {
+        let batch = OrganizationModel.db.batch()
+        
+        let reqRef = self.reference.collection(OrgDBKeys.memberRequsts.rawValue).document(user.uid)
+        batch.deleteDocument(reqRef)
+        
+        let memData: [String: Any] = [
+            OrgDBKeys.userDisplayName.rawValue: user.displayName as Any,
+            OrgDBKeys.userReference.rawValue: user.reference
+        ]
+        let memRef = self.reference.collection(OrgDBKeys.members.rawValue).document(user.uid)
+        batch.setData(memData, forDocument: memRef)
+        
+        let userOrgData: [String: Any] = [
+            UserDBKeys.organizationTitle.rawValue: self.title as Any,
+            UserDBKeys.organizationReference.rawValue: self.reference
+        ]
+        let userOrgRef = user.reference.collection(UserDBKeys.organizations.rawValue).document(self.uid)
+        batch.setData(userOrgData, forDocument: userOrgRef)
+        
+        batch.commit(completion: completion)
+    }
+    
+    
+    func removeMember(uid userUID: String, completion: ((Error?) -> Void)? = nil) {
+        self.reference.collection(OrgDBKeys.members.rawValue).document(userUID)
+            .delete(completion: completion)
+    }
+    
+    
+    func makeAdministrator(_ user: UserReference, completion: ((Error?) -> Void)? = nil) {
+        let batch = OrganizationModel.db.batch()
+        
+        let memRef = self.reference.collection(OrgDBKeys.members.rawValue).document(user.uid)
+        batch.deleteDocument(memRef)
+        
+        let adminData: [String: Any] = [
+            OrgDBKeys.userDisplayName.rawValue: user.displayName as Any,
+            OrgDBKeys.userReference.rawValue: user.reference
+        ]
+        let adminRef = self.reference.collection(OrgDBKeys.administrators.rawValue).document(user.uid)
+        batch.setData(adminData, forDocument: adminRef)
+        
+        batch.commit()
+    }
+    
+    func removeAdministrator(_ user: UserReference, completion: ((Error?) -> Void)? = nil) {
+        
+        guard let paceUser = UserModel.sharedInstance() else {
+            return
+        }
+        
+        guard paceUser.uid != user.uid else {
+            if let completion = completion {
+                completion(PaceOrganizationErrors.AdminSelfRemoveError)
+            }
+            return
+        }
+        
+        let batch = OrganizationModel.db.batch()
+        
+        let adminRef = self.reference.collection(OrgDBKeys.administrators.rawValue).document(user.uid)
+        batch.deleteDocument(adminRef)
+        
+        let memberData: [String: Any] = [
+            OrgDBKeys.userDisplayName.rawValue: user.displayName as Any,
+            OrgDBKeys.userReference.rawValue: user.reference
+        ]
+        let memberRef = self.reference.collection(OrgDBKeys.members.rawValue).document(user.uid)
+        batch.setData(memberData, forDocument: memberRef)
+        
+        batch.commit()
     }
     
     private func snapshotListener(document: DocumentSnapshot?, error: Error?) {
@@ -201,13 +310,42 @@ class OrganizationModel {
             return
         }
         
-        self._administrators = []
+        self._administrators.removeAll()
         for document in querySnap.documents {
             if let userRef = UserReference(fromDocument: document) {
-                self._administrators!.append(userRef)
+                self._administrators.append(userRef)
             }
         }
         
+        OrganizationModel.notificationCenter.post(
+            name: OrganizationModel.NewData,
+            object: self
+        )
+    }
+    
+    private func membersCollectionListener(querySnap: QuerySnapshot?, error: Error?) {
+        
+        guard error == nil else {
+            print(error!.localizedDescription)
+            return
+        }
+        
+        guard let querySnap = querySnap else {
+            print("No query snapshot returned")
+            return
+        }
+        
+        self._members.removeAll()
+        for document in querySnap.documents {
+            if let userRef = UserReference(fromDocument: document) {
+                self._members.append(userRef)
+            }
+        }
+        
+        OrganizationModel.notificationCenter.post(
+            name: OrganizationModel.NewMemberData,
+            object: self
+        )
         OrganizationModel.notificationCenter.post(
             name: OrganizationModel.NewData,
             object: self
@@ -226,10 +364,10 @@ class OrganizationModel {
             return
         }
         
-        self._membershipRequests = []
+        self._membershipRequests.removeAll()
         for document in querySnap.documents {
             if let userRef = UserReference(fromDocument: document) {
-                self._membershipRequests!.append(userRef)
+                self._membershipRequests.append(userRef)
             }
         }
         
