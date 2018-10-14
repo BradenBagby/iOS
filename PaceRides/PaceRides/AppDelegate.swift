@@ -26,6 +26,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         
         FirebaseApp.configure()
         
+        let db = Firestore.firestore()
+        let settings = db.settings
+        settings.areTimestampsInSnapshotsEnabled = true
+        db.settings = settings
+        
         Auth.auth().addStateDidChangeListener(UserModel.firebaseAuthStateChangeListener)
     }
 
