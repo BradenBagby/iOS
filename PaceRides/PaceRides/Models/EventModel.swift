@@ -19,10 +19,12 @@ enum EventDBKeys: String {
 
 class EventModel {
     
+    static let NewData = Notification.Name("NewEventData")
+    static let notificationCenter = NotificationCenter.default
     static let db = Firestore.firestore()
     static let ref = EventModel.db.collection(EventDBKeys.events.rawValue)
     
-    private let data: [String: Any]? = nil
+    private var data: [String: Any]? = nil
     
     let uid: String
     
@@ -50,6 +52,9 @@ class EventModel {
     }
     
     
+    private var docListener: ListenerRegistration? = nil
+    
+    
     init(fromReference refDoc: DocumentSnapshot, underOrganization organization: OrganizationModel? = nil) {
         
         self.uid = refDoc.documentID
@@ -67,4 +72,59 @@ class EventModel {
         self._organization = nil
     }
     
+    /// Adds using block to notification obersvers then fetches
+    func subscribe(using block: @escaping (Notification) -> Void) {
+        EventModel.notificationCenter.addObserver(
+            forName: EventModel.NewData,
+            object: self,
+            queue: OperationQueue.main,
+            using: block
+        )
+        fetch()
+    }
+    
+    
+    /// Begins process of pulling down all data relevant to this organization
+    func fetch() {
+        
+        guard self.docListener == nil else {
+            EventModel.notificationCenter.post(
+                name: EventModel.NewData,
+                object: self
+            )
+            return
+        }
+        
+        docListener = self.reference.addSnapshotListener(self.snapshotListener)
+        
+    }
+    
+    func snapshotListener(document: DocumentSnapshot?, error: Error?) {
+        
+        guard error == nil else {
+            print(error!.localizedDescription)
+            return
+        }
+        
+        guard let document = document else {
+            print("No event document for uid: \(self.uid)")
+            return
+        }
+        
+        guard let docData = document.data() else {
+            print("No data in document for event uid: \(self.uid)")
+            return
+        }
+        
+        self.data = docData
+        
+        if let newTitle = docData[OrgDBKeys.title.rawValue] as? String {
+            self._title = newTitle
+        }
+        
+        EventModel.notificationCenter.post(
+            name: EventModel.NewData,
+            object: self
+        )
+    }
 }

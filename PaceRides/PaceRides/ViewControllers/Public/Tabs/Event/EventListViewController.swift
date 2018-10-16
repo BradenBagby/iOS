@@ -28,6 +28,7 @@ class EventListViewController: PaceTabViewController {
         )
     }
     
+    
     func newPaceUserData(_: Notification? = nil) {
         
         guard let paceUser = UserModel.sharedInstance() else {
@@ -41,10 +42,16 @@ class EventListViewController: PaceTabViewController {
         self.eventListTableView.reloadData()
     }
     
+    
     func newOrganizationData(_: Notification? = nil) {
         self.eventListTableView.reloadData()
     }
+    
 
+    func newEventData(_: Notification? = nil) {
+        self.eventListTableView.reloadData()
+    }
+    
     
     func open(event: EventModel) {
         
@@ -58,6 +65,7 @@ class EventListViewController: PaceTabViewController {
             }
         }
         self.recentEvents.append(event)
+        event.subscribe(using: self.newEventData)
         if let tv = self.eventListTableView {
             tv.reloadData()
         }
@@ -67,7 +75,7 @@ class EventListViewController: PaceTabViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showEventDetail" {
             if let destVC = segue.destination as? EventDetailViewController, let event = self.eventToOpen  {
-                destVC.eventRef = event
+                destVC.event = event
             }
         }
     }

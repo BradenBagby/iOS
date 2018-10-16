@@ -10,11 +10,21 @@ import UIKit
 
 class EventDetailViewController: UIViewController {
 
-    var eventRef: EventModel!
+    var event: EventModel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.title = eventRef.title
+        self.event.subscribe(using: self.newEventData)
+    }
+    
+    
+    func newEventData(_: Notification? = nil) {
+        self.updateUI()
+    }
+    
+    
+    func updateUI() {
+        self.title = event.title
     }
 }
