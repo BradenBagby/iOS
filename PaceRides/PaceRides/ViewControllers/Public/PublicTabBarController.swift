@@ -30,6 +30,16 @@ class PublicTabBarController: UITabBarController {
             queue: OperationQueue.main,
             using: self.paceUserUniversityDataDidChange
         )
+        
+        if let transitionDestination = self.appDelegate().transitionDestination {
+            switch transitionDestination {
+            case .organization(_):
+                break
+            case .event(let eventId):
+                self.open(event: EventModel(withUID: eventId))
+                break
+            }
+        }
     }
     
     

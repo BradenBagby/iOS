@@ -12,6 +12,7 @@ import FBSDKCoreKit
 
 enum TransitionDestination {
     case organization(String)
+    case event(String)
 }
 
 @UIApplicationMain
@@ -75,6 +76,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
                 
                 if url.path.lowercased().contains("organization"), let orgId = queryParameters(from: url)["id"] {
                     self.transitionDestination = TransitionDestination.organization(orgId)
+                }
+                
+                if url.path.lowercased().contains("event"), let eventId = queryParameters(from: url)["id"] {
+                    self.transitionDestination = TransitionDestination.event(eventId)
                 }
                 
                 let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)

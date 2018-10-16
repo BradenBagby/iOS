@@ -34,6 +34,8 @@ class OrganizationListViewController: PaceTabViewController {
                 self.appDelegate().transitionDestination = nil
                 
                 return
+            default:
+                break
             }
         }
         
