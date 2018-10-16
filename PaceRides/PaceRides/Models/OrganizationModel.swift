@@ -15,12 +15,15 @@ enum OrgDBKeys: String {
     case title = "title"
     case subscription = "subscription"
     
+    case reference = "reference"
+    
     case administrators = "administrators"
     case members = "members"
     case memberRequsts = "requests"
     
     case userDisplayName = "displayName"
-    case userReference = "reference"
+    
+    case events = "events"
 }
 
 enum PaceOrganizationErrors: Error {
@@ -66,6 +69,7 @@ class OrganizationModel {
     private var memberListener: ListenerRegistration? = nil
     private var membersListener: ListenerRegistration? = nil
     private var membershipRequestsListener: ListenerRegistration? = nil
+    private var eventsListener: ListenerRegistration? = nil
     
     private var _title: String?
     var title: String? {
@@ -113,6 +117,13 @@ class OrganizationModel {
     var membershipRequests: [UserReference] {
         get {
             return _membershipRequests
+        }
+    }
+    
+    private var _events = [EventModel]()
+    var events: [EventModel] {
+        get {
+            return self._events
         }
     }
     
@@ -171,6 +182,8 @@ class OrganizationModel {
             .addSnapshotListener(self.membersCollectionListener)
         membershipRequestsListener = self.reference.collection(OrgDBKeys.memberRequsts.rawValue)
             .addSnapshotListener(self.membershipRequestCollectionListener)
+        eventsListener = self.reference.collection(OrgDBKeys.events.rawValue)
+            .addSnapshotListener(self.eventsCollectionListener)
     }
     
     
@@ -178,7 +191,7 @@ class OrganizationModel {
         
         let requestData: [String: Any] = [
             OrgDBKeys.userDisplayName.rawValue: userPublicProfile.displayName as Any,
-            OrgDBKeys.userReference.rawValue: userPublicProfile.dbReference
+            OrgDBKeys.reference.rawValue: userPublicProfile.dbReference
         ]
         
         OrganizationModel.ref.document(self.uid).collection(OrgDBKeys.memberRequsts.rawValue)
@@ -206,7 +219,7 @@ class OrganizationModel {
         
         let memData: [String: Any] = [
             OrgDBKeys.userDisplayName.rawValue: user.displayName as Any,
-            OrgDBKeys.userReference.rawValue: user.reference
+            OrgDBKeys.reference.rawValue: user.reference
         ]
         let memRef = self.reference.collection(OrgDBKeys.members.rawValue).document(user.uid)
         batch.setData(memData, forDocument: memRef)
@@ -236,7 +249,7 @@ class OrganizationModel {
         
         let adminData: [String: Any] = [
             OrgDBKeys.userDisplayName.rawValue: user.displayName as Any,
-            OrgDBKeys.userReference.rawValue: user.reference
+            OrgDBKeys.reference.rawValue: user.reference
         ]
         let adminRef = self.reference.collection(OrgDBKeys.administrators.rawValue).document(user.uid)
         batch.setData(adminData, forDocument: adminRef)
@@ -264,12 +277,20 @@ class OrganizationModel {
         
         let memberData: [String: Any] = [
             OrgDBKeys.userDisplayName.rawValue: user.displayName as Any,
-            OrgDBKeys.userReference.rawValue: user.reference
+            OrgDBKeys.reference.rawValue: user.reference
         ]
         let memberRef = self.reference.collection(OrgDBKeys.members.rawValue).document(user.uid)
         batch.setData(memberData, forDocument: memberRef)
         
         batch.commit()
+    }
+    
+    
+    func hasEventPrivileges() -> Bool {
+        if let subscription = self.subscription, subscription == 1 {
+            return true
+        }
+        return false
     }
     
     private func snapshotListener(document: DocumentSnapshot?, error: Error?) {
@@ -290,6 +311,10 @@ class OrganizationModel {
         }
         
         self.orgData = docData
+        
+        if let newTitle = docData[OrgDBKeys.title.rawValue] as? String {
+            self._title = newTitle
+        }
         
         OrganizationModel.notificationCenter.post(
             name: OrganizationModel.NewData,
@@ -369,6 +394,30 @@ class OrganizationModel {
             if let userRef = UserReference(fromDocument: document) {
                 self._membershipRequests.append(userRef)
             }
+        }
+        
+        OrganizationModel.notificationCenter.post(
+            name: OrganizationModel.NewData,
+            object: self
+        )
+    }
+    
+    
+    private func eventsCollectionListener(querySnap: QuerySnapshot?, error: Error?) {
+        
+        guard error == nil else {
+            print(error!.localizedDescription)
+            return
+        }
+        
+        guard let querySnap = querySnap else {
+            print("No query snapshot returned")
+            return
+        }
+        
+        self._events.removeAll()
+        for document in querySnap.documents {
+            self._events.append(EventModel(fromReference: document, underOrganization: self))
         }
         
         OrganizationModel.notificationCenter.post(

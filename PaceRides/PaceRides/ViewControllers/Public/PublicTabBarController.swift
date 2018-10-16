@@ -43,6 +43,18 @@ class PublicTabBarController: UITabBarController {
     }
     
     
+    func open(event: EventModel) {
+        
+        guard let navVC = self.viewControllers?[1] as? UINavigationController,
+            let eventListVC = navVC.viewControllers[0] as? EventListViewController else {
+            print("VC[1] not EventListVC")
+            return
+        }
+        
+        self.selectedIndex = 1
+        eventListVC.open(event: event)
+    }
+    
     func paceUserUniversityDataDidChange(_ : Notification? = nil) {
         
         self.tabBar.backgroundColor = nil

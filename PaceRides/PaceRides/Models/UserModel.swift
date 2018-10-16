@@ -38,7 +38,12 @@ class PaceFbLoginDelegate: NSObject, FBSDKLoginButtonDelegate {
             return
         }
         
-        UserModel.createUser(fromFacebookTokenString: result.token.tokenString) { user, error in
+        guard let token = result.token else {
+            print("No token returned from Facebook delegate.")
+            return
+        }
+        
+        UserModel.createUser(fromFacebookTokenString: token.tokenString) { user, error in
             
             guard error == nil else {
                 

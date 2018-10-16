@@ -19,6 +19,7 @@ class OrganizationDetailViewController: UIViewController {
     @IBOutlet weak var externalView: UIView!
     @IBOutlet weak var btnCopyLink: UIButton!
     @IBOutlet weak var btnManageMembers: UIButton!
+    @IBOutlet weak var eventsTableView: UITableView!
     
     
     override func viewWillAppear(_ animated: Bool) {
@@ -111,10 +112,16 @@ class OrganizationDetailViewController: UIViewController {
     
     func updateUI() {
         
+        self.eventsTableView.isHidden = true
         if self._userIsAdmin {
          
             self.externalView.isHidden = true
             self.memberView.isHidden = true
+            
+            if self.organizationModel.hasEventPrivileges() {
+                self.eventsTableView.isHidden = false
+                self.eventsTableView.reloadData()
+            }
             
         } else if self._userIsMember {
             
@@ -141,4 +148,70 @@ class OrganizationDetailViewController: UIViewController {
     @IBAction func manageMembersButtonPressed() {
         self.performSegue(withIdentifier: "showOrganizationMembers", sender: self)
     }
+}
+
+
+extension OrganizationDetailViewController: UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1 + (self.organizationModel.events.count > 0 ? 1 : 0)
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0 {
+            return "Events"
+        }
+        return nil
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch section {
+        case 0:
+            return 1
+        case 1:
+            return self.organizationModel.events.count
+        default:
+            return 0
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "default_cell", for: indexPath)
+
+        switch indexPath.section {
+        case 0:
+            cell.textLabel?.text = "Create Event"
+            cell.accessoryType = .none
+        case 1:
+            cell.textLabel?.text = self.organizationModel.events[indexPath.row].title
+            cell.accessoryType = .disclosureIndicator
+        default:
+            cell.textLabel?.text = "Error"
+        }
+        
+        return cell
+    }
+    
+    
+}
+
+
+extension OrganizationDetailViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        switch indexPath.section {
+        case 0:
+            print("Selected create event")
+        case 1:
+            if let tabBarController = self.tabBarController as? PublicTabBarController {
+                tabBarController.open(event: self.organizationModel.events[indexPath.row])
+                return
+            }
+        default:
+            print("Error")
+        }
+    }
+    
 }
