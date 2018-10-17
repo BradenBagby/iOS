@@ -14,6 +14,7 @@ class EventListViewController: PaceTabViewController {
     private var recentEvents = [EventModel]()
     
     @IBOutlet weak var eventListTableView: UITableView!
+    @IBOutlet weak var noEventsView: UIView!
     
     
     override func viewDidLoad() {
@@ -39,16 +40,39 @@ class EventListViewController: PaceTabViewController {
             org.subscribe(using: self.newOrganizationData)
         }
         
+        if self.numberOfSections(in: self.eventListTableView) == 0 {
+            self.noEventsView.isHidden = false
+            return
+        } else {
+            self.noEventsView.isHidden = true
+        }
+        
         self.eventListTableView.reloadData()
     }
     
     
     func newOrganizationData(_: Notification? = nil) {
+        
+        if self.numberOfSections(in: self.eventListTableView) == 0 {
+            self.noEventsView.isHidden = false
+            return
+        } else {
+            self.noEventsView.isHidden = true
+        }
+        
         self.eventListTableView.reloadData()
     }
     
 
     func newEventData(_: Notification? = nil) {
+        
+        if self.numberOfSections(in: self.eventListTableView) == 0 {
+            self.noEventsView.isHidden = false
+            return
+        } else {
+            self.noEventsView.isHidden = true
+        }
+        
         self.eventListTableView.reloadData()
     }
     
@@ -164,7 +188,12 @@ extension EventListViewController: UITableViewDataSource {
             }
         }
         
-        default_cell.textLabel?.text = recentEvents[indexPath.row].title ?? "Error"
+        if indexPath.row < self.recentEvents.count {
+            default_cell.textLabel?.text = recentEvents[indexPath.row].title ?? "Error"
+        } else {
+            default_cell.textLabel?.text = "Error"
+        }
+        
         return default_cell
     }
     

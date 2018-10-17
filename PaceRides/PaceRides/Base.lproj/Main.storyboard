@@ -132,13 +132,23 @@
                                     <outlet property="delegate" destination="rfo-t0-ySn" id="E02-lS-Vo9"/>
                                 </connections>
                             </tableView>
+                            <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vsm-af-b6Q">
+                                <rect key="frame" x="0.0" y="116" width="375" height="502"/>
+                                <connections>
+                                    <segue destination="evU-x9-WtJ" kind="embed" id="xST-ya-lTB"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="Vsm-af-b6Q" firstAttribute="leading" secondItem="FAv-Cc-i42" secondAttribute="leading" id="2mr-iT-gxq"/>
+                            <constraint firstItem="FAv-Cc-i42" firstAttribute="trailing" secondItem="Vsm-af-b6Q" secondAttribute="trailing" id="asN-25-dCu"/>
                             <constraint firstItem="FAv-Cc-i42" firstAttribute="trailing" secondItem="Zw7-xU-RHe" secondAttribute="trailing" id="fw2-fF-Lg0"/>
+                            <constraint firstItem="FAv-Cc-i42" firstAttribute="bottom" secondItem="Vsm-af-b6Q" secondAttribute="bottom" id="jGn-JW-z4Y"/>
                             <constraint firstItem="Zw7-xU-RHe" firstAttribute="leading" secondItem="FAv-Cc-i42" secondAttribute="leading" id="lXk-VW-0Ro"/>
                             <constraint firstItem="Zw7-xU-RHe" firstAttribute="top" secondItem="2ax-QN-rzI" secondAttribute="top" id="oAO-zs-7QC"/>
                             <constraint firstItem="FAv-Cc-i42" firstAttribute="bottom" secondItem="Zw7-xU-RHe" secondAttribute="bottom" id="wNG-i1-ubK"/>
+                            <constraint firstItem="Vsm-af-b6Q" firstAttribute="top" secondItem="FAv-Cc-i42" secondAttribute="top" id="zrA-43-nUL"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="FAv-Cc-i42"/>
                     </view>
@@ -147,6 +157,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="eventListTableView" destination="Zw7-xU-RHe" id="2VZ-WV-gyE"/>
+                        <outlet property="noEventsView" destination="Vsm-af-b6Q" id="yup-8u-pPV"/>
                         <outlet property="openMenuBarButtonItem" destination="wj1-DH-VFs" id="QPY-Rt-gjo"/>
                         <segue destination="ZVu-34-QCy" kind="show" identifier="showEventDetail" id="FIx-Vq-aRE"/>
                     </connections>
@@ -195,7 +206,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k23-dJ-OvI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5397.6000000000004" y="-56.221889055472268"/>
+            <point key="canvasLocation" x="6385" y="-57"/>
         </scene>
         <!--Drive-->
         <scene sceneID="i1U-8X-hRB">
@@ -1045,6 +1056,33 @@
             </objects>
             <point key="canvasLocation" x="4442.3999999999996" y="-1496.8515742128936"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="BFj-wh-jnY">
+            <objects>
+                <viewController id="evU-x9-WtJ" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="dev-7H-hNf">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="502"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You have no saved events." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a3n-CX-931">
+                                <rect key="frame" x="16" y="240.5" width="343" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="a3n-CX-931" secondAttribute="trailing" constant="16" id="BcY-2j-IVW"/>
+                            <constraint firstItem="a3n-CX-931" firstAttribute="leading" secondItem="dev-7H-hNf" secondAttribute="leading" constant="16" id="ncD-Xe-Vs7"/>
+                            <constraint firstItem="a3n-CX-931" firstAttribute="centerY" secondItem="dev-7H-hNf" secondAttribute="centerY" id="z2W-NJ-7ap"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8SV-hb-ApY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5344.8000000000002" y="-79.160419790104953"/>
+        </scene>
     </scenes>
     <resources>
         <image name="carIcon" width="24" height="24"/>
@@ -1055,7 +1093,6 @@
         <image name="testSteeringWheel" width="29" height="29"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="aQt-gZ-TXt"/>
         <segue reference="T3t-vN-uJH"/>
     </inferredMetricsTieBreakers>
 </document>
