@@ -91,7 +91,15 @@ extension EventListViewController: UITableViewDataSource {
             return 0
         }
         
-        return paceUser.organizations.count + (recentEvents.count > 0 ? 1 : 0)
+        var count = 0
+        
+        for org in paceUser.organizations {
+            if org.events.count > 0 {
+                count += 1
+            }
+        }
+        
+        return count + (recentEvents.count > 0 ? 1 : 0)
     }
     
     
@@ -101,14 +109,18 @@ extension EventListViewController: UITableViewDataSource {
             return nil
         }
         
-        if section < paceUser.organizations.count {
-            if paceUser.organizations[section].events.count == 0 {
-                return nil
+        var sectionsLeft = section
+        
+        for org in paceUser.organizations {
+            if org.events.count > 0 {
+                if sectionsLeft == 0 {
+                    return org.title
+                }
+                sectionsLeft = sectionsLeft - 1
             }
-            return paceUser.organizations[section].title
-        } else {
-            return "Recent Events"
         }
+        
+        return "Recent Events"
     }
     
     
@@ -118,11 +130,18 @@ extension EventListViewController: UITableViewDataSource {
             return 0
         }
         
-        if section < paceUser.organizations.count {
-            return paceUser.organizations[section].events.count
-        } else {
-            return self.recentEvents.count
+        var sectionsLeft = section
+        
+        for org in paceUser.organizations {
+            if org.events.count > 0 {
+                if sectionsLeft == 0 {
+                    return org.events.count
+                }
+                sectionsLeft = sectionsLeft - 1
+            }
         }
+        
+        return self.recentEvents.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -133,12 +152,19 @@ extension EventListViewController: UITableViewDataSource {
             return default_cell
         }
         
-        if indexPath.section < paceUser.organizations.count {
-           default_cell.textLabel?.text = paceUser.organizations[indexPath.section].events[indexPath.row].title ?? "Error"
-        } else {
-            default_cell.textLabel?.text = recentEvents[indexPath.row].title ?? "Error"
+        var sectionsLeft = indexPath.section
+        
+        for org in paceUser.organizations {
+            if org.events.count > 0 {
+                if sectionsLeft == 0 {
+                    default_cell.textLabel?.text = org.events[indexPath.row].title ?? "Error"
+                    return default_cell
+                }
+                sectionsLeft = sectionsLeft - 1
+            }
         }
         
+        default_cell.textLabel?.text = recentEvents[indexPath.row].title ?? "Error"
         return default_cell
     }
     
@@ -154,13 +180,21 @@ extension EventListViewController: UITableViewDelegate {
             return
         }
         
-        if indexPath.section < paceUser.organizations.count {
-            self.eventToOpen = paceUser.organizations[indexPath.section].events[indexPath.row]
-        } else {
-            self.eventToOpen = self.recentEvents[indexPath.row]
+        var sectionsLeft = indexPath.section
+        
+        for org in paceUser.organizations {
+            if org.events.count > 0 {
+                if sectionsLeft == 0 {
+                    self.eventToOpen = org.events[indexPath.row]
+                    self.performSegue(withIdentifier: "showEventDetail", sender: self)
+                    return
+                }
+                sectionsLeft = sectionsLeft - 1
+            }
         }
         
+        self.eventToOpen = recentEvents[indexPath.row]
         self.performSegue(withIdentifier: "showEventDetail", sender: self)
+        return
     }
-    
 }
