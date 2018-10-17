@@ -21,24 +21,6 @@ class OrganizationListViewController: PaceTabViewController {
     override func viewDidLoad() {
         super.viewDidLoad(self.view)
         
-        if let transitionDestination = self.appDelegate().transitionDestination {
-            switch transitionDestination {
-            case .organization(let orgId):
-                
-                let transitionOrgModel = OrganizationModel(withId: orgId)
-                self.selectedOrganization = transitionOrgModel
-                self.performSegue(withIdentifier: "showOrganizationDetail", sender: self)
-                
-                self.recentOrganizations.append(transitionOrgModel)
-                self.tableView.reloadData()
-                self.appDelegate().transitionDestination = nil
-                
-                return
-            default:
-                break
-            }
-        }
-        
         self.newPaceUserData()
         UserModel.notificationCenter.addObserver(
             forName: .NewPaceUserData,
@@ -72,6 +54,21 @@ class OrganizationListViewController: PaceTabViewController {
     }
     
     
+    func open(organization: OrganizationModel) {
+        
+        self.navigationController!.popToRootViewController(animated: false)
+        self.selectedOrganization = organization
+        self.performSegue(withIdentifier: "showOrganizationDetail", sender: self)
+        
+        for recentOrganization in self.recentOrganizations {
+            if recentOrganization.uid == organization.uid {
+                return
+            }
+        }
+        self.recentOrganizations.append(organization)
+    }
+    
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showOrganizationDetail" {
             
@@ -84,7 +81,6 @@ class OrganizationListViewController: PaceTabViewController {
                 print("Could not cast destination to OrganizationDetailVC")
                 return
             }
-            
         }
     }
 }

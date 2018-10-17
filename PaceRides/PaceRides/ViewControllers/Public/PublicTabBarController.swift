@@ -33,12 +33,14 @@ class PublicTabBarController: UITabBarController {
         
         if let transitionDestination = self.appDelegate().transitionDestination {
             switch transitionDestination {
-            case .organization(_):
+            case .organization(let orgId):
+                self.open(organization: OrganizationModel(withId: orgId))
                 break
             case .event(let eventId):
                 self.open(event: EventModel(withUID: eventId))
                 break
             }
+            self.appDelegate().transitionDestination = nil
         }
     }
     
@@ -64,6 +66,20 @@ class PublicTabBarController: UITabBarController {
         self.selectedIndex = 1
         eventListVC.open(event: event)
     }
+    
+    
+    func open(organization: OrganizationModel) {
+        
+        guard let navVC = self.viewControllers?[0] as? UINavigationController,
+            let orgListVC = navVC.viewControllers[0] as? OrganizationListViewController else {
+                print("VC[0] not OrgListVC")
+                return
+        }
+        
+        self.selectedIndex = 0
+        orgListVC.open(organization: organization)
+    }
+    
     
     func paceUserUniversityDataDidChange(_ : Notification? = nil) {
         
