@@ -162,13 +162,40 @@
                     <view key="view" contentMode="scaleToFill" id="9e1-b4-bmO">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cGO-8F-p9r">
+                                <rect key="frame" x="16" y="148" width="343" height="32"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b7j-6V-07Z">
+                                <rect key="frame" x="16" y="212" width="343" height="30"/>
+                                <state key="normal" title="Request a Ride"/>
+                                <connections>
+                                    <action selector="requestRideButtonPressed:" destination="ZVu-34-QCy" eventType="touchUpInside" id="9nf-Ns-A4z"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="b7j-6V-07Z" firstAttribute="top" secondItem="cGO-8F-p9r" secondAttribute="bottom" constant="32" id="Dbz-m3-4IA"/>
+                            <constraint firstItem="cGO-8F-p9r" firstAttribute="top" secondItem="boc-BG-l0K" secondAttribute="top" constant="32" id="EZ2-hy-9KQ"/>
+                            <constraint firstItem="boc-BG-l0K" firstAttribute="trailing" secondItem="cGO-8F-p9r" secondAttribute="trailing" constant="16" id="HVg-wv-GxD"/>
+                            <constraint firstItem="boc-BG-l0K" firstAttribute="trailing" secondItem="b7j-6V-07Z" secondAttribute="trailing" constant="16" id="LbM-vb-8eX"/>
+                            <constraint firstItem="b7j-6V-07Z" firstAttribute="leading" secondItem="boc-BG-l0K" secondAttribute="leading" constant="16" id="OsX-3t-051"/>
+                            <constraint firstItem="cGO-8F-p9r" firstAttribute="leading" secondItem="boc-BG-l0K" secondAttribute="leading" constant="16" id="hjz-2P-O16"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="boc-BG-l0K"/>
                     </view>
+                    <connections>
+                        <outlet property="primaryLabel" destination="cGO-8F-p9r" id="f43-zl-bcG"/>
+                        <outlet property="requestRideButton" destination="b7j-6V-07Z" id="grs-KT-gh3"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k23-dJ-OvI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5398" y="-56"/>
+            <point key="canvasLocation" x="5397.6000000000004" y="-56.221889055472268"/>
         </scene>
         <!--Drive-->
         <scene sceneID="i1U-8X-hRB">
@@ -1028,6 +1055,7 @@
         <image name="testSteeringWheel" width="29" height="29"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="J8c-CJ-kSm"/>
+        <segue reference="aQt-gZ-TXt"/>
+        <segue reference="T3t-vN-uJH"/>
     </inferredMetricsTieBreakers>
 </document>

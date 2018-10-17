@@ -97,7 +97,6 @@ class OrganizationExternalViewController: UIViewController {
                         return
                     }
                 }
-                
             }
         }
     }
