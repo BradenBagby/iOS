@@ -287,6 +287,13 @@ class OrganizationModel {
     
     func createEvent(withTitle title: String, completion: ((Error?) -> Void)? = nil) {
         
+        guard !title.isEmpty else {
+            if let completion = completion {
+                completion(NSError(domain: "PaceEventError", code: 11111, userInfo: nil))
+            }
+            return
+        }
+        
         let batch = OrganizationModel.db.batch()
         
         let eventRef = EventModel.ref.document()

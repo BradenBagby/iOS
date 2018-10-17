@@ -213,7 +213,7 @@ extension OrganizationDetailViewController: UITableViewDelegate {
             }
             alert.addAction(UIAlertAction(title: "Create", style: .default) { [weak alert] (_) in
                 let textField = alert!.textFields![0] // Force unwrapping because we know it exists.
-                if let text = textField.text {
+                if let text = textField.text, !text.isEmpty {
                     self.organizationModel.createEvent(withTitle: text)
                 }
             })
