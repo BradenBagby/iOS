@@ -73,7 +73,7 @@ class SchoolViewController: UIViewController {
                         self.primaryLabel.text = "Not Quite Yet"
                         self.secondaryLabel.text = """
                             For the time being, \(universityShorthand) isn't using Pace Rides.\n
-                            In the mean time, click the Public tab in the main menu to view community events.
+                            In the mean time, click 'Public' in the main menu to view community events.
                         """
                     }
                     
