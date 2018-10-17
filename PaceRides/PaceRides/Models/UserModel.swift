@@ -66,9 +66,10 @@ public enum UserDBKeys: String {
     case publicProfile = "publicProfile"
     case displayName = "displayName"
     case facebookId = "facebookId"
+    case savedEvents = "events"
     case organizations = "organizations"
-    case organizationTitle = "title"
-    case organizationReference = "reference"
+    case title = "title"
+    case reference = "reference"
     
     case schoolProfile = "schoolProfile"
     case email = "email"
@@ -199,6 +200,8 @@ protocol PaceUser {
     var organizations: [OrganizationModel] { get }
     
     
+    var savedEvents: [EventModel] { get }
+    
     /// Returns the public profile information if the user is signed into a public profile, nil otherwise
     func publicProfile() -> PacePublicProfile?
     
@@ -217,6 +220,12 @@ protocol PaceUser {
     
     /// Sign out the current user
     func signOut() -> Error?
+    
+    
+    func save(event: EventModel)
+    
+    
+    func unsave(event: EventModel)
 }
 
 
@@ -476,6 +485,13 @@ class UserModel: NSObject, PaceUser {
         }
     }
     
+    private var _savedEvents = [EventModel]()
+    var savedEvents: [EventModel] {
+        get {
+            return self._savedEvents
+        }
+    }
+    
     private var userData: [String: Any]! = nil
     private var userDataListener: ListenerRegistration? = nil
     private var userOrganizationsListener: ListenerRegistration? = nil
@@ -524,6 +540,9 @@ class UserModel: NSObject, PaceUser {
         // Listen for organizations updates
         self.userOrganizationsListener = self.dbReference.collection(UserDBKeys.organizations.rawValue)
             .addSnapshotListener(self.onOrganizationsUpdate)
+        
+        self.dbReference.collection(UserDBKeys.savedEvents.rawValue)
+            .addSnapshotListener(self.onSavedEventsUpdate)
     }
     
     private func onUserDocumentUpdate(userDocSnap: DocumentSnapshot?, error: Error?) {
@@ -561,8 +580,8 @@ class UserModel: NSObject, PaceUser {
         
         self._organizations.removeAll()
         for organization in organizations.documents {
-            if let title = organization.data()[UserDBKeys.organizationTitle.rawValue] as? String,
-                    let reference = organization.data()[UserDBKeys.organizationReference.rawValue] as? DocumentReference {
+            if let title = organization.data()[UserDBKeys.title.rawValue] as? String,
+                    let reference = organization.data()[UserDBKeys.reference.rawValue] as? DocumentReference {
                 self._organizations.append(OrganizationModel(withTitle: title, andReference: reference))
             }
         }
@@ -573,6 +592,32 @@ class UserModel: NSObject, PaceUser {
         )
     }
     
+    
+    private func onSavedEventsUpdate(eventsSnapshot: QuerySnapshot?, error: Error?) {
+        
+        guard error == nil else {
+            print(error!.localizedDescription)
+            return
+        }
+        
+        guard let events = eventsSnapshot else {
+            print("Error, no user organization")
+            return
+        }
+        
+        self._savedEvents.removeAll()
+        for event in events.documents {
+            if let title = event.data()[UserDBKeys.title.rawValue] as? String,
+                let reference = event.data()[UserDBKeys.reference.rawValue] as? DocumentReference {
+                self._savedEvents.append(EventModel(withUID: reference.documentID, andTitle: title))
+            }
+        }
+        
+        UserModel.notificationCenter.post(
+            name: .NewPaceUserData,
+            object: nil
+        )
+    }
     
     /// Links the existing user with given credentials
     private func linkCredentials(_ credentials: AuthCredential, completion: PaceAuthResultCallback? = nil) {
@@ -678,6 +723,20 @@ class UserModel: NSObject, PaceUser {
         
         FBSDKLoginManager().logOut()
         return nil
+    }
+    
+    
+    func save(event: EventModel) {
+        let savedEventData: [String: Any] = [
+            UserDBKeys.title.rawValue: event.title as Any,
+            UserDBKeys.reference.rawValue: event.reference
+        ]
+        self.dbReference.collection(UserDBKeys.savedEvents.rawValue).document(event.uid).setData(savedEventData)
+    }
+    
+    
+    func unsave(event: EventModel) {
+        self.dbReference.collection(UserDBKeys.savedEvents.rawValue).document(event.uid).delete()
     }
     
     

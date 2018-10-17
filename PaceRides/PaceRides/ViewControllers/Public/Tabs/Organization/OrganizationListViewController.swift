@@ -146,7 +146,11 @@ extension OrganizationListViewController: UITableViewDataSource {
             }
             fallthrough
         case 1:
-            cell.textLabel?.text = self.recentOrganizations[indexPath.row].title
+            if indexPath.row < self.recentOrganizations.count {
+                cell.textLabel?.text = self.recentOrganizations[indexPath.row].title
+            } else {
+                cell.textLabel?.text = "Error"
+            }
             break
         default:
             cell.textLabel?.text = "Error"

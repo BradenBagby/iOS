@@ -180,8 +180,17 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b7j-6V-07Z">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hlQ-zq-xgm">
                                 <rect key="frame" x="16" y="212" width="343" height="30"/>
+                                <state key="normal" title="Save Event">
+                                    <color key="titleColor" red="0.93385511636734009" green="0.77375763654708862" blue="0.16158574819564819" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="saveEventButtonPressed" destination="ZVu-34-QCy" eventType="touchUpInside" id="iiN-bI-2I8"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b7j-6V-07Z">
+                                <rect key="frame" x="16" y="250" width="343" height="30"/>
                                 <state key="normal" title="Request a Ride"/>
                                 <connections>
                                     <action selector="requestRideButtonPressed:" destination="ZVu-34-QCy" eventType="touchUpInside" id="9nf-Ns-A4z"/>
@@ -190,23 +199,27 @@
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="b7j-6V-07Z" firstAttribute="top" secondItem="cGO-8F-p9r" secondAttribute="bottom" constant="32" id="Dbz-m3-4IA"/>
+                            <constraint firstItem="boc-BG-l0K" firstAttribute="trailing" secondItem="hlQ-zq-xgm" secondAttribute="trailing" constant="16" id="5aI-PB-1dk"/>
                             <constraint firstItem="cGO-8F-p9r" firstAttribute="top" secondItem="boc-BG-l0K" secondAttribute="top" constant="32" id="EZ2-hy-9KQ"/>
                             <constraint firstItem="boc-BG-l0K" firstAttribute="trailing" secondItem="cGO-8F-p9r" secondAttribute="trailing" constant="16" id="HVg-wv-GxD"/>
                             <constraint firstItem="boc-BG-l0K" firstAttribute="trailing" secondItem="b7j-6V-07Z" secondAttribute="trailing" constant="16" id="LbM-vb-8eX"/>
                             <constraint firstItem="b7j-6V-07Z" firstAttribute="leading" secondItem="boc-BG-l0K" secondAttribute="leading" constant="16" id="OsX-3t-051"/>
+                            <constraint firstItem="b7j-6V-07Z" firstAttribute="top" secondItem="hlQ-zq-xgm" secondAttribute="bottom" constant="8" id="e6A-ck-eHO"/>
+                            <constraint firstItem="hlQ-zq-xgm" firstAttribute="top" secondItem="cGO-8F-p9r" secondAttribute="bottom" constant="32" id="fpR-vg-7Q0"/>
                             <constraint firstItem="cGO-8F-p9r" firstAttribute="leading" secondItem="boc-BG-l0K" secondAttribute="leading" constant="16" id="hjz-2P-O16"/>
+                            <constraint firstItem="hlQ-zq-xgm" firstAttribute="leading" secondItem="boc-BG-l0K" secondAttribute="leading" constant="16" id="pug-Ga-R5S"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="boc-BG-l0K"/>
                     </view>
                     <connections>
                         <outlet property="primaryLabel" destination="cGO-8F-p9r" id="f43-zl-bcG"/>
                         <outlet property="requestRideButton" destination="b7j-6V-07Z" id="grs-KT-gh3"/>
+                        <outlet property="saveEventButton" destination="hlQ-zq-xgm" id="yyk-Fq-Y15"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k23-dJ-OvI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6385" y="-57"/>
+            <point key="canvasLocation" x="6384.8000000000002" y="-57.121439280359823"/>
         </scene>
         <!--Drive-->
         <scene sceneID="i1U-8X-hRB">

@@ -225,8 +225,8 @@ class OrganizationModel {
         batch.setData(memData, forDocument: memRef)
         
         let userOrgData: [String: Any] = [
-            UserDBKeys.organizationTitle.rawValue: self.title as Any,
-            UserDBKeys.organizationReference.rawValue: self.reference
+            UserDBKeys.title.rawValue: self.title as Any,
+            UserDBKeys.reference.rawValue: self.reference
         ]
         let userOrgRef = user.reference.collection(UserDBKeys.organizations.rawValue).document(self.uid)
         batch.setData(userOrgData, forDocument: userOrgRef)

@@ -123,7 +123,7 @@ extension EventListViewController: UITableViewDataSource {
             }
         }
         
-        return count + (recentEvents.count > 0 ? 1 : 0)
+        return count + (paceUser.savedEvents.count > 0 ? 1 : 0) + (recentEvents.count > 0 ? 1 : 0)
     }
     
     
@@ -144,7 +144,17 @@ extension EventListViewController: UITableViewDataSource {
             }
         }
         
-        return "Recent Events"
+        if sectionsLeft == 0 {
+            return "Saved Events"
+        } else if sectionsLeft == 1 {
+            if self.recentEvents.count > 0 {
+                return "Recent Events"
+            } else {
+                return "Saved Events"
+            }
+        }
+        
+        return "Error"
     }
     
     
@@ -165,7 +175,17 @@ extension EventListViewController: UITableViewDataSource {
             }
         }
         
-        return self.recentEvents.count
+        if sectionsLeft == 0 {
+            return paceUser.savedEvents.count
+        } else if sectionsLeft == 1 {
+            if self.recentEvents.count > 0 {
+                return self.recentEvents.count
+            } else {
+                return paceUser.savedEvents.count
+            }
+        }
+        
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -188,8 +208,14 @@ extension EventListViewController: UITableViewDataSource {
             }
         }
         
-        if indexPath.row < self.recentEvents.count {
-            default_cell.textLabel?.text = recentEvents[indexPath.row].title ?? "Error"
+        if sectionsLeft == 0 {
+            default_cell.textLabel?.text = paceUser.savedEvents[indexPath.row].title
+        } else if sectionsLeft == 1 {
+            if self.recentEvents.count > 0 {
+                default_cell.textLabel?.text = self.recentEvents[indexPath.row].title
+            } else {
+                default_cell.textLabel?.text = paceUser.savedEvents[indexPath.row].title
+            }
         } else {
             default_cell.textLabel?.text = "Error"
         }
@@ -222,8 +248,18 @@ extension EventListViewController: UITableViewDelegate {
             }
         }
         
-        self.eventToOpen = recentEvents[indexPath.row]
+        if sectionsLeft == 0 {
+            self.eventToOpen = paceUser.savedEvents[indexPath.row]
+        } else if sectionsLeft == 1 {
+            if self.recentEvents.count > 0 {
+                self.eventToOpen = self.recentEvents[indexPath.row]
+            } else {
+                self.eventToOpen = paceUser.savedEvents[indexPath.row]
+            }
+        } else {
+            return
+        }
+        
         self.performSegue(withIdentifier: "showEventDetail", sender: self)
-        return
     }
 }
