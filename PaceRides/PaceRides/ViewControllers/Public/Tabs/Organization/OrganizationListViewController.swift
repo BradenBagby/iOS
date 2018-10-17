@@ -89,18 +89,23 @@ class OrganizationListViewController: PaceTabViewController {
 extension OrganizationListViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1 + (self.recentOrganizations.count > 0 ? 1 : 0)
+        
+        guard let paceUser = UserModel.sharedInstance() else {
+            return 0
+        }
+        
+        return (paceUser.organizations.count > 0 ? 1 : 0) + (self.recentOrganizations.count > 0 ? 1 : 0)
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        
+        guard let paceUser = UserModel.sharedInstance() else {
+            return nil
+        }
+        
         switch section {
         case 0:
-            if let paceUser = UserModel.sharedInstance(), let userPublicProfile = paceUser.publicProfile() {
-                if userPublicProfile.organizations.count == 0 {
-                    return nil
-                }
-            }
-            return "Your Organizations"
+            return (paceUser.organizations.count > 0 ? "Your Organizations" : "Recent Organizations")
         case 1:
             return "Recent Organizations"
         default:
@@ -110,33 +115,36 @@ extension OrganizationListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
+        guard let paceUser = UserModel.sharedInstance() else {
+            return 0
+        }
+        
         switch section {
         case 0:
-            if let paceUser = UserModel.sharedInstance(), let userPublicProfile = paceUser.publicProfile() {
-                return userPublicProfile.organizations.count
-            }
-            break
+            return (paceUser.organizations.count > 0 ? paceUser.organizations.count : self.recentOrganizations.count)
         case 1:
             return self.recentOrganizations.count
         default:
             return 0
         }
-        
-        return 0
     }
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "default_cell", for: indexPath)
         
+        guard let paceUser = UserModel.sharedInstance() else {
+            cell.textLabel?.text = "Error"
+            return cell
+        }
+        
         switch indexPath.section {
         case 0:
-            if let paceUser = UserModel.sharedInstance() {
-                if let userPublicProfile = paceUser.publicProfile() {
-                    cell.textLabel?.text = userPublicProfile.organizations[indexPath.row].title
-                }
+            if paceUser.organizations.count > 0 {
+                cell.textLabel?.text = paceUser.organizations[indexPath.row].title
+                break
             }
-            break
+            fallthrough
         case 1:
             cell.textLabel?.text = self.recentOrganizations[indexPath.row].title
             break
@@ -153,20 +161,28 @@ extension OrganizationListViewController: UITableViewDataSource {
 extension OrganizationListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
         tableView.deselectRow(at: indexPath, animated: true)
-        if let paceUser = UserModel.sharedInstance(), let userPublicProfile = paceUser.publicProfile() {
-            switch indexPath.section {
-            case 0:
-                self.selectedOrganization = userPublicProfile.organizations[indexPath.row]
-                break
-            case 1:
-                self.selectedOrganization = recentOrganizations[indexPath.row]
-                break
-            default:
-                return
-            }
-            self.performSegue(withIdentifier: "showOrganizationDetail", sender: self)
+        
+        guard let paceUser = UserModel.sharedInstance() else {
+            return
         }
+        
+        switch indexPath.section {
+        case 0:
+            if paceUser.organizations.count > 0 {
+                self.selectedOrganization = paceUser.organizations[indexPath.row]
+                break
+            }
+            fallthrough
+        case 1:
+            self.selectedOrganization = recentOrganizations[indexPath.row]
+            break
+        default:
+            return
+        }
+        
+        self.performSegue(withIdentifier: "showOrganizationDetail", sender: self)
     }
     
 }
