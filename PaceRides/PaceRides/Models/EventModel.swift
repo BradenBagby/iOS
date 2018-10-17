@@ -13,6 +13,7 @@ import Firebase
 enum EventDBKeys: String {
     case events = "events"
     case title = "title"
+    case organization = "organization"
     case reference = "reference"
 }
 

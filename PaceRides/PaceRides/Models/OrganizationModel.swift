@@ -254,7 +254,7 @@ class OrganizationModel {
         let adminRef = self.reference.collection(OrgDBKeys.administrators.rawValue).document(user.uid)
         batch.setData(adminData, forDocument: adminRef)
         
-        batch.commit()
+        batch.commit(completion: completion)
     }
     
     func removeAdministrator(_ user: UserReference, completion: ((Error?) -> Void)? = nil) {
@@ -282,7 +282,32 @@ class OrganizationModel {
         let memberRef = self.reference.collection(OrgDBKeys.members.rawValue).document(user.uid)
         batch.setData(memberData, forDocument: memberRef)
         
-        batch.commit()
+        batch.commit(completion: completion)
+    }
+    
+    func createEvent(withTitle title: String, completion: ((Error?) -> Void)? = nil) {
+        
+        let batch = OrganizationModel.db.batch()
+        
+        let eventRef = EventModel.ref.document()
+        let eventOrgData: [String: Any] = [
+            EventDBKeys.title.rawValue: self.title as Any,
+            EventDBKeys.reference.rawValue: self.reference
+        ]
+        let eventData: [String: Any] = [
+            EventDBKeys.title.rawValue: title,
+            EventDBKeys.organization.rawValue: eventOrgData
+        ]
+        batch.setData(eventData, forDocument: eventRef)
+        
+        let orgEventRef = self.reference.collection(OrgDBKeys.events.rawValue).document(eventRef.documentID)
+        let orgEventData: [String: Any] = [
+            OrgDBKeys.title.rawValue: title,
+            OrgDBKeys.reference.rawValue: eventRef
+        ]
+        batch.setData(orgEventData, forDocument: orgEventRef)
+        
+        batch.commit(completion: completion)
     }
     
     

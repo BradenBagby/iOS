@@ -203,7 +203,22 @@ extension OrganizationDetailViewController: UITableViewDelegate {
         
         switch indexPath.section {
         case 0:
-            print("Selected create event")
+            let alert = UIAlertController(
+                title: "Create Event",
+                message: "Create a new event for this organization.",
+                preferredStyle: .alert
+            )
+            alert.addTextField { (textField) in
+                textField.placeholder = "Event Title"
+            }
+            alert.addAction(UIAlertAction(title: "Create", style: .default) { [weak alert] (_) in
+                let textField = alert!.textFields![0] // Force unwrapping because we know it exists.
+                if let text = textField.text {
+                    self.organizationModel.createEvent(withTitle: text)
+                }
+            })
+            alert.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: nil))
+            self.present(alert, animated: true, completion: nil)
         case 1:
             if let tabBarController = self.tabBarController as? PublicTabBarController {
                 tabBarController.open(event: self.organizationModel.events[indexPath.row])
