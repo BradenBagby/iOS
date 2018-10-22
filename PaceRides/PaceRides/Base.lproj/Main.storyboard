@@ -249,14 +249,39 @@
                     <view key="view" contentMode="scaleToFill" id="p7O-S1-ij7">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bgS-cV-7SI">
+                                <rect key="frame" x="16" y="132" width="343" height="31.5"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xdf-jP-KLj">
+                                <rect key="frame" x="0.0" y="116" width="375" height="502"/>
+                                <connections>
+                                    <segue destination="egG-qo-Zaw" kind="embed" id="zYl-l1-GcN"/>
+                                </connections>
+                            </containerView>
+                        </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="UhR-5L-Z0d" firstAttribute="trailing" secondItem="bgS-cV-7SI" secondAttribute="trailing" constant="16" id="1MW-8r-xCE"/>
+                            <constraint firstItem="UhR-5L-Z0d" firstAttribute="trailing" secondItem="Xdf-jP-KLj" secondAttribute="trailing" id="Bch-hv-bUJ"/>
+                            <constraint firstItem="bgS-cV-7SI" firstAttribute="top" secondItem="UhR-5L-Z0d" secondAttribute="top" constant="16" id="aIT-gI-KhV"/>
+                            <constraint firstItem="UhR-5L-Z0d" firstAttribute="bottom" secondItem="Xdf-jP-KLj" secondAttribute="bottom" id="iqQ-NE-w9x"/>
+                            <constraint firstItem="Xdf-jP-KLj" firstAttribute="top" secondItem="UhR-5L-Z0d" secondAttribute="top" id="l0t-Cr-bBq"/>
+                            <constraint firstItem="Xdf-jP-KLj" firstAttribute="leading" secondItem="UhR-5L-Z0d" secondAttribute="leading" id="ltm-mp-Vq8"/>
+                            <constraint firstItem="bgS-cV-7SI" firstAttribute="leading" secondItem="UhR-5L-Z0d" secondAttribute="leading" constant="16" id="uzx-at-zdu"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="UhR-5L-Z0d"/>
                     </view>
                     <navigationItem key="navigationItem" title="Ride" id="n9Z-Jt-bmr">
                         <barButtonItem key="leftBarButtonItem" image="hamburgerMenuIcon" id="2PF-IR-ffx"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="noRideView" destination="Xdf-jP-KLj" id="WIM-PX-Tlr"/>
                         <outlet property="openMenuBarButtonItem" destination="2PF-IR-ffx" id="9s6-4v-g7s"/>
+                        <outlet property="primaryLabel" destination="bgS-cV-7SI" id="1QB-v9-3V5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jct-MA-jWO" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1102,6 +1127,33 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8SV-hb-ApY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5344.8000000000002" y="-79.160419790104953"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="l5x-XV-Dhb">
+            <objects>
+                <viewController id="egG-qo-Zaw" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="GC5-9R-PRh">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="502"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You are not currently in a ride. " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vwg-nV-JF7">
+                                <rect key="frame" x="16" y="240.5" width="343" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="vwg-nV-JF7" firstAttribute="centerY" secondItem="GC5-9R-PRh" secondAttribute="centerY" id="Cbq-Jc-ax2"/>
+                            <constraint firstItem="vwg-nV-JF7" firstAttribute="leading" secondItem="GC5-9R-PRh" secondAttribute="leading" constant="16" id="Ieu-hE-QKB"/>
+                            <constraint firstAttribute="trailing" secondItem="vwg-nV-JF7" secondAttribute="trailing" constant="16" id="uy5-TC-skq"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="imC-Qt-LAz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5461.6000000000004" y="772.71364317841085"/>
         </scene>
     </scenes>
     <resources>
