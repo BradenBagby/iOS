@@ -17,6 +17,9 @@ class EventDetailViewController: UIViewController {
     @IBOutlet weak var saveEventButton: UIButton!
     
     private var _userHasSavedEvent = false
+    private var _userRide: RideModel?
+    private var _userRideIsForThisEvent = false
+    private var _userRideIsThisEvent = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,11 +48,35 @@ class EventDetailViewController: UIViewController {
             }
         }
         
+        if let ride = paceUser.ride {
+            self._userRide = ride
+            ride.subscribe(using: self.newRideData)
+        } else {
+            self._userRide = nil
+        }
+        
         self.updateUI()
     }
     
     
+    func newRideData(_: Notification? = nil) {
+        
+        self._userRideIsForThisEvent = false
+        
+        guard let userRide = self._userRide else {
+            return
+        }
+        
+        if userRide.eventUID == self.event.uid {
+            self._userRideIsForThisEvent = true
+        }
+        
+        updateUI()
+    }
+    
+    
     func updateUI() {
+        
         self.title = event.title
         self.primaryLabel.text = event.title
         
@@ -57,15 +84,47 @@ class EventDetailViewController: UIViewController {
         if self._userHasSavedEvent {
             self.saveEventButton.setTitle("✔️ Event Saved", for: .normal)
         }
+        
+        self.requestRideButton.isEnabled = true
+        self.requestRideButton.setTitle("Request a Ride", for: .normal)
+        self.requestRideButton.setTitleColor(nil, for: .normal)
+        if self._userRide != nil {
+            if self._userRideIsForThisEvent {
+                self.requestRideButton.setTitle("Cancel Ride Request", for: .normal)
+                self.requestRideButton.setTitleColor(.red, for: .normal)
+            } else {
+                self.requestRideButton.isEnabled = false
+            }
+        }
     }
     
     
     @IBAction func requestRideButtonPressed(_ sender: Any) {
-        self.requestRideButton.setTitleColor(.red, for: .normal)
-        self.requestRideButton.setTitle("Need to implement", for: .normal)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-            self.requestRideButton.setTitleColor(nil, for: .normal)
-            self.requestRideButton.setTitle("Request a Ride", for: .normal)
+        
+        guard let paceUser = UserModel.sharedInstance(), let publicProfile = paceUser.publicProfile() else {
+            return
+        }
+        
+        if self._userRide == nil {
+        
+            RideModel.createNewRide(rider: publicProfile, event: self.event) { error in
+                
+                guard error == nil else {
+                    print("Error")
+                    self.requestRideButton.setTitle("Error", for: .normal)
+                    print(error!.localizedDescription)
+                    return
+                }
+            }
+            
+        } else if self._userRideIsForThisEvent {
+            
+            print("Cancel ride request")
+            
+        } else {
+            
+            print("Cannot request ride when already in ride")
+            
         }
     }
     

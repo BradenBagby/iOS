@@ -74,6 +74,8 @@ public enum UserDBKeys: String {
     case schoolProfile = "schoolProfile"
     case email = "email"
     case isEmailVerified = "isEmailVerified"
+    
+    case ride = "ride"
 }
 
 public enum PaceUserError: Error {
@@ -201,6 +203,10 @@ protocol PaceUser {
     
     
     var savedEvents: [EventModel] { get }
+    
+    
+    var ride: RideModel? { get }
+    
     
     /// Returns the public profile information if the user is signed into a public profile, nil otherwise
     func publicProfile() -> PacePublicProfile?
@@ -489,6 +495,23 @@ class UserModel: NSObject, PaceUser {
     var savedEvents: [EventModel] {
         get {
             return self._savedEvents
+        }
+    }
+    
+    private var _ride: RideModel?
+    var ride: RideModel? {
+        get {
+            
+            if let ride = self._ride {
+                return ride
+            }
+            
+            if let rideRef = self.userData[UserDBKeys.ride.rawValue] as? DocumentReference {
+                self._ride = RideModel(fromReference: rideRef)
+                return self._ride
+            }
+            
+            return nil
         }
     }
     

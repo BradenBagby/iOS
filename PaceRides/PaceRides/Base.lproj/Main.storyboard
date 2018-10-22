@@ -849,11 +849,11 @@
             </objects>
             <point key="canvasLocation" x="1049" y="-833"/>
         </scene>
-        <!--Organization-->
+        <!--Organizations-->
         <scene sceneID="RFy-Io-NM8">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="YiV-3J-Oyp" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Organization" image="organizationIcon" id="DDb-OM-eew"/>
+                    <tabBarItem key="tabBarItem" title="Organizations" image="organizationIcon" id="DDb-OM-eew"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="hHe-lF-5aW">
                         <rect key="frame" x="0.0" y="20" width="375" height="96"/>
@@ -1096,6 +1096,7 @@
                             <constraint firstItem="a3n-CX-931" firstAttribute="leading" secondItem="dev-7H-hNf" secondAttribute="leading" constant="16" id="ncD-Xe-Vs7"/>
                             <constraint firstItem="a3n-CX-931" firstAttribute="centerY" secondItem="dev-7H-hNf" secondAttribute="centerY" id="z2W-NJ-7ap"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="Tfh-Sf-BZo"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8SV-hb-ApY" userLabel="First Responder" sceneMemberID="firstResponder"/>

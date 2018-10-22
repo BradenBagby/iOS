@@ -15,6 +15,10 @@ enum EventDBKeys: String {
     case title = "title"
     case organization = "organization"
     case reference = "reference"
+    case rideQueue = "rideQueue"
+    case riderDisplayName = "riderDisplayName"
+    case riderReference = "riderReference"
+    case timeOfRequest = "timeOfRequest"
 }
 
 
@@ -97,7 +101,6 @@ class EventModel {
         }
         
         docListener = self.reference.addSnapshotListener(self.snapshotListener)
-        
     }
     
     func snapshotListener(document: DocumentSnapshot?, error: Error?) {
