@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="PbX-2I-lAq">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -870,6 +870,66 @@
             </objects>
             <point key="canvasLocation" x="1862" y="1443"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="EiZ-bn-XLh">
+            <objects>
+                <viewController storyboardIdentifier="EULAViewController" id="C0Z-1u-EPI" customClass="EULAViewController" customModule="PaceRides" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="jiO-d0-q4v">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="EULA Text" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ekl-Dg-jwl">
+                                <rect key="frame" x="16" y="141" width="343" height="460"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kXg-b7-Gv9">
+                                <rect key="frame" x="16" y="617" width="343" height="30"/>
+                                <state key="normal" title="Accept"/>
+                                <connections>
+                                    <action selector="acceptButtonPressed" destination="C0Z-1u-EPI" eventType="touchUpInside" id="cbL-Rv-4sg"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Before we get started..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ioh-Sm-RjS">
+                                <rect key="frame" x="16" y="44" width="343" height="32"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please review and accept the following terms." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zcN-iX-BCR">
+                                <rect key="frame" x="16" y="84" width="343" height="41"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="ioh-Sm-RjS" firstAttribute="leading" secondItem="qOI-Tm-i1d" secondAttribute="leading" constant="16" id="0zi-wT-Suq"/>
+                            <constraint firstItem="ioh-Sm-RjS" firstAttribute="top" secondItem="qOI-Tm-i1d" secondAttribute="top" constant="24" id="18g-Gt-NLZ"/>
+                            <constraint firstItem="zcN-iX-BCR" firstAttribute="leading" secondItem="qOI-Tm-i1d" secondAttribute="leading" constant="16" id="4bJ-6l-I6r"/>
+                            <constraint firstItem="ekl-Dg-jwl" firstAttribute="leading" secondItem="qOI-Tm-i1d" secondAttribute="leading" constant="16" id="5oq-b8-zI2"/>
+                            <constraint firstItem="ekl-Dg-jwl" firstAttribute="top" secondItem="zcN-iX-BCR" secondAttribute="bottom" constant="16" id="6A5-Bt-fBM"/>
+                            <constraint firstItem="qOI-Tm-i1d" firstAttribute="trailing" secondItem="kXg-b7-Gv9" secondAttribute="trailing" constant="16" id="En6-Lf-NpC"/>
+                            <constraint firstItem="qOI-Tm-i1d" firstAttribute="trailing" secondItem="ekl-Dg-jwl" secondAttribute="trailing" constant="16" id="K25-1P-msE"/>
+                            <constraint firstItem="kXg-b7-Gv9" firstAttribute="leading" secondItem="qOI-Tm-i1d" secondAttribute="leading" constant="16" id="Wqn-49-frc"/>
+                            <constraint firstItem="zcN-iX-BCR" firstAttribute="top" secondItem="ioh-Sm-RjS" secondAttribute="bottom" constant="8" id="iBf-nZ-gik"/>
+                            <constraint firstItem="kXg-b7-Gv9" firstAttribute="top" secondItem="ekl-Dg-jwl" secondAttribute="bottom" constant="16" id="pFk-zr-9tT"/>
+                            <constraint firstItem="qOI-Tm-i1d" firstAttribute="trailing" secondItem="zcN-iX-BCR" secondAttribute="trailing" constant="16" id="q5a-80-rRq"/>
+                            <constraint firstItem="qOI-Tm-i1d" firstAttribute="bottom" secondItem="kXg-b7-Gv9" secondAttribute="bottom" constant="20" id="rmf-vK-gQW"/>
+                            <constraint firstItem="qOI-Tm-i1d" firstAttribute="trailing" secondItem="ioh-Sm-RjS" secondAttribute="trailing" constant="16" id="zvH-A4-hDu"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="qOI-Tm-i1d"/>
+                    </view>
+                    <connections>
+                        <segue destination="PbX-2I-lAq" kind="show" identifier="startApplication" id="2bI-tO-tP5"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aAp-uz-ySV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="104.8" y="-833.43328335832086"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="VYi-Nn-BKd">
             <objects>
@@ -1206,6 +1266,6 @@
         <image name="testSteeringWheel" width="29" height="29"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="T3t-vN-uJH"/>
+        <segue reference="J8c-CJ-kSm"/>
     </inferredMetricsTieBreakers>
 </document>

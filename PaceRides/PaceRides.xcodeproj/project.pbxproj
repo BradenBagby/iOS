@@ -17,6 +17,7 @@
 		E0246DF22167024300DB3CC8 /* PaceSchoolProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0246DF12167024300DB3CC8 /* PaceSchoolProfileTableViewCell.swift */; };
 		E06C1B3B21767554009A91DD /* EventModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06C1B3A21767554009A91DD /* EventModel.swift */; };
 		E06C1B3E21767D19009A91DD /* EventDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06C1B3D21767D19009A91DD /* EventDetailViewController.swift */; };
+		E06C74B9217E6CC800973325 /* EULAViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06C74B8217E6CC800973325 /* EULAViewController.swift */; };
 		E07754C6216D2462008421CE /* PublicTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07754C5216D2462008421CE /* PublicTabBarController.swift */; };
 		E07754C8216D4560008421CE /* OrganizationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07754C7216D4560008421CE /* OrganizationModel.swift */; };
 		E07754CA216DA85A008421CE /* OrganizationListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07754C9216DA85A008421CE /* OrganizationListViewController.swift */; };
@@ -83,6 +84,7 @@
 		E0246DF12167024300DB3CC8 /* PaceSchoolProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaceSchoolProfileTableViewCell.swift; sourceTree = "<group>"; };
 		E06C1B3A21767554009A91DD /* EventModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventModel.swift; sourceTree = "<group>"; };
 		E06C1B3D21767D19009A91DD /* EventDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailViewController.swift; sourceTree = "<group>"; };
+		E06C74B8217E6CC800973325 /* EULAViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EULAViewController.swift; sourceTree = "<group>"; };
 		E07754C5216D2462008421CE /* PublicTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicTabBarController.swift; sourceTree = "<group>"; };
 		E07754C7216D4560008421CE /* OrganizationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationModel.swift; sourceTree = "<group>"; };
 		E07754C9216DA85A008421CE /* OrganizationListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationListViewController.swift; sourceTree = "<group>"; };
@@ -258,6 +260,7 @@
 		E0860A752161B11D003375A7 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				E06C74B8217E6CC800973325 /* EULAViewController.swift */,
 				E07754CB216DAF50008421CE /* ViewController.swift */,
 				E0860A822161C1C3003375A7 /* RearMenuTableViewController.swift */,
 				E0860A8A21626D63003375A7 /* Public */,
@@ -699,6 +702,7 @@
 				E0860A782161B1B8003375A7 /* UserModel.swift in Sources */,
 				E0246DF02167021C00DB3CC8 /* PacePublicProfileTableViewCell.swift in Sources */,
 				E0C1A9842162C65B006C4DF6 /* VerifyEmailViewController.swift in Sources */,
+				E06C74B9217E6CC800973325 /* EULAViewController.swift in Sources */,
 				E0E44B45216C25810069DAEE /* MenuItemTableViewCell.swift in Sources */,
 				E07754CE216DB417008421CE /* PaceTabViewController.swift in Sources */,
 				E0246DF22167024300DB3CC8 /* PaceSchoolProfileTableViewCell.swift in Sources */,

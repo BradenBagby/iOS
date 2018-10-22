@@ -15,6 +15,10 @@ enum TransitionDestination {
     case event(String)
 }
 
+enum UserDefaultsKeys: String {
+    case UserAcceptedEULA = "UserAcceptedEULA"
+}
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
 
@@ -38,6 +42,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         FBSDKApplicationDelegate.sharedInstance()!.application(application, didFinishLaunchingWithOptions: launchOptions)
+        
+        let userHasAcceptedEULA = UserDefaults.standard.bool(forKey: UserDefaultsKeys.UserAcceptedEULA.rawValue)
+        
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        
+        if !userHasAcceptedEULA {
+            
+            let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let acceptEULAVC = mainStoryboard.instantiateViewController(withIdentifier: "EULAViewController")
+            self.window?.rootViewController = acceptEULAVC
+            self.window?.makeKeyAndVisible()
+            
+        } else {
+            
+            let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let revealVC = mainStoryboard.instantiateViewController(withIdentifier: "RevealVC")
+            self.window?.rootViewController = revealVC
+            self.window?.makeKeyAndVisible()
+            
+        }
+        
         return true
     }
 
@@ -83,7 +108,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
                 }
                 
                 let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                let revealVC = mainStoryboard.instantiateInitialViewController()
+                let revealVC = mainStoryboard.instantiateViewController(withIdentifier: "RevealVC")
                 self.window?.rootViewController = revealVC
                 self.window?.makeKeyAndVisible()
             }
