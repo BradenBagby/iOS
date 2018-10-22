@@ -106,7 +106,7 @@ class EventDetailViewController: UIViewController {
         }
         
         if self._userRide == nil {
-        
+            
             RideModel.createNewRide(rider: publicProfile, event: self.event) { error in
                 
                 guard error == nil else {
@@ -120,20 +120,40 @@ class EventDetailViewController: UIViewController {
             
         } else if self._userRideIsForThisEvent {
             
-            self._userRide!.cancelRequest(toEvent: self.event.uid, forRider: paceUser) { error in
+            let actionSheet = UIAlertController(
+                title: "Cancel Request",
+                message: "Are you sure you want to cancel your ride request",
+                preferredStyle: .actionSheet
+            )
+            
+            actionSheet.addAction(UIAlertAction(
+                title: "Cancel Request",
+                style: .destructive
+            ) { _ in
                 
-                guard error == nil else {
-                    print("Error")
-                    self.requestRideButton.setTitle("Error", for: .normal)
-                    print(error!.localizedDescription)
-                    return
+                self._userRide!.cancelRequest(toEvent: self.event.uid, forRider: paceUser) { error in
+                    
+                    guard error == nil else {
+                        print("Error")
+                        self.requestRideButton.setTitle("Error", for: .normal)
+                        print(error!.localizedDescription)
+                        return
+                    }
+                    
+                    self._userRide = nil
+                    self._userRideIsForThisEvent = false
+                    self.updateUI()
                 }
-                
-                self._userRide = nil
-                self._userRideIsForThisEvent = false
-                self.updateUI()
-            }
-            return
+            })
+            
+            
+            actionSheet.addAction(UIAlertAction(
+                title: "Keep Request",
+                style: .cancel,
+                handler: nil
+            ))
+            
+            self.present(actionSheet, animated: true)
             
         } else {
             
