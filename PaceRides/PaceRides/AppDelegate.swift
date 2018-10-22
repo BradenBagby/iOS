@@ -16,7 +16,7 @@ enum TransitionDestination {
 }
 
 enum UserDefaultsKeys: String {
-    case UserAcceptedEULA = "UserAcceptedEULA"
+    case EULAAgreementSeconds = "EULAAgreementSeconds"
 }
 
 @UIApplicationMain
@@ -43,22 +43,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         
         FBSDKApplicationDelegate.sharedInstance()!.application(application, didFinishLaunchingWithOptions: launchOptions)
         
-        let userHasAcceptedEULA = UserDefaults.standard.bool(forKey: UserDefaultsKeys.UserAcceptedEULA.rawValue)
+        let eulaAgreementSeconds
+            = UserDefaults.standard.object(forKey: UserDefaultsKeys.EULAAgreementSeconds.rawValue) as? NSNumber
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
         
-        if !userHasAcceptedEULA {
+        if let eulaAgreementSeconds = eulaAgreementSeconds, eulaAgreementSeconds.int64Value > 0 {
+            
+            print(eulaAgreementSeconds.int64Value)
             
             let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            let acceptEULAVC = mainStoryboard.instantiateViewController(withIdentifier: "EULAViewController")
-            self.window?.rootViewController = acceptEULAVC
+            let revealVC = mainStoryboard.instantiateViewController(withIdentifier: "RevealVC")
+            self.window?.rootViewController = revealVC
             self.window?.makeKeyAndVisible()
             
         } else {
             
             let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            let revealVC = mainStoryboard.instantiateViewController(withIdentifier: "RevealVC")
-            self.window?.rootViewController = revealVC
+            let acceptEULAVC = mainStoryboard.instantiateViewController(withIdentifier: "EULAViewController")
+            self.window?.rootViewController = acceptEULAVC
             self.window?.makeKeyAndVisible()
             
         }

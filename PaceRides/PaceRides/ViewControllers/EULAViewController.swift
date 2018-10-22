@@ -7,11 +7,17 @@
 //
 
 import UIKit
+import Firebase
 
 class EULAViewController: UIViewController {
 
     @IBAction func acceptButtonPressed() {
-        UserDefaults.standard.set(true, forKey: UserDefaultsKeys.UserAcceptedEULA.rawValue)
+        
+        UserDefaults.standard.set(
+            NSNumber(value: Timestamp().seconds),
+            forKey: UserDefaultsKeys.EULAAgreementSeconds.rawValue
+        )
+        
         self.performSegue(withIdentifier: "startApplication", sender: self)
     }
     
