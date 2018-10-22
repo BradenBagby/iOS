@@ -116,14 +116,28 @@ class EventDetailViewController: UIViewController {
                     return
                 }
             }
+            return
             
         } else if self._userRideIsForThisEvent {
             
-            print("Cancel ride request")
+            self._userRide!.cancelRequest(toEvent: self.event.uid, forRider: paceUser) { error in
+                
+                guard error == nil else {
+                    print("Error")
+                    self.requestRideButton.setTitle("Error", for: .normal)
+                    print(error!.localizedDescription)
+                    return
+                }
+                
+                self._userRide = nil
+                self._userRideIsForThisEvent = false
+                self.updateUI()
+            }
+            return
             
         } else {
             
-            print("Cannot request ride when already in ride")
+            print("Cannot request ride when already in ride.")
             
         }
     }

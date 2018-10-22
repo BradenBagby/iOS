@@ -155,7 +155,36 @@ class RideModel {
     }
     
     
-    func snapshotListener(document: DocumentSnapshot?, error: Error?) {
+    func cancelRequest(
+        toEvent eventUID: String,
+        forRider rider: PaceUser,
+        completion: ((Error?) -> Void)? = nil
+    ) {
+        
+        let batch = RideModel.db.batch()
+        
+        // Set ride space
+        batch.deleteDocument(self.reference)
+        
+        // Set rider space
+        let riderData: [String: Any] = [
+            UserDBKeys.ride.rawValue: FieldValue.delete()
+        ]
+        batch.setData(riderData, forDocument: rider.dbReference, options: .merge())
+        
+        // Set event space
+        let eventRideQueueRef = EventModel.ref
+                                    .document(eventUID)
+                                    .collection(EventDBKeys.rideQueue.rawValue)
+                                    .document(self.uid)
+        batch.deleteDocument(eventRideQueueRef)
+        
+        // Comit writes
+        batch.commit(completion: completion)
+    }
+    
+    
+    private func snapshotListener(document: DocumentSnapshot?, error: Error?) {
         
         guard error == nil else {
             print(error!.localizedDescription)

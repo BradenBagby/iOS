@@ -582,6 +582,16 @@ class UserModel: NSObject, PaceUser {
         
         self.userData = userData
         
+        if let newUserRide = userData[UserDBKeys.ride.rawValue] as? DocumentReference {
+            if let existingUserRide = self._ride {
+                if newUserRide.documentID != existingUserRide.uid {
+                    self._ride = RideModel(fromReference: newUserRide)
+                }
+            }
+        } else {
+            self._ride = nil
+        }
+        
         UserModel.notificationCenter.post(
             name: .NewPaceUserData,
             object: nil

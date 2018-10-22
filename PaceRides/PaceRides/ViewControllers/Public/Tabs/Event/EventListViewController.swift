@@ -144,9 +144,9 @@ extension EventListViewController: UITableViewDataSource {
             }
         }
         
-        if sectionsLeft == 0 {
+        if sectionsLeft == 1 {
             return "Saved Events"
-        } else if sectionsLeft == 1 {
+        } else if sectionsLeft == 0 {
             if self.recentEvents.count > 0 {
                 return "Recent Events"
             } else {
@@ -175,9 +175,9 @@ extension EventListViewController: UITableViewDataSource {
             }
         }
         
-        if sectionsLeft == 0 {
+        if sectionsLeft == 1 {
             return paceUser.savedEvents.count
-        } else if sectionsLeft == 1 {
+        } else if sectionsLeft == 0 {
             if self.recentEvents.count > 0 {
                 return self.recentEvents.count
             } else {
@@ -208,12 +208,20 @@ extension EventListViewController: UITableViewDataSource {
             }
         }
         
-        if sectionsLeft == 0 {
+        if sectionsLeft == 1 {
+            guard indexPath.row < paceUser.savedEvents.count else {
+                default_cell.textLabel?.text = "Error"
+                return default_cell
+            }
             default_cell.textLabel?.text = paceUser.savedEvents[indexPath.row].title
-        } else if sectionsLeft == 1 {
-            if self.recentEvents.count > 0 {
+        } else if sectionsLeft == 0 {
+            if indexPath.row < self.recentEvents.count {
                 default_cell.textLabel?.text = self.recentEvents[indexPath.row].title
             } else {
+                guard indexPath.row < paceUser.savedEvents.count else {
+                    default_cell.textLabel?.text = "Error"
+                    return default_cell
+                }
                 default_cell.textLabel?.text = paceUser.savedEvents[indexPath.row].title
             }
         } else {
@@ -248,9 +256,9 @@ extension EventListViewController: UITableViewDelegate {
             }
         }
         
-        if sectionsLeft == 0 {
+        if sectionsLeft == 1 {
             self.eventToOpen = paceUser.savedEvents[indexPath.row]
-        } else if sectionsLeft == 1 {
+        } else if sectionsLeft == 0 {
             if self.recentEvents.count > 0 {
                 self.eventToOpen = self.recentEvents[indexPath.row]
             } else {
