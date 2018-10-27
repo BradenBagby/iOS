@@ -39,6 +39,7 @@
 		E0860A852161CDC9003375A7 /* PaceRidesConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0860A842161CDC9003375A7 /* PaceRidesConstants.swift */; };
 		E0860A8921626C0F003375A7 /* PublicSignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0860A8821626C0F003375A7 /* PublicSignInViewController.swift */; };
 		E0860A8C216281A6003375A7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E0860A8B216281A6003375A7 /* GoogleService-Info.plist */; };
+		E0889552218517310050FED1 /* LaunchScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0889551218517310050FED1 /* LaunchScreenViewController.swift */; };
 		E0BA02C82177C64F003A553D /* ButtonWithImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0BA02C72177C64F003A553D /* ButtonWithImage.swift */; };
 		E0BA02CA2177FBE0003A553D /* RideModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0BA02C92177FBE0003A553D /* RideModel.swift */; };
 		E0C1A97E21629CFD006C4DF6 /* SchoolSignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0C1A97D21629CFD006C4DF6 /* SchoolSignInViewController.swift */; };
@@ -114,6 +115,7 @@
 		E0860A842161CDC9003375A7 /* PaceRidesConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaceRidesConstants.swift; sourceTree = "<group>"; };
 		E0860A8821626C0F003375A7 /* PublicSignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicSignInViewController.swift; sourceTree = "<group>"; };
 		E0860A8B216281A6003375A7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		E0889551218517310050FED1 /* LaunchScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenViewController.swift; sourceTree = "<group>"; };
 		E0BA02C72177C64F003A553D /* ButtonWithImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonWithImage.swift; sourceTree = "<group>"; };
 		E0BA02C92177FBE0003A553D /* RideModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideModel.swift; sourceTree = "<group>"; };
 		E0C1A97D21629CFD006C4DF6 /* SchoolSignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolSignInViewController.swift; sourceTree = "<group>"; };
@@ -260,6 +262,7 @@
 		E0860A752161B11D003375A7 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				E0889551218517310050FED1 /* LaunchScreenViewController.swift */,
 				E06C74B8217E6CC800973325 /* EULAViewController.swift */,
 				E07754CB216DAF50008421CE /* ViewController.swift */,
 				E0860A822161C1C3003375A7 /* RearMenuTableViewController.swift */,
@@ -626,6 +629,7 @@
 				E0246DF22167024300DB3CC8 /* PaceSchoolProfileTableViewCell.swift in Sources */,
 				E0860A7F2161B867003375A7 /* SWRevealViewController.m in Sources */,
 				E07754D4216DB626008421CE /* DriveViewController.swift in Sources */,
+				E0889552218517310050FED1 /* LaunchScreenViewController.swift in Sources */,
 				E018D7C7217146310063A362 /* OrganizationExternalViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

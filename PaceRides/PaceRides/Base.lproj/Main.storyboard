@@ -1259,6 +1259,45 @@
             </objects>
             <point key="canvasLocation" x="5344.8000000000002" y="1494.1529235382311"/>
         </scene>
+        <!--Launch Screen View Controller-->
+        <scene sceneID="Gw0-lM-ZPS">
+            <objects>
+                <viewController storyboardIdentifier="launchscreen" id="Wky-Lv-KP5" customClass="LaunchScreenViewController" customModule="PaceRides" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="YbO-va-CCL">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pace Rides" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hIk-ld-uCo">
+                                <rect key="frame" x="16" y="327.5" width="343" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="343" id="14j-RT-USb"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="TpA-zc-YdX">
+                                <rect key="frame" x="177.5" y="367.5" width="20" height="20"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="TpA-zc-YdX" firstAttribute="centerX" secondItem="bKH-ab-bGG" secondAttribute="centerX" id="IbH-oP-2Go"/>
+                            <constraint firstItem="hIk-ld-uCo" firstAttribute="leading" secondItem="bKH-ab-bGG" secondAttribute="leading" constant="16" id="SZh-jJ-eGc"/>
+                            <constraint firstItem="TpA-zc-YdX" firstAttribute="top" secondItem="hIk-ld-uCo" secondAttribute="bottom" constant="8" id="Z45-xT-qvu"/>
+                            <constraint firstItem="hIk-ld-uCo" firstAttribute="centerY" secondItem="bKH-ab-bGG" secondAttribute="centerY" id="hOo-7x-fHY"/>
+                            <constraint firstItem="bKH-ab-bGG" firstAttribute="trailing" secondItem="hIk-ld-uCo" secondAttribute="trailing" constant="16" id="xwh-YE-xdb"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="bKH-ab-bGG"/>
+                    </view>
+                    <connections>
+                        <outlet property="activityIndicator" destination="TpA-zc-YdX" id="Xgp-IN-V1o"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3WA-j1-kcg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-876" y="-57"/>
+        </scene>
     </scenes>
     <resources>
         <image name="carIcon" width="24" height="24"/>

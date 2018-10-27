@@ -55,10 +55,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         FBSDKApplicationDelegate.sharedInstance()!.application(application, didFinishLaunchingWithOptions: launchOptions)
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
-        let storyboard = UIStoryboard(name: "LaunchScreen", bundle: nil)
-        let viewcontroller = storyboard.instantiateViewController(withIdentifier: "launchscreen")
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let viewcontroller = storyboard.instantiateViewController(withIdentifier: "launchscreen") as! LaunchScreenViewController
         self.window?.rootViewController = viewcontroller
         self.window?.makeKeyAndVisible()
+        viewcontroller.activityIndicator.isHidden = false
+        viewcontroller.activityIndicator.startAnimating()
         
         let eulaAgreementSeconds
             = UserDefaults.standard.object(forKey: UserDefaultsKeys.EULAAgreementSeconds.rawValue) as? NSNumber
