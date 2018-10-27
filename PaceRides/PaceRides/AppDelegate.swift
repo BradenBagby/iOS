@@ -55,12 +55,80 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         FBSDKApplicationDelegate.sharedInstance()!.application(application, didFinishLaunchingWithOptions: launchOptions)
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
-        let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let acceptEULAVC = mainStoryboard.instantiateViewController(withIdentifier: "EULAViewController")
-        self.window?.rootViewController = acceptEULAVC
+        let storyboard = UIStoryboard(name: "LaunchScreen", bundle: nil)
+        let viewcontroller = storyboard.instantiateViewController(withIdentifier: "launchscreen")
+        self.window?.rootViewController = viewcontroller
         self.window?.makeKeyAndVisible()
         
+        let eulaAgreementSeconds
+            = UserDefaults.standard.object(forKey: UserDefaultsKeys.EULAAgreementSeconds.rawValue) as? NSNumber
+        
+        if let eulaAgreementSeconds = eulaAgreementSeconds, eulaAgreementSeconds.int64Value > 0 {
+            
+            Firestore.firestore().collection(DataDBKeys.data.rawValue)
+                .document(DataDBKeys.eula.rawValue).getDocument() { document, error in
+                    
+                    // TODO: Handle errors
+                    guard error == nil else {
+                        print(error!.localizedDescription)
+                        return
+                    }
+                    
+                    guard let data = document?.data() else {
+                        print("No data in eula")
+                        return
+                    }
+                    
+                    guard let eulaTimestamp = data[EULADBKeys.timestamp.rawValue] as? Timestamp else {
+                        print("No eula text")
+                        return
+                    }
+                    
+                    if eulaAgreementSeconds.int64Value > eulaTimestamp.seconds {
+                        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                        let viewcontroller = storyboard.instantiateViewController(withIdentifier: "RevealVC")
+                        self.window?.rootViewController = viewcontroller
+                        self.window?.makeKeyAndVisible()
+                    } else {
+                        self.displayEULAViewController()
+                    }
+            }
+        } else {
+            self.displayEULAViewController()
+        }
+        
         return true
+    }
+    
+    private func displayEULAViewController() {
+        
+        let eulaRef = Firestore.firestore().collection(DataDBKeys.data.rawValue).document(DataDBKeys.eula.rawValue)
+        eulaRef.getDocument() { document, error in
+            
+            // TODO: Handle errors
+            guard error == nil else {
+                print(error!.localizedDescription)
+                return
+            }
+            
+            guard let data = document?.data() else {
+                print("No data in eula")
+                return
+            }
+            
+            guard let eulaText = data[EULADBKeys.text.rawValue] as? String else {
+                print("No eula text")
+                return
+            }
+            
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let viewcontroller = storyboard.instantiateViewController(withIdentifier: "EULAViewController") as! EULAViewController
+            viewcontroller.eulaText = eulaText
+            self.window?.rootViewController = viewcontroller
+            self.window?.makeKeyAndVisible()
+            
+        }
+        
     }
 
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {

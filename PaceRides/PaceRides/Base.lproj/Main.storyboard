@@ -1224,6 +1224,7 @@
                             <constraint firstItem="vwg-nV-JF7" firstAttribute="leading" secondItem="GC5-9R-PRh" secondAttribute="leading" constant="16" id="Ieu-hE-QKB"/>
                             <constraint firstAttribute="trailing" secondItem="vwg-nV-JF7" secondAttribute="trailing" constant="16" id="uy5-TC-skq"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="Pwx-1L-lOH"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="imC-Qt-LAz" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1251,6 +1252,7 @@
                             <constraint firstItem="ZHW-bM-v3M" firstAttribute="centerY" secondItem="5MF-39-X5h" secondAttribute="centerY" id="eET-RR-vXf"/>
                             <constraint firstItem="ZHW-bM-v3M" firstAttribute="leading" secondItem="5MF-39-X5h" secondAttribute="leading" constant="16" id="iH1-w1-VAQ"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="siC-nR-eqv"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V5I-zB-7HC" userLabel="First Responder" sceneMemberID="firstResponder"/>
