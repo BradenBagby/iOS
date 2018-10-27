@@ -924,7 +924,7 @@
                     </view>
                     <connections>
                         <outlet property="textView" destination="ekl-Dg-jwl" id="kI3-yV-e2s"/>
-                        <segue destination="PbX-2I-lAq" kind="show" identifier="startApplication" id="2bI-tO-tP5"/>
+                        <segue destination="PbX-2I-lAq" kind="showDetail" identifier="startApplication" id="2bI-tO-tP5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aAp-uz-ySV" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1292,6 +1292,7 @@
                     </view>
                     <connections>
                         <outlet property="activityIndicator" destination="TpA-zc-YdX" id="Xgp-IN-V1o"/>
+                        <segue destination="PbX-2I-lAq" kind="showDetail" identifier="startApplication" id="j2v-vH-xRF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3WA-j1-kcg" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1309,5 +1310,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="J8c-CJ-kSm"/>
+        <segue reference="j2v-vH-xRF"/>
     </inferredMetricsTieBreakers>
 </document>

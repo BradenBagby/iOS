@@ -56,11 +56,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let viewcontroller = storyboard.instantiateViewController(withIdentifier: "launchscreen") as! LaunchScreenViewController
-        self.window?.rootViewController = viewcontroller
+        let mainLaunchScreen = storyboard.instantiateViewController(withIdentifier: "launchscreen") as! LaunchScreenViewController
+        self.window?.rootViewController = mainLaunchScreen
         self.window?.makeKeyAndVisible()
-        viewcontroller.activityIndicator.isHidden = false
-        viewcontroller.activityIndicator.startAnimating()
+        mainLaunchScreen.activityIndicator.isHidden = false
+        mainLaunchScreen.activityIndicator.startAnimating()
         
         let eulaAgreementSeconds
             = UserDefaults.standard.object(forKey: UserDefaultsKeys.EULAAgreementSeconds.rawValue) as? NSNumber
@@ -87,10 +87,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
                     }
                     
                     if eulaAgreementSeconds.int64Value > eulaTimestamp.seconds {
-                        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                        let viewcontroller = storyboard.instantiateViewController(withIdentifier: "RevealVC")
-                        self.window?.rootViewController = viewcontroller
-                        self.window?.makeKeyAndVisible()
+                        mainLaunchScreen.performSegue(withIdentifier: "startApplication", sender: nil)
                     } else {
                         self.displayEULAViewController()
                     }
