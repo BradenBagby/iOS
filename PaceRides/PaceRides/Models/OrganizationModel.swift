@@ -134,7 +134,7 @@ class OrganizationModel {
     }
     
     
-    init(withTitle title: String, andReference reference: DocumentReference) {
+    init(withTitle title: String?, andReference reference: DocumentReference) {
         self._title = title
         self.orgData = nil
         self.reference = reference

@@ -49,7 +49,7 @@ class EventModel {
     }
     
 
-    private let _organization: OrganizationModel?
+    private var _organization: OrganizationModel?
     var organization: OrganizationModel? {
         get {
             return self._organization
@@ -124,6 +124,17 @@ class EventModel {
         
         if let newTitle = docData[OrgDBKeys.title.rawValue] as? String {
             self._title = newTitle
+        }
+        
+        if let newOrgData = docData[EventDBKeys.organization.rawValue] as? [String: Any],
+            let newOrgRef = newOrgData[EventDBKeys.reference.rawValue] as? DocumentReference {
+            
+            if self._organization == nil || self._organization!.uid != newOrgRef.documentID {
+                self._organization = OrganizationModel(
+                    withTitle: newOrgData[EventDBKeys.title.rawValue] as? String,
+                    andReference: newOrgRef
+                )
+            }
         }
         
         EventModel.notificationCenter.post(

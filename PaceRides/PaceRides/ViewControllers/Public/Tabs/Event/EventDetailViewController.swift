@@ -20,6 +20,8 @@ class EventDetailViewController: UIViewController {
     private var _userRide: RideModel?
     private var _userRideIsForThisEvent = false
     private var _userRideIsThisEvent = false
+    private var _userIsAdmin = false
+    private var _userIsMember = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,6 +43,10 @@ class EventDetailViewController: UIViewController {
             return
         }
         
+        if let org = self.event.organization {
+            org.subscribe(using: self.newOrganizationData)
+        }
+        
         self._userHasSavedEvent = false
         for savedEvent in paceUser.savedEvents {
             if savedEvent.uid == self.event.uid {
@@ -53,6 +59,38 @@ class EventDetailViewController: UIViewController {
             ride.subscribe(using: self.newRideData)
         } else {
             self._userRide = nil
+        }
+        
+        self.updateUI()
+    }
+    
+    
+    func newOrganizationData(_: Notification? = nil) {
+        
+        guard let org = self.event.organization else {
+            return
+        }
+        
+        guard let paceUser = UserModel.sharedInstance() else {
+            return
+        }
+        
+        self._userIsAdmin = false
+        self._userIsMember = false
+        for admin in org.administrators {
+            if paceUser.uid == admin.uid {
+                self._userIsAdmin = true
+                break
+            }
+        }
+        
+        if !_userIsAdmin {
+            for member in org.members {
+                if paceUser.uid == member.uid {
+                    self._userIsMember = true
+                    break
+                }
+            }
         }
         
         self.updateUI()
@@ -96,6 +134,13 @@ class EventDetailViewController: UIViewController {
                 self.requestRideButton.isEnabled = false
             }
         }
+        
+        if self._userIsAdmin {
+            print("User is admin")
+        } else if self._userIsMember {
+            print("User is member")
+        }
+        
     }
     
     
