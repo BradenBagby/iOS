@@ -19,6 +19,17 @@ enum UserDefaultsKeys: String {
     case EULAAgreementSeconds = "EULAAgreementSeconds"
 }
 
+enum DataDBKeys: String {
+    case data = "data"
+    case eula = "eula"
+    case author = "author"
+}
+
+enum EULADBKeys: String {
+    case text = "text"
+    case timestamp = "timestamp"
+}
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
 
@@ -43,28 +54,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         
         FBSDKApplicationDelegate.sharedInstance()!.application(application, didFinishLaunchingWithOptions: launchOptions)
         
-        let eulaAgreementSeconds
-            = UserDefaults.standard.object(forKey: UserDefaultsKeys.EULAAgreementSeconds.rawValue) as? NSNumber
-        
         self.window = UIWindow(frame: UIScreen.main.bounds)
-        
-        if let eulaAgreementSeconds = eulaAgreementSeconds, eulaAgreementSeconds.int64Value > 0 {
-            
-            print(eulaAgreementSeconds.int64Value)
-            
-            let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            let revealVC = mainStoryboard.instantiateViewController(withIdentifier: "RevealVC")
-            self.window?.rootViewController = revealVC
-            self.window?.makeKeyAndVisible()
-            
-        } else {
-            
-            let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            let acceptEULAVC = mainStoryboard.instantiateViewController(withIdentifier: "EULAViewController")
-            self.window?.rootViewController = acceptEULAVC
-            self.window?.makeKeyAndVisible()
-            
-        }
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let acceptEULAVC = mainStoryboard.instantiateViewController(withIdentifier: "EULAViewController")
+        self.window?.rootViewController = acceptEULAVC
+        self.window?.makeKeyAndVisible()
         
         return true
     }

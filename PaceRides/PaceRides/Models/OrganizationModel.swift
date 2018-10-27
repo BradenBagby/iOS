@@ -195,7 +195,7 @@ class OrganizationModel {
         ]
         
         OrganizationModel.ref.document(self.uid).collection(OrgDBKeys.memberRequsts.rawValue)
-            .document(userPublicProfile.uid).setData(requestData, options: SetOptions.merge(), completion: completion)
+            .document(userPublicProfile.uid).setData(requestData, merge: true, completion: completion)
     }
     
     

@@ -9,9 +9,9 @@ target 'PaceRides' do
   pod 'Firebase/Core'
   pod 'Firebase/Firestore'
   pod 'Firebase/Auth'
-  pod 'FacebookCore'
-  pod 'FacebookLogin'
-
+  pod 'FacebookSDK'
+  pod 'FacebookSDK/LoginKit'
+  
   target 'PaceRidesTests' do
     inherit! :search_paths
     # Pods for testing

@@ -63,7 +63,7 @@ class RideModel {
         let riderData: [String: Any] = [
             UserDBKeys.ride.rawValue: rideRef
         ]
-        batch.setData(riderData, forDocument: rider.dbReference, options: .merge())
+        batch.setData(riderData, forDocument: rider.dbReference, merge: true)
         
         // Set event space
         let eventRideQueueData: [String: Any] = [
@@ -170,7 +170,7 @@ class RideModel {
         let riderData: [String: Any] = [
             UserDBKeys.ride.rawValue: FieldValue.delete()
         ]
-        batch.setData(riderData, forDocument: rider.dbReference, options: .merge())
+        batch.setData(riderData, forDocument: rider.dbReference, merge: true)
         
         // Set event space
         let eventRideQueueRef = EventModel.ref

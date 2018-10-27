@@ -380,7 +380,7 @@ class UserModel: NSObject, PaceUser {
                             var newPaceUser: PaceUser? = nil
                             
                             if let resultingFirebaseUser = user {
-                                UserModel._sharedInstance = UserModel(forFirebaseUser: resultingFirebaseUser)
+                                UserModel._sharedInstance = UserModel(forFirebaseUser: resultingFirebaseUser.user)
                                 newPaceUser = UserModel.sharedInstance()
                             }
                             
@@ -792,13 +792,12 @@ class UserModel: NSObject, PaceUser {
             ]
         }
         
-        UserModel.db.collection("users").document(self._user.uid).setData(dbData, options: SetOptions.merge()) { error in
+        UserModel.db.collection("users").document(self._user.uid).setData(dbData, merge: true ) { error in
 
             guard error == nil else {
                 print(error!.localizedDescription)
                 return
             }
-
         }
     }
     
