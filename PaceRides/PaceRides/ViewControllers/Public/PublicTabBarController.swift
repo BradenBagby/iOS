@@ -15,6 +15,8 @@ class PublicTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.setRearGestureRecognizer()
+        
         self.userPublicProfileDidChange()
         UserModel.notificationCenter.addObserver(
             forName: .NewPaceUserAuthData,

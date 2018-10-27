@@ -14,5 +14,8 @@ class DriveViewController: PaceTabViewController {
         super.viewDidLoad(self.view)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        self.setRearGestureRecognizer()
+    }
 }
 

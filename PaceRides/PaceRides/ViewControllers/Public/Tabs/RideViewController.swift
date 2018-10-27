@@ -25,6 +25,10 @@ class RideViewController: PaceTabViewController {
         )
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        self.setRearGestureRecognizer()
+    }
+    
     func newUserData(_: Notification? = nil) {
         
         guard let paceUser = UserModel.sharedInstance(), let userRide = paceUser.ride else {

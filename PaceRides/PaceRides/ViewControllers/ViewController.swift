@@ -18,11 +18,17 @@ extension UIViewController {
             openMenuBarButtonItem.action = #selector(SWRevealViewController.revealToggle(_:))
         }
         
-        view.addGestureRecognizer(self.revealViewController()!.panGestureRecognizer())
-        view.addGestureRecognizer(self.revealViewController()!.tapGestureRecognizer())
-        
+        self.setRearGestureRecognizer()
     }
     
+    func setRearGestureRecognizer() {
+        
+        if let revealVC = self.revealViewController() {
+            self.view.addGestureRecognizer(revealVC.panGestureRecognizer())
+            self.view.addGestureRecognizer(revealVC.tapGestureRecognizer())
+        }
+        
+    }
     
     func setNavigationBarColors(_: Notification? = nil) {
         

@@ -30,6 +30,10 @@ class OrganizationListViewController: PaceTabViewController {
         )
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        self.setRearGestureRecognizer()
+    }
+    
     func newPaceUserData(_: Notification? = nil) {
         
         self.noOrganizationsView.isHidden = true

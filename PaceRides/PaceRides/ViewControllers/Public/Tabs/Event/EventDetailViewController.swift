@@ -35,7 +35,6 @@ class EventDetailViewController: UIViewController {
         )
     }
     
-    
     func newEventData(_: Notification? = nil) {
         
         guard let paceUser = UserModel.sharedInstance() else {

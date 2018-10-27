@@ -34,7 +34,6 @@ class OrganizationDetailViewController: UIViewController {
         self.organizationModel.subscribe(using: self.newOrganizationData)
     }
     
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "externalEmbed" {
             if let destVC = segue.destination as? OrganizationExternalViewController {
