@@ -196,14 +196,24 @@
                                     <action selector="requestRideButtonPressed:" destination="ZVu-34-QCy" eventType="touchUpInside" id="9nf-Ns-A4z"/>
                                 </connections>
                             </button>
+                            <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UPy-NP-eBS">
+                                <rect key="frame" x="0.0" y="288" width="375" height="330"/>
+                                <connections>
+                                    <segue destination="IPC-FL-Y3I" kind="embed" id="H0W-Nt-KyV"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="boc-BG-l0K" firstAttribute="trailing" secondItem="hlQ-zq-xgm" secondAttribute="trailing" constant="16" id="5aI-PB-1dk"/>
+                            <constraint firstItem="UPy-NP-eBS" firstAttribute="leading" secondItem="boc-BG-l0K" secondAttribute="leading" id="BZW-bO-8Px"/>
                             <constraint firstItem="cGO-8F-p9r" firstAttribute="top" secondItem="boc-BG-l0K" secondAttribute="top" constant="32" id="EZ2-hy-9KQ"/>
                             <constraint firstItem="boc-BG-l0K" firstAttribute="trailing" secondItem="cGO-8F-p9r" secondAttribute="trailing" constant="16" id="HVg-wv-GxD"/>
                             <constraint firstItem="boc-BG-l0K" firstAttribute="trailing" secondItem="b7j-6V-07Z" secondAttribute="trailing" constant="16" id="LbM-vb-8eX"/>
                             <constraint firstItem="b7j-6V-07Z" firstAttribute="leading" secondItem="boc-BG-l0K" secondAttribute="leading" constant="16" id="OsX-3t-051"/>
+                            <constraint firstItem="UPy-NP-eBS" firstAttribute="top" secondItem="b7j-6V-07Z" secondAttribute="bottom" constant="8" id="ZLo-tG-X7B"/>
+                            <constraint firstItem="boc-BG-l0K" firstAttribute="trailing" secondItem="UPy-NP-eBS" secondAttribute="trailing" id="bj0-g3-J08"/>
+                            <constraint firstItem="boc-BG-l0K" firstAttribute="bottom" secondItem="UPy-NP-eBS" secondAttribute="bottom" id="cD8-Hu-Fuo"/>
                             <constraint firstItem="b7j-6V-07Z" firstAttribute="top" secondItem="hlQ-zq-xgm" secondAttribute="bottom" constant="8" id="e6A-ck-eHO"/>
                             <constraint firstItem="hlQ-zq-xgm" firstAttribute="top" secondItem="cGO-8F-p9r" secondAttribute="bottom" constant="32" id="fpR-vg-7Q0"/>
                             <constraint firstItem="cGO-8F-p9r" firstAttribute="leading" secondItem="boc-BG-l0K" secondAttribute="leading" constant="16" id="hjz-2P-O16"/>
@@ -212,6 +222,7 @@
                         <viewLayoutGuide key="safeArea" id="boc-BG-l0K"/>
                     </view>
                     <connections>
+                        <outlet property="memberView" destination="UPy-NP-eBS" id="XYe-Uc-v7n"/>
                         <outlet property="primaryLabel" destination="cGO-8F-p9r" id="f43-zl-bcG"/>
                         <outlet property="requestRideButton" destination="b7j-6V-07Z" id="grs-KT-gh3"/>
                         <outlet property="saveEventButton" destination="hlQ-zq-xgm" id="yyk-Fq-Y15"/>
@@ -1299,6 +1310,38 @@
             </objects>
             <point key="canvasLocation" x="-876" y="-57"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="6sV-Qg-71S">
+            <objects>
+                <viewController id="IPC-FL-Y3I" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="6bN-H1-yS5">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="330"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HhF-XH-ZP1">
+                                <rect key="frame" x="16" y="0.0" width="343" height="30"/>
+                                <state key="normal" title="Drive"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Txv-gs-3aa">
+                                <rect key="frame" x="16" y="38" width="343" height="30"/>
+                                <state key="normal" title="Copy Link"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Txv-gs-3aa" firstAttribute="top" secondItem="HhF-XH-ZP1" secondAttribute="bottom" constant="8" id="7EG-C4-IjJ"/>
+                            <constraint firstItem="HhF-XH-ZP1" firstAttribute="top" secondItem="6bN-H1-yS5" secondAttribute="top" id="7wa-Em-5pJ"/>
+                            <constraint firstAttribute="trailing" secondItem="Txv-gs-3aa" secondAttribute="trailing" constant="16" id="9cJ-fs-vh6"/>
+                            <constraint firstItem="Txv-gs-3aa" firstAttribute="leading" secondItem="6bN-H1-yS5" secondAttribute="leading" constant="16" id="9yN-wW-pRN"/>
+                            <constraint firstAttribute="trailing" secondItem="HhF-XH-ZP1" secondAttribute="trailing" constant="16" id="ESm-8M-gED"/>
+                            <constraint firstItem="HhF-XH-ZP1" firstAttribute="leading" secondItem="6bN-H1-yS5" secondAttribute="leading" constant="16" id="UoS-vl-2hR"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DWz-jp-QVy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="7256.8000000000002" y="-57.571214392803604"/>
+        </scene>
     </scenes>
     <resources>
         <image name="carIcon" width="24" height="24"/>
@@ -1309,7 +1352,7 @@
         <image name="testSteeringWheel" width="29" height="29"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="J8c-CJ-kSm"/>
+        <segue reference="0jr-UU-XuU"/>
         <segue reference="j2v-vH-xRF"/>
     </inferredMetricsTieBreakers>
 </document>

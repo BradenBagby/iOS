@@ -15,6 +15,7 @@ class EventDetailViewController: UIViewController {
     @IBOutlet weak var primaryLabel: UILabel!
     @IBOutlet weak var requestRideButton: UIButton!
     @IBOutlet weak var saveEventButton: UIButton!
+    @IBOutlet weak var memberView: UIView!
     
     private var _userHasSavedEvent = false
     private var _userRide: RideModel?
@@ -134,10 +135,9 @@ class EventDetailViewController: UIViewController {
             }
         }
         
-        if self._userIsAdmin {
-            print("User is admin")
-        } else if self._userIsMember {
-            print("User is member")
+        self.memberView.isHidden = true
+        if self._userIsAdmin || self._userIsMember {
+            self.memberView.isHidden = false
         }
         
     }
