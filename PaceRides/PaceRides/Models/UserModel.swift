@@ -407,14 +407,14 @@ class UserModel: NSObject, PaceUser {
     private static func createUser(withCredentials credentials: AuthCredential, completion: PaceAuthResultCallback? = nil) {
         
         // Create a new user
-        Auth.auth().signIn(with: credentials) { user, error in
+        Auth.auth().signInAndRetrieveData(with: credentials) { authResult, error in
             if let completion = completion {
                 
                 // If user was able to sign in
                 var userModelForCallback: UserModel? = nil
-                if let user = user {
+                if let auth = authResult {
                     // Set new user as shared instance
-                    UserModel._sharedInstance = UserModel(forFirebaseUser: user)
+                    UserModel._sharedInstance = UserModel(forFirebaseUser: auth.user)
                     userModelForCallback = UserModel._sharedInstance
 
                     UserModel.notificationCenter.post(
