@@ -19,6 +19,8 @@ enum EventDBKeys: String {
     case riderDisplayName = "riderDisplayName"
     case riderReference = "riderReference"
     case timeOfRequest = "timeOfRequest"
+    case drivers = "drivers"
+    case displayName = "displayName"
 }
 
 
@@ -82,6 +84,55 @@ class EventModel {
         self.reference = EventModel.ref.document(self.uid)
         self._organization = nil
     }
+    
+    
+    func addDriver(paceUser: PacePublicProfile, completion: ((Error?) -> Void)? = nil) {
+        
+        let batch = EventModel.db.batch()
+        
+        let eventDriverData: [String: Any] = [
+            EventDBKeys.displayName.rawValue: paceUser.displayName as Any,
+            EventDBKeys.reference.rawValue: paceUser.dbReference
+        ]
+        let eventDriverRef = self.reference.collection(EventDBKeys.drivers.rawValue).document(paceUser.uid)
+        batch.setData(eventDriverData, forDocument: eventDriverRef)
+        
+        let userDriveForData: [String: Any] = [
+            UserDBKeys.driveFor.rawValue: self.reference
+        ]
+        batch.setData(userDriveForData, forDocument: paceUser.dbReference, merge: true)
+        
+        batch.commit() { error in
+            if let completion = completion {
+                DispatchQueue.main.async {
+                    completion(error)
+                }
+            }
+        }
+    }
+    
+    
+    func stopDriving(paceUser: PaceUser, completion: ((Error?) -> Void)? = nil) {
+        
+        let batch = EventModel.db.batch()
+        
+        let eventDriverRef = self.reference.collection(EventDBKeys.drivers.rawValue).document(paceUser.uid)
+        batch.deleteDocument(eventDriverRef)
+        
+        let userDriveForData: [String: Any] = [
+            UserDBKeys.driveFor.rawValue: FieldValue.delete()
+        ]
+        batch.setData(userDriveForData, forDocument: paceUser.dbReference, merge: true)
+        
+        batch.commit() { error in
+            if let completion = completion {
+                DispatchQueue.main.async {
+                    completion(error)
+                }
+            }
+        }
+    }
+    
     
     /// Adds using block to notification obersvers then fetches
     func subscribe(using block: @escaping (Notification) -> Void) {

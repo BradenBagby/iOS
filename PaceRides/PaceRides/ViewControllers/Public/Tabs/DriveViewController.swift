@@ -10,9 +10,76 @@ import UIKit
 
 class DriveViewController: PaceTabViewController {
     
+    
+    private var _userDrivingForEvent = false
+    private var _userDriveEventTitle: String?
+    
+    @IBOutlet weak var noDriveView: UIView!
+    @IBOutlet weak var primaryLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad(self.view)
+        
+        self.newUserData()
+        UserModel.notificationCenter.addObserver(
+            forName: .NewPaceUserData,
+            object: nil,
+            queue: OperationQueue.main,
+            using: self.newUserData
+        )
     }
+    
+    
+    func newUserData(_: Notification? = nil) {
+        
+        guard let paceUser = UserModel.sharedInstance() else {
+            return
+        }
+        
+        if let userDriveFor = paceUser.driveFor {
+            self._userDrivingForEvent = true
+            userDriveFor.subscribe(using: self.newEventData)
+        } else {
+            self._userDrivingForEvent = false
+            self._userDriveEventTitle = nil
+        }
+        
+        updateUI()
+    }
+    
+    
+    func newEventData(_: Notification? = nil) {
+     
+        self._userDrivingForEvent = false
+        self._userDriveEventTitle = nil
+        
+        guard let paceUser = UserModel.sharedInstance() else {
+            updateUI()
+            return
+        }
+        
+        guard let userDriveFor = paceUser.driveFor else {
+            updateUI()
+            return
+        }
+        
+        self._userDrivingForEvent = true
+        self._userDriveEventTitle = userDriveFor.title
+        
+        updateUI()
+    }
+    
+    
+    func updateUI() {
+        
+        self.noDriveView.isHidden = self._userDrivingForEvent
+        
+        if self._userDrivingForEvent {
+            self.primaryLabel.text = self._userDriveEventTitle
+        }
+        
+    }
+    
     
     override func viewDidAppear(_ animated: Bool) {
         self.setRearGestureRecognizer()

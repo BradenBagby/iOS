@@ -14,8 +14,59 @@ class EventMemberViewController: UIViewController {
     @IBOutlet weak var btnCopyLink: UIButton!
     @IBOutlet weak var btnDrive: UIButton!
     
+    private var _userIsDrivingForEvent = true
+    private var _userIsDrivingForThisEvent = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.newUserData()
+        UserModel.notificationCenter.addObserver(
+            forName: .NewPaceUserData,
+            object: nil,
+            queue: OperationQueue.main,
+            using: self.newUserData
+        )
+    }
+    
+    
+    func newUserData(_: Notification? = nil) {
+     
+        guard let paceUser = UserModel.sharedInstance() else {
+            self._userIsDrivingForEvent = true
+            self._userIsDrivingForThisEvent = false
+            self.updateUI()
+            return
+        }
+        
+        if let userDriveFor = paceUser.driveFor {
+            self._userIsDrivingForEvent = true
+            self._userIsDrivingForThisEvent = userDriveFor.uid == self.event.uid
+        } else {
+            self._userIsDrivingForEvent = false
+        }
+        
+        self.updateUI()
+    }
+    
+    func updateUI() {
+        
+        if _userIsDrivingForEvent {
+            if _userIsDrivingForThisEvent {
+                self.btnDrive.isEnabled = true
+                self.btnDrive.setTitle("Stop Driving", for: .normal)
+                self.btnDrive.setTitleColor(.red, for: .normal)
+            } else {
+                self.btnDrive.isEnabled = false
+                self.btnDrive.setTitle("Drive", for: .normal)
+                self.btnDrive.setTitleColor(nil, for: .normal)
+            }
+        } else {
+            self.btnDrive.isEnabled = true
+            self.btnDrive.setTitle("Drive", for: .normal)
+            self.btnDrive.setTitleColor(nil, for: .normal)
+        }
+        
     }
     
     @IBAction func copyLinkButtonPressed() {
@@ -28,10 +79,16 @@ class EventMemberViewController: UIViewController {
     
     @IBAction func driveButtonPressed() {
         
-        guard let paceUser = UserModel.sharedInstance() else {
+        guard let paceUser = UserModel.sharedInstance(), let pubProf = paceUser.publicProfile() else {
             return
         }
         
-        print("\(paceUser.uid) drive for \(self.event.title ?? "Error")")
+        if let userDriveFor = paceUser.driveFor {
+            if userDriveFor.uid == self.event.uid {
+                userDriveFor.stopDriving(paceUser: paceUser)
+            }
+        } else {
+            self.event.addDriver(paceUser: pubProf)
+        }
     }
 }
