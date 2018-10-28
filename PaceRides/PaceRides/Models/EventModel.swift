@@ -56,6 +56,12 @@ class EventModel {
         }
     }
     
+    var link: String {
+        get {
+            return "https://pacerides.com/event?id=\(self.uid)"
+        }
+    }
+    
     
     private var docListener: ListenerRegistration? = nil
     

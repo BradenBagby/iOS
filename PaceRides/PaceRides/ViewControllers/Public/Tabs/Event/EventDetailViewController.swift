@@ -143,6 +143,15 @@ class EventDetailViewController: UIViewController {
     }
     
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showMemberView" {
+            if let destVC = segue.destination as? EventMemberViewController {
+                destVC.event = self.event
+            }
+        }
+    }
+    
+    
     @IBAction func requestRideButtonPressed(_ sender: Any) {
         
         guard let paceUser = UserModel.sharedInstance(), let publicProfile = paceUser.publicProfile() else {

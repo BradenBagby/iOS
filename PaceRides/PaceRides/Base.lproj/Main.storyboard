@@ -199,7 +199,7 @@
                             <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UPy-NP-eBS">
                                 <rect key="frame" x="0.0" y="288" width="375" height="330"/>
                                 <connections>
-                                    <segue destination="IPC-FL-Y3I" kind="embed" id="H0W-Nt-KyV"/>
+                                    <segue destination="IPC-FL-Y3I" kind="embed" identifier="showMemberView" id="H0W-Nt-KyV"/>
                                 </connections>
                             </containerView>
                         </subviews>
@@ -1310,10 +1310,10 @@
             </objects>
             <point key="canvasLocation" x="-876" y="-57"/>
         </scene>
-        <!--View Controller-->
+        <!--Event Member View Controller-->
         <scene sceneID="6sV-Qg-71S">
             <objects>
-                <viewController id="IPC-FL-Y3I" sceneMemberID="viewController">
+                <viewController id="IPC-FL-Y3I" customClass="EventMemberViewController" customModule="PaceRides" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="6bN-H1-yS5">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="330"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1321,10 +1321,16 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HhF-XH-ZP1">
                                 <rect key="frame" x="16" y="0.0" width="343" height="30"/>
                                 <state key="normal" title="Drive"/>
+                                <connections>
+                                    <action selector="driveButtonPressed" destination="IPC-FL-Y3I" eventType="touchUpInside" id="SjB-kx-Lon"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Txv-gs-3aa">
                                 <rect key="frame" x="16" y="38" width="343" height="30"/>
                                 <state key="normal" title="Copy Link"/>
+                                <connections>
+                                    <action selector="copyLinkButtonPressed" destination="IPC-FL-Y3I" eventType="touchUpInside" id="Qb5-ol-5m8"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -1337,6 +1343,10 @@
                             <constraint firstItem="HhF-XH-ZP1" firstAttribute="leading" secondItem="6bN-H1-yS5" secondAttribute="leading" constant="16" id="UoS-vl-2hR"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="btnCopyLink" destination="Txv-gs-3aa" id="rKb-zz-G8p"/>
+                        <outlet property="btnDrive" destination="HhF-XH-ZP1" id="2pF-33-Wum"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DWz-jp-QVy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

@@ -15,6 +15,7 @@
 		E018D7CB21718FC30063A362 /* OrganizationMembersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E018D7CA21718FC30063A362 /* OrganizationMembersTableViewController.swift */; };
 		E0246DF02167021C00DB3CC8 /* PacePublicProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0246DEF2167021C00DB3CC8 /* PacePublicProfileTableViewCell.swift */; };
 		E0246DF22167024300DB3CC8 /* PaceSchoolProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0246DF12167024300DB3CC8 /* PaceSchoolProfileTableViewCell.swift */; };
+		E05429C12186363400231901 /* EventMemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E05429C02186363400231901 /* EventMemberViewController.swift */; };
 		E06C1B3B21767554009A91DD /* EventModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06C1B3A21767554009A91DD /* EventModel.swift */; };
 		E06C1B3E21767D19009A91DD /* EventDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06C1B3D21767D19009A91DD /* EventDetailViewController.swift */; };
 		E06C74B9217E6CC800973325 /* EULAViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06C74B8217E6CC800973325 /* EULAViewController.swift */; };
@@ -83,6 +84,7 @@
 		E018D7CA21718FC30063A362 /* OrganizationMembersTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationMembersTableViewController.swift; sourceTree = "<group>"; };
 		E0246DEF2167021C00DB3CC8 /* PacePublicProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacePublicProfileTableViewCell.swift; sourceTree = "<group>"; };
 		E0246DF12167024300DB3CC8 /* PaceSchoolProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaceSchoolProfileTableViewCell.swift; sourceTree = "<group>"; };
+		E05429C02186363400231901 /* EventMemberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventMemberViewController.swift; sourceTree = "<group>"; };
 		E06C1B3A21767554009A91DD /* EventModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventModel.swift; sourceTree = "<group>"; };
 		E06C1B3D21767D19009A91DD /* EventDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailViewController.swift; sourceTree = "<group>"; };
 		E06C74B8217E6CC800973325 /* EULAViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EULAViewController.swift; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 			children = (
 				E07754CF216DB5D6008421CE /* EventListViewController.swift */,
 				E06C1B3D21767D19009A91DD /* EventDetailViewController.swift */,
+				E05429C02186363400231901 /* EventMemberViewController.swift */,
 			);
 			path = Event;
 			sourceTree = "<group>";
@@ -607,6 +610,7 @@
 				E0C1A97E21629CFD006C4DF6 /* SchoolSignInViewController.swift in Sources */,
 				E018D7C92171463B0063A362 /* OrganizationMemberViewController.swift in Sources */,
 				E06C1B3E21767D19009A91DD /* EventDetailViewController.swift in Sources */,
+				E05429C12186363400231901 /* EventMemberViewController.swift in Sources */,
 				E07754CA216DA85A008421CE /* OrganizationListViewController.swift in Sources */,
 				E07754C8216D4560008421CE /* OrganizationModel.swift in Sources */,
 				E0C1A9802162AC97006C4DF6 /* SchoolViewController.swift in Sources */,
