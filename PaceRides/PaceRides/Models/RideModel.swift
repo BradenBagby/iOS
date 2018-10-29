@@ -36,6 +36,7 @@ class RideModel {
     static let ref = RideModel.db.collection(RideDBKeys.rides.rawValue)
     static let notificationCenter = NotificationCenter.default
     static let NewData = Notification.Name("NewRideData")
+    static let RideDoesNotExist = Notification.Name("RideDoesNotExits")
     
     static func createNewRide(rider: PacePublicProfile, event: EventModel, completion: ((Error?) -> Void)? = nil) {
     
@@ -198,7 +199,16 @@ class RideModel {
         }
         
         guard let docData = document.data() else {
-            print("No data in document for ride uid: \(self.uid)")
+            RideModel.notificationCenter.post(
+                name: RideModel.RideDoesNotExist,
+                object: self
+            )
+            
+            self._riderDisplayName = nil
+            self._riderReference = nil
+            self._eventTitle = nil
+            self._eventReference = nil
+            
             return
         }
         

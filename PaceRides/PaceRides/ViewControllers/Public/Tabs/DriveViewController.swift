@@ -13,7 +13,7 @@ class DriveViewController: PaceTabViewController {
     
     private var _userDriveFor: EventModel?
     private var _userDrive: RideModel?
-    
+    private var _userDriveDeletionObserver: NSObjectProtocol?
     
     @IBOutlet weak var noDriveView: UIView!
     @IBOutlet weak var primaryLabel: UILabel!
@@ -54,6 +54,13 @@ class DriveViewController: PaceTabViewController {
         
         if let userDrive = paceUser.drive {
             self._userDrive = userDrive
+            
+            self._userDriveDeletionObserver = RideModel.notificationCenter.addObserver(
+                forName: RideModel.RideDoesNotExist,
+                object: userDrive,
+                queue: OperationQueue.main,
+                using: self.rideDoesNotExist
+            )
             userDrive.subscribe(using: self.newRideData)
         } else {
             self._userDrive = nil
@@ -73,6 +80,32 @@ class DriveViewController: PaceTabViewController {
     }
     
     
+    func rideDoesNotExist(_: Notification? = nil) {
+        
+        let alert = UIAlertController(
+            title: "Drive Ended",
+            message: "This ride has been canceled or removed.",
+            preferredStyle: .alert
+        )
+        
+        alert.addAction(UIAlertAction(
+            title: "Okay",
+            style: .cancel,
+            handler: nil)
+        )
+        
+        self.present(alert, animated: true)
+        
+        guard let userDriveFor = self._userDriveFor, let user = UserModel.sharedInstance(), let pubProf = user.publicProfile() else {
+            return
+        }
+        guard let userDrive = self._userDrive else {
+            return
+        }
+        userDriveFor.endDrive(pubProf, rideModel: userDrive)
+    }
+    
+    
     func updateUI() {
         
         guard let userDriveFor = self._userDriveFor else {
@@ -88,15 +121,16 @@ class DriveViewController: PaceTabViewController {
             
             self.primaryButton.isEnabled = true
             self.primaryButton.setTitle("Get Rider's Location", for: .normal)
-            self.destructivButton.setTitle("End Ride", for: .normal)
+            self.destructivButton.setTitle("End Drive", for: .normal)
             
         } else {
             
-            self.primaryButton.setTitle("Get Next Rider", for: .normal)
             if userDriveFor.rideQueue.count > 0 {
                 self.primaryButton.isEnabled = true
+                self.primaryButton.setTitle("Get Next Rider", for: .normal)
             } else {
                 self.primaryButton.isEnabled = false
+                self.primaryButton.setTitle("No One in Queue", for: .normal)
             }
             
             self.destructivButton.setTitle("Stop Driving", for: .normal)
@@ -127,7 +161,7 @@ class DriveViewController: PaceTabViewController {
     
     @IBAction func destructiveButtonPressed() {
         
-        guard let paceUser = UserModel.sharedInstance() else {
+        guard let paceUser = UserModel.sharedInstance(), let pubProf = paceUser.publicProfile() else {
             return
         }
         
@@ -135,8 +169,36 @@ class DriveViewController: PaceTabViewController {
             return
         }
         
-        if let _ = self._userDrive {
-            print("End ride")
+        if let userDrive = self._userDrive {
+            
+            let actionSheet = UIAlertController(
+                title: "End Drive",
+                message: "Are you sure the drive is over?",
+                preferredStyle: .actionSheet
+            )
+            
+            actionSheet.addAction(UIAlertAction(
+                title: "End Drive",
+                style: .destructive
+            ) { _ in
+                
+                RideModel.notificationCenter.removeObserver(
+                    self._userDriveDeletionObserver as Any,
+                    name: RideModel.RideDoesNotExist,
+                    object: userDrive
+                )
+                userDriveFor.endDrive(pubProf, rideModel: userDrive)
+                
+            })
+            
+            actionSheet.addAction(UIAlertAction(
+                title: "Cancel",
+                style: .cancel,
+                handler: nil
+            ))
+            
+            self.present(actionSheet, animated: true)
+            
         } else {
             
             let actionSheet = UIAlertController(

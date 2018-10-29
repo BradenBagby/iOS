@@ -268,6 +268,22 @@ class EventModel {
         }
     }
     
+    func endDrive(_ driver: PacePublicProfile, rideModel: RideModel) {
+        
+        let batch = EventModel.db.batch()
+        
+        let activeRidesRideRef = self.reference.collection(EventDBKeys.activeRides.rawValue).document(rideModel.uid)
+        batch.deleteDocument(activeRidesRideRef)
+        
+        batch.deleteDocument(rideModel.reference)
+        
+        let newDriverData: [String: Any] = [
+            UserDBKeys.drive.rawValue: FieldValue.delete()
+        ]
+        batch.setData(newDriverData, forDocument: driver.dbReference, merge: true)
+        
+        batch.commit()
+    }
     
     private func snapshotListener(document: DocumentSnapshot?, error: Error?) {
         

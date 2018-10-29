@@ -56,6 +56,13 @@ class EventDetailViewController: UIViewController {
         
         if let ride = paceUser.ride {
             self._userRide = ride
+            
+            RideModel.notificationCenter.addObserver(
+                forName: RideModel.RideDoesNotExist,
+                object: ride,
+                queue: OperationQueue.main,
+                using: self.rideDoesNotExist
+            )
             ride.subscribe(using: self.newRideData)
         } else {
             self._userRide = nil
@@ -110,6 +117,20 @@ class EventDetailViewController: UIViewController {
         }
         
         updateUI()
+    }
+    
+    
+    func rideDoesNotExist(_: Notification? = nil) {
+        
+        guard let paceUser = UserModel.sharedInstance() else {
+            return
+        }
+        
+        guard let userRide = self._userRide else {
+            return
+        }
+        
+        userRide.cancelRequest(toEvent: self.event.uid, forRider: paceUser)
     }
     
     
