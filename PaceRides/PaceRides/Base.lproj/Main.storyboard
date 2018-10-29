@@ -262,8 +262,8 @@
                                     <action selector="destructiveButtonPressed" destination="xTG-ak-9PI" eventType="touchUpInside" id="zvn-DV-RzU"/>
                                 </connections>
                             </button>
-                            <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aqW-QJ-ABh">
-                                <rect key="frame" x="-207" y="441" width="375" height="502"/>
+                            <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aqW-QJ-ABh">
+                                <rect key="frame" x="0.0" y="116" width="375" height="502"/>
                                 <connections>
                                     <segue destination="Umf-Vs-pOx" kind="embed" id="1qH-z4-hua"/>
                                 </connections>

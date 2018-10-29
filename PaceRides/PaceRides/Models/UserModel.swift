@@ -594,6 +594,10 @@ class UserModel: NSObject, PaceUser {
         
         self.userData = userData
         
+        if self.photoUrl != nil, self._profilePicture == nil {
+            self.getProfilePicture()
+        }
+        
         if let newUserRide = userData[UserDBKeys.ride.rawValue] as? DocumentReference {
             if let existingUserRide = self._ride {
                 if newUserRide.documentID != existingUserRide.uid {
