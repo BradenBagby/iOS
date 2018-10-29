@@ -113,14 +113,14 @@ class DriveViewController: PaceTabViewController {
             return
         }
         
-        guard let paceUser = UserModel.sharedInstance() else {
+        guard let paceUser = UserModel.sharedInstance(), let pubProf = paceUser.publicProfile() else {
             return
         }
         
         if let _ = self._userDrive {
             print("Get rider's location")
         } else {
-            userDriveFor.getNextRiderInQueue(paceUser)
+            userDriveFor.getNextRiderInQueue(pubProf)
         }
     }
     

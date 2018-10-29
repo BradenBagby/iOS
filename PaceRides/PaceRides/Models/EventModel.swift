@@ -19,6 +19,8 @@ enum EventDBKeys: String {
     case activeRides = "activeRides"
     case riderDisplayName = "riderDisplayName"
     case riderReference = "riderReference"
+    case driverDisplayName = "driverDisplayName"
+    case driverRidference = "driverReference"
     case timeOfRequest = "timeOfRequest"
     case drivers = "drivers"
     case displayName = "displayName"
@@ -172,7 +174,7 @@ class EventModel {
     }
     
     
-    func getNextRiderInQueue(_ paceUser: PaceUser) {
+    func getNextRiderInQueue(_ paceUser: PacePublicProfile) {
         
         guard self.rideQueue.count > 0 else {
             return
@@ -182,7 +184,7 @@ class EventModel {
     }
     
     
-    private func dequeRideFormRideQueue(_ paceUser: PaceUser, rideQueueIdx: Int) {
+    private func dequeRideFormRideQueue(_ paceUser: PacePublicProfile, rideQueueIdx: Int) {
         
         guard self.rideQueue.count > rideQueueIdx else {
             // TODO
@@ -192,7 +194,7 @@ class EventModel {
         let ride = self.rideQueue[rideQueueIdx];
         let rideQueueRideRef = self.reference.collection(EventDBKeys.rideQueue.rawValue).document(ride.uid)
         let activeRidesRideRef = self.reference.collection(EventDBKeys.activeRides.rawValue).document(ride.uid)
-        let updatedStatusData: [String: Any] = [
+        var updatedRideData: [String: Any] = [
             RideDBKeys.status.rawValue: 1
         ]
         let userDriveData: [String: Any] = [
@@ -229,9 +231,18 @@ class EventModel {
                 return nil
             }
             
+            var activeRideData = data
+            activeRideData[EventDBKeys.driverDisplayName.rawValue] = paceUser.displayName as Any
+            activeRideData[EventDBKeys.driverRidference.rawValue] = paceUser.dbReference
+            
+            updatedRideData[RideDBKeys.driver.rawValue] = [
+                RideDBKeys.displayName.rawValue: paceUser.displayName as Any,
+                RideDBKeys.reference.rawValue: paceUser.dbReference
+            ] as [String: Any]
+            
             transaction.deleteDocument(rideQueueRideRef)
-            transaction.setData(data, forDocument: activeRidesRideRef)
-            transaction.setData(updatedStatusData, forDocument: ride.reference, merge: true)
+            transaction.setData(activeRideData, forDocument: activeRidesRideRef)
+            transaction.setData(updatedRideData, forDocument: ride.reference, merge: true)
             transaction.setData(userDriveData, forDocument: paceUser.dbReference, merge: true)
             return ride.reference
         }) { object, error in

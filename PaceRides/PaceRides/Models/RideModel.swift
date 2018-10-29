@@ -13,6 +13,7 @@ import Firebase
 enum RideDBKeys: String {
     case rides = "rides"
     case rider = "rider"
+    case driver = "driver"
     case event = "event"
     case status = "status"
     
