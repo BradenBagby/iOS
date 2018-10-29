@@ -109,10 +109,18 @@ class DriveViewController: PaceTabViewController {
     
     @IBAction func primaryButtonPressed() {
         
+        guard let userDriveFor = self._userDriveFor else {
+            return
+        }
+        
+        guard let paceUser = UserModel.sharedInstance() else {
+            return
+        }
+        
         if let _ = self._userDrive {
             print("Get rider's location")
         } else {
-            print("Get next rider in queue")
+            userDriveFor.getNextRiderInQueue(paceUser)
         }
     }
     

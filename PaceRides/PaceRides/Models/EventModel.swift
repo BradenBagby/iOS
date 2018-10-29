@@ -16,6 +16,7 @@ enum EventDBKeys: String {
     case organization = "organization"
     case reference = "reference"
     case rideQueue = "rideQueue"
+    case activeRides = "activeRides"
     case riderDisplayName = "riderDisplayName"
     case riderReference = "riderReference"
     case timeOfRequest = "timeOfRequest"
@@ -165,7 +166,95 @@ class EventModel {
         }
         
         docListener = self.reference.addSnapshotListener(self.snapshotListener)
-        self.reference.collection(EventDBKeys.rideQueue.rawValue).addSnapshotListener(self.rideQueueListener)
+        self.reference.collection(EventDBKeys.rideQueue.rawValue)
+            .order(by: EventDBKeys.timeOfRequest.rawValue, descending: false)
+            .addSnapshotListener(self.rideQueueListener)
+    }
+    
+    
+    func getNextRiderInQueue(_ paceUser: PaceUser) {
+        
+        guard self.rideQueue.count > 0 else {
+            return
+        }
+        
+        self.dequeRideFormRideQueue(paceUser, rideQueueIdx: 0)
+    }
+    
+    
+    private func dequeRideFormRideQueue(_ paceUser: PaceUser, rideQueueIdx: Int) {
+        
+        guard self.rideQueue.count > rideQueueIdx else {
+            // TODO
+            return
+        }
+        
+        let ride = self.rideQueue[rideQueueIdx];
+        let rideQueueRideRef = self.reference.collection(EventDBKeys.rideQueue.rawValue).document(ride.uid)
+        let activeRidesRideRef = self.reference.collection(EventDBKeys.activeRides.rawValue).document(ride.uid)
+        let updatedStatusData: [String: Any] = [
+            RideDBKeys.status.rawValue: 1
+        ]
+        let userDriveData: [String: Any] = [
+            UserDBKeys.drive.rawValue: ride.reference
+        ]
+        
+        EventModel.db.runTransaction({ transaction, errorPointer -> Any? in
+            
+            let rideQueueRideDoc: DocumentSnapshot
+            do {
+                try rideQueueRideDoc = transaction.getDocument(rideQueueRideRef)
+            } catch let fetchError as NSError {
+                errorPointer?.pointee = fetchError
+                return nil
+            }
+            
+            guard let data = rideQueueRideDoc.data() else {
+                let error = NSError(
+                    domain: "PaceRidesDequeRideErrorDomain",
+                    code: -1,
+                    userInfo: [NSLocalizedDescriptionKey: "Could not retrieve data from rideQueueRide \(ride.uid)"]
+                )
+                errorPointer?.pointee = error
+                return nil
+            }
+            
+            guard let _ = data[EventDBKeys.reference.rawValue] as? DocumentReference else {
+                let error = NSError(
+                    domain: "PaceRidesDequeRideErrorDomain",
+                    code: -2,
+                    userInfo: [NSLocalizedDescriptionKey: "No data in rideQueueRide \(ride.uid)"]
+                )
+                errorPointer?.pointee = error
+                return nil
+            }
+            
+            transaction.deleteDocument(rideQueueRideRef)
+            transaction.setData(data, forDocument: activeRidesRideRef)
+            transaction.setData(updatedStatusData, forDocument: ride.reference, merge: true)
+            transaction.setData(userDriveData, forDocument: paceUser.dbReference, merge: true)
+            return ride.reference
+        }) { object, error in
+            
+            guard error == nil else {
+                let error = error! as NSError
+                
+                if error.code == -1 || error.code == -2 {
+                    print(error.localizedDescription)
+                } else {
+                    print(error.localizedDescription)
+                }
+                
+                return
+            }
+            
+            guard let dequeuedRideRef = object as? DocumentReference else {
+                print("Transaction result not document reference")
+                return
+            }
+            
+            print("Successfully dequeued ride \(dequeuedRideRef.documentID)")
+        }
     }
     
     
