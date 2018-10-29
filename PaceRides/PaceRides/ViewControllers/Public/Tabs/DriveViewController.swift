@@ -16,6 +16,9 @@ class DriveViewController: PaceTabViewController {
     
     @IBOutlet weak var noDriveView: UIView!
     @IBOutlet weak var primaryLabel: UILabel!
+    @IBOutlet weak var primaryButton: UIButton!
+    @IBOutlet weak var destructivButton: UIButton!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad(self.view)
@@ -27,6 +30,11 @@ class DriveViewController: PaceTabViewController {
             queue: OperationQueue.main,
             using: self.newUserData
         )
+    }
+    
+    
+    override func viewDidAppear(_ animated: Bool) {
+        self.setRearGestureRecognizer()
     }
     
     
@@ -81,8 +89,13 @@ class DriveViewController: PaceTabViewController {
     }
     
     
-    override func viewDidAppear(_ animated: Bool) {
-        self.setRearGestureRecognizer()
+    @IBAction func primaryButtonPressed() {
+        print("Primary button pressed")
+    }
+    
+    
+    @IBAction func destructiveButtonPressed() {
+        print("Destructive button presssed")
     }
 }
 

@@ -241,12 +241,28 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8tF-9R-i62">
-                                <rect key="frame" x="32" y="140" width="327" height="32"/>
+                                <rect key="frame" x="16" y="140" width="343" height="32"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aqW-QJ-ABh">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="npE-qS-JRr">
+                                <rect key="frame" x="16" y="180" width="343" height="30"/>
+                                <state key="normal" title="Primary Button"/>
+                                <connections>
+                                    <action selector="primaryButtonPressed" destination="xTG-ak-9PI" eventType="touchUpInside" id="OVc-fZ-MF4"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bx7-by-RHP">
+                                <rect key="frame" x="16" y="218" width="343" height="30"/>
+                                <state key="normal" title="Destructive Button">
+                                    <color key="titleColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="destructiveButtonPressed" destination="xTG-ak-9PI" eventType="touchUpInside" id="zvn-DV-RzU"/>
+                                </connections>
+                            </button>
+                            <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aqW-QJ-ABh">
                                 <rect key="frame" x="0.0" y="116" width="375" height="502"/>
                                 <connections>
                                     <segue destination="Umf-Vs-pOx" kind="embed" id="1qH-z4-hua"/>
@@ -255,13 +271,19 @@
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="8tF-9R-i62" firstAttribute="leading" secondItem="xnm-hY-sq7" secondAttribute="leading" constant="32" id="7yQ-CJ-B3V"/>
+                            <constraint firstItem="8tF-9R-i62" firstAttribute="leading" secondItem="xnm-hY-sq7" secondAttribute="leading" constant="16" id="7yQ-CJ-B3V"/>
+                            <constraint firstItem="npE-qS-JRr" firstAttribute="top" secondItem="8tF-9R-i62" secondAttribute="bottom" constant="8" id="CPa-uK-HHc"/>
+                            <constraint firstItem="npE-qS-JRr" firstAttribute="leading" secondItem="xnm-hY-sq7" secondAttribute="leading" constant="16" id="NIF-UX-8gY"/>
                             <constraint firstItem="aqW-QJ-ABh" firstAttribute="top" secondItem="xnm-hY-sq7" secondAttribute="top" id="Pjj-Cl-chl"/>
+                            <constraint firstItem="bx7-by-RHP" firstAttribute="top" secondItem="npE-qS-JRr" secondAttribute="bottom" constant="8" id="Pqj-uB-Kok"/>
                             <constraint firstItem="xnm-hY-sq7" firstAttribute="bottom" secondItem="aqW-QJ-ABh" secondAttribute="bottom" id="R6q-AO-SkS"/>
                             <constraint firstItem="xnm-hY-sq7" firstAttribute="trailing" secondItem="8tF-9R-i62" secondAttribute="trailing" constant="16" id="fp5-1l-xlE"/>
+                            <constraint firstItem="xnm-hY-sq7" firstAttribute="trailing" secondItem="npE-qS-JRr" secondAttribute="trailing" constant="16" id="gNL-pB-7Xw"/>
                             <constraint firstItem="xnm-hY-sq7" firstAttribute="trailing" secondItem="aqW-QJ-ABh" secondAttribute="trailing" id="i6Z-bc-KEy"/>
+                            <constraint firstItem="bx7-by-RHP" firstAttribute="leading" secondItem="xnm-hY-sq7" secondAttribute="leading" constant="16" id="pHU-F2-zXM"/>
                             <constraint firstItem="aqW-QJ-ABh" firstAttribute="leading" secondItem="xnm-hY-sq7" secondAttribute="leading" id="pMf-a4-ppt"/>
                             <constraint firstItem="8tF-9R-i62" firstAttribute="top" secondItem="xnm-hY-sq7" secondAttribute="top" constant="24" id="ru4-wY-HEe"/>
+                            <constraint firstItem="xnm-hY-sq7" firstAttribute="trailing" secondItem="bx7-by-RHP" secondAttribute="trailing" constant="16" id="wM5-L6-mfS"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="xnm-hY-sq7"/>
                     </view>
@@ -269,8 +291,10 @@
                         <barButtonItem key="leftBarButtonItem" image="hamburgerMenuIcon" id="1sO-px-IN5"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="destructivButton" destination="bx7-by-RHP" id="wfS-hV-QQj"/>
                         <outlet property="noDriveView" destination="aqW-QJ-ABh" id="5pA-uf-aq2"/>
                         <outlet property="openMenuBarButtonItem" destination="1sO-px-IN5" id="cv2-o7-u7g"/>
+                        <outlet property="primaryButton" destination="npE-qS-JRr" id="gBL-ij-5JE"/>
                         <outlet property="primaryLabel" destination="8tF-9R-i62" id="Pcx-Tl-PfP"/>
                     </connections>
                 </viewController>
@@ -1349,6 +1373,7 @@
                             <constraint firstAttribute="trailing" secondItem="HhF-XH-ZP1" secondAttribute="trailing" constant="16" id="ESm-8M-gED"/>
                             <constraint firstItem="HhF-XH-ZP1" firstAttribute="leading" secondItem="6bN-H1-yS5" secondAttribute="leading" constant="16" id="UoS-vl-2hR"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="xkb-Be-i5A"/>
                     </view>
                     <connections>
                         <outlet property="btnCopyLink" destination="Txv-gs-3aa" id="rKb-zz-G8p"/>
