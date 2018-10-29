@@ -33,20 +33,41 @@ class OrganizationMemberViewController: UIViewController {
         guard let paceUser = UserModel.sharedInstance() else {
             return
         }
-        self.organization.removeMember(uid: paceUser.uid) { error in
-            
-            guard error == nil else {
-                print(error!.localizedDescription)
-                return
-            }
-            
-            paceUser.removeFromOrganizationList(organization: self.organization) { error in
+        
+        let actionSheet = UIAlertController(
+            title: "Leave Organization",
+            message: "Are you sure you want to leave this organization?",
+            preferredStyle: .actionSheet
+        )
+        
+        actionSheet.addAction(UIAlertAction(
+            title: "Leave Organization",
+            style: .destructive
+            ) { _ in
+        
+            self.organization.removeMember(uid: paceUser.uid) { error in
                 
-                if let error = error {
-                    print(error.localizedDescription)
+                guard error == nil else {
+                    print(error!.localizedDescription)
                     return
                 }
+                
+                paceUser.removeFromOrganizationList(organization: self.organization) { error in
+                    
+                    if let error = error {
+                        print(error.localizedDescription)
+                        return
+                    }
+                }
             }
-        }
+        })
+        
+        actionSheet.addAction(UIAlertAction(
+            title: "Cancel",
+            style: .cancel,
+            handler: nil
+        ))
+        
+        self.present(actionSheet, animated: true)
     }
 }

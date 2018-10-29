@@ -85,7 +85,28 @@ class EventMemberViewController: UIViewController {
         
         if let userDriveFor = paceUser.driveFor {
             if userDriveFor.uid == self.event.uid {
-                userDriveFor.stopDriving(paceUser: paceUser)
+                
+                let actionSheet = UIAlertController(
+                    title: "Stop Driving",
+                    message: "Are you sure you want to stop driving for this event?",
+                    preferredStyle: .actionSheet
+                )
+                
+                actionSheet.addAction(UIAlertAction(
+                    title: "Stop Driving",
+                    style: .destructive
+                ) { _ in
+                    userDriveFor.stopDriving(paceUser: paceUser)
+                })
+                
+                actionSheet.addAction( UIAlertAction(
+                    title: "Cancel",
+                    style: .cancel,
+                    handler: nil
+                ))
+                
+                self.present(actionSheet, animated: true)
+                
             }
         } else {
             self.event.addDriver(paceUser: pubProf)
