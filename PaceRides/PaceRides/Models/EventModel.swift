@@ -58,6 +58,13 @@ class EventModel {
         }
     }
     
+    private var _rideQueue = [RideModel]()
+    var rideQueue: [RideModel] {
+        get {
+            return self._rideQueue
+        }
+    }
+    
     var link: String {
         get {
             return "https://pacerides.com/event?id=\(self.uid)"
@@ -158,9 +165,11 @@ class EventModel {
         }
         
         docListener = self.reference.addSnapshotListener(self.snapshotListener)
+        self.reference.collection(EventDBKeys.rideQueue.rawValue).addSnapshotListener(self.rideQueueListener)
     }
     
-    func snapshotListener(document: DocumentSnapshot?, error: Error?) {
+    
+    private func snapshotListener(document: DocumentSnapshot?, error: Error?) {
         
         guard error == nil else {
             print(error!.localizedDescription)
@@ -192,6 +201,31 @@ class EventModel {
                     andReference: newOrgRef
                 )
             }
+        }
+        
+        EventModel.notificationCenter.post(
+            name: EventModel.NewData,
+            object: self
+        )
+    }
+    
+    
+    private func rideQueueListener(snapshot: QuerySnapshot?, error: Error?) {
+        
+        guard error == nil else {
+            print(error!.localizedDescription)
+            return
+        }
+        
+        guard let snapshot = snapshot else {
+            print("No ride queue snapshot for event: \(self.uid)")
+            return
+        }
+        
+        self._rideQueue.removeAll()
+        for document in snapshot.documents {
+            let rideRef = RideModel(fromUID: document.documentID) 
+            self._rideQueue.append(rideRef)
         }
         
         EventModel.notificationCenter.post(

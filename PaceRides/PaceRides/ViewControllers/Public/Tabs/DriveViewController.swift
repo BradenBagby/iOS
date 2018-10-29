@@ -11,14 +11,14 @@ import UIKit
 class DriveViewController: PaceTabViewController {
     
     
-    private var _userDrivingForEvent = false
-    private var _userDriveEventTitle: String?
+    private var _userDriveFor: EventModel?
+    private var _userDrive: RideModel?
+    
     
     @IBOutlet weak var noDriveView: UIView!
     @IBOutlet weak var primaryLabel: UILabel!
     @IBOutlet weak var primaryButton: UIButton!
     @IBOutlet weak var destructivButton: UIButton!
-    
     
     override func viewDidLoad() {
         super.viewDidLoad(self.view)
@@ -45,11 +45,18 @@ class DriveViewController: PaceTabViewController {
         }
         
         if let userDriveFor = paceUser.driveFor {
-            self._userDrivingForEvent = true
+            self._userDriveFor = userDriveFor
             userDriveFor.subscribe(using: self.newEventData)
         } else {
-            self._userDrivingForEvent = false
-            self._userDriveEventTitle = nil
+            self._userDriveFor = nil
+        }
+        
+        
+        if let userDrive = paceUser.drive {
+            self._userDrive = userDrive
+            userDrive.subscribe(using: self.newRideData)
+        } else {
+            self._userDrive = nil
         }
         
         updateUI()
@@ -57,45 +64,65 @@ class DriveViewController: PaceTabViewController {
     
     
     func newEventData(_: Notification? = nil) {
-     
-        self._userDrivingForEvent = false
-        self._userDriveEventTitle = nil
-        
-        guard let paceUser = UserModel.sharedInstance() else {
-            updateUI()
-            return
-        }
-        
-        guard let userDriveFor = paceUser.driveFor else {
-            updateUI()
-            return
-        }
-        
-        self._userDrivingForEvent = true
-        self._userDriveEventTitle = userDriveFor.title
-        
+        updateUI()
+    }
+    
+    
+    func newRideData(_: Notification? = nil) {
         updateUI()
     }
     
     
     func updateUI() {
         
-        self.noDriveView.isHidden = self._userDrivingForEvent
+        guard let userDriveFor = self._userDriveFor else {
+            self.noDriveView.isHidden = false
+            return
+        }
         
-        if self._userDrivingForEvent {
-            self.primaryLabel.text = self._userDriveEventTitle
+        self.noDriveView.isHidden = true
+        
+        self.primaryLabel.text = userDriveFor.title
+        
+        if let _ = self._userDrive {
+            
+            self.primaryButton.isEnabled = true
+            self.primaryButton.setTitle("Get Rider's Location", for: .normal)
+            self.destructivButton.setTitle("End Ride", for: .normal)
+            
+        } else {
+            
+            self.primaryButton.setTitle("Get Next Rider", for: .normal)
+            if userDriveFor.rideQueue.count > 0 {
+                self.primaryButton.isEnabled = true
+            } else {
+                self.primaryButton.isEnabled = false
+            }
+            
+            self.destructivButton.setTitle("Stop Driving", for: .normal)
+            
+            
         }
         
     }
     
     
     @IBAction func primaryButtonPressed() {
-        print("Primary button pressed")
+        
+        if let _ = self._userDrive {
+            print("Get rider's location")
+        } else {
+            print("Get next rider in queue")
+        }
     }
     
     
     @IBAction func destructiveButtonPressed() {
-        print("Destructive button presssed")
+        if let _ = self._userDrive {
+        print("End ride")
+    } else {
+        print("Stop driving")
+        }
     }
 }
 

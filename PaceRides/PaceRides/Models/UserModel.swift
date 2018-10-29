@@ -77,6 +77,7 @@ public enum UserDBKeys: String {
     
     case ride = "ride"
     case driveFor = "driveFor"
+    case drive = "drive"
 }
 
 public enum PaceUserError: Error {
@@ -210,6 +211,9 @@ protocol PaceUser {
     
     
     var driveFor: EventModel? { get }
+    
+    
+    var drive: RideModel? { get }
     
     
     /// Returns the public profile information if the user is signed into a public profile, nil otherwise
@@ -527,6 +531,14 @@ class UserModel: NSObject, PaceUser {
         }
     }
     
+    
+    private var _drive: RideModel?
+    var drive: RideModel? {
+        get {
+            return self._drive
+        }
+    }
+    
     private var userData: [String: Any]! = nil
     private var userDataListener: ListenerRegistration? = nil
     private var userOrganizationsListener: ListenerRegistration? = nil
@@ -618,6 +630,19 @@ class UserModel: NSObject, PaceUser {
             }
         } else {
             self._driveFor = nil
+        }
+        
+        
+        if let newDrive = userData[UserDBKeys.drive.rawValue] as? DocumentReference {
+            if let existingDrive = self._drive {
+                if newDrive.documentID != existingDrive.uid {
+                    self._drive = RideModel(fromReference: newDrive)
+                }
+            } else {
+                self._drive = RideModel(fromReference: newDrive)
+            }
+        } else {
+            self._drive = nil
         }
         
         UserModel.notificationCenter.post(
