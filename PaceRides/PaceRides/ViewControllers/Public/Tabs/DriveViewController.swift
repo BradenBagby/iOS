@@ -118,10 +118,40 @@ class DriveViewController: PaceTabViewController {
     
     
     @IBAction func destructiveButtonPressed() {
+        
+        guard let paceUser = UserModel.sharedInstance() else {
+            return
+        }
+        
+        guard let userDriveFor = self._userDriveFor else {
+            return
+        }
+        
         if let _ = self._userDrive {
-        print("End ride")
-    } else {
-        print("Stop driving")
+            print("End ride")
+        } else {
+            
+            let actionSheet = UIAlertController(
+                title: "Stop Driving",
+                message: "Are you sure you want to stop driving for this event?",
+                preferredStyle: .actionSheet
+            )
+            
+            actionSheet.addAction(UIAlertAction(
+                title: "Stop Driving",
+                style: .destructive
+            ) { _ in
+                userDriveFor.stopDriving(paceUser: paceUser)
+            })
+            
+            actionSheet.addAction( UIAlertAction(
+                title: "Cancel",
+                style: .cancel,
+                handler: nil
+            ))
+            
+            self.present(actionSheet, animated: true)
+            
         }
     }
 }
