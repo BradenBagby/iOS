@@ -14,8 +14,9 @@ class RequestRideViewController: UIViewController {
 
     var event: EventModel!
     private var locationManager: CLLocationManager!
-    private var pendingPickupLocation: CLLocation?
+    private var pendingPickupLocation: CLLocationCoordinate2D?
     private var pendingPickupLocationPin: MKPointAnnotation!
+    private var pendingPickupLocationPinView: MKAnnotationView!
     private var userHasUpdatedLocation = false
     private var userIsEditingLocation = false
     private var locationLoaded = false
@@ -40,6 +41,20 @@ class RequestRideViewController: UIViewController {
         
         self.pendingPickupLocationPin = MKPointAnnotation()
         self.pendingPickupLocationPin.title = "Pickup Location"
+        if #available(iOS 11.0, *) {
+            self.pendingPickupLocationPinView = MKMarkerAnnotationView(
+                annotation: self.pendingPickupLocationPin,
+                reuseIdentifier: "pendingPickupLocationPinView"
+            )
+        } else {
+            self.pendingPickupLocationPinView = MKPinAnnotationView(
+                annotation: self.pendingPickupLocationPin,
+                reuseIdentifier: "pendingPickupLocationPinView"
+            )
+        }
+        self.pendingPickupLocationPinView.canShowCallout = false
+        self.pendingPickupLocationPinView.isDraggable = false
+        self.pendingPickupLocationPinView.isDraggable = false
         
         self.mapView.delegate = self
         self.mapView.addAnnotation(self.pendingPickupLocationPin)
@@ -55,9 +70,9 @@ class RequestRideViewController: UIViewController {
     }
 
     
-    private func updateLocation(location: CLLocation) {
+    private func updateLocation(location: CLLocationCoordinate2D) {
         self.pendingPickupLocation = location
-        self.pendingPickupLocationPin.coordinate = location.coordinate
+        self.pendingPickupLocationPin.coordinate = location
         
         if !self.locationLoaded {
             
@@ -65,7 +80,7 @@ class RequestRideViewController: UIViewController {
             
             self.mapView.setRegion(
                 MKCoordinateRegion(
-                    center: (location.coordinate),
+                    center: (location),
                     latitudinalMeters: 1000,
                     longitudinalMeters: 1000
                 ),
@@ -108,11 +123,13 @@ class RequestRideViewController: UIViewController {
             self.submitButton.isEnabled = false
             self.userHasUpdatedLocation = true
             self.editLocationButton.setTitle("Commit Location", for: .normal)
+            self.pendingPickupLocationPinView.isDraggable = true
             
         } else {
             
             self.submitButton.isEnabled = true
             self.editLocationButton.setTitle("Edit Location", for: .normal)
+            self.pendingPickupLocationPinView.isDraggable = false
             
         }
         
@@ -125,11 +142,11 @@ class RequestRideViewController: UIViewController {
             return
         }
         
-        guard let currentLocation = self.locationManager.location else {
+        guard let pickupLocation = self.pendingPickupLocation else {
             return
         }
         
-        RideModel.createNewRide(rider: publicProfile, event: self.event, location: currentLocation) { error in
+        RideModel.createNewRide(rider: publicProfile, event: self.event, location: pickupLocation) { error in
             
             guard error == nil else {
                 print("Error")
@@ -160,7 +177,7 @@ extension RequestRideViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard !userHasUpdatedLocation else { return }
         if let location = locations.last {
-            self.updateLocation(location: location)
+            self.updateLocation(location: location.coordinate)
         }
     }
     
@@ -174,23 +191,41 @@ extension RequestRideViewController: CLLocationManagerDelegate {
 
 extension RequestRideViewController: MKMapViewDelegate {
     
-//    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-//
-//        var view: MKAnnotationView!
-//
-//
-//
-//        return view
-//    }
-//
-//    func mapView(_ mapView: MKMapView,
-//                 annotationView view: MKAnnotationView,
-//                 didChange newState: MKAnnotationView.DragState,
-//                 fromOldState oldState: MKAnnotationView.DragState
-//    ) {
-//
-//
-//
-//    }
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+
+        if annotation.title == "Pickup Location" {
+            return self.pendingPickupLocationPinView
+        }
+        
+        return nil
+    }
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        
+    }
+
+    func mapView(_ mapView: MKMapView,
+                 annotationView view: MKAnnotationView,
+                 didChange newState: MKAnnotationView.DragState,
+                 fromOldState oldState: MKAnnotationView.DragState
+    ) {
+        
+        guard view == self.pendingPickupLocationPinView,
+            self.userIsEditingLocation else {
+            return
+        }
+        
+        guard newState != oldState else {
+            return
+        }
+        
+        if newState == .ending {
+            if let annotation = view.annotation {
+                self.updateLocation(location: annotation.coordinate)
+            }
+        }
+        
+        view.dragState = newState
+    }
     
 }

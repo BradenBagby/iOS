@@ -39,7 +39,7 @@ class RideModel {
     static let NewData = Notification.Name("NewRideData")
     static let RideDoesNotExist = Notification.Name("RideDoesNotExits")
     
-    static func createNewRide(rider: PacePublicProfile, event: EventModel, location loc: CLLocation, completion: ((Error?) -> Void)? = nil) {
+    static func createNewRide(rider: PacePublicProfile, event: EventModel, location loc: CLLocationCoordinate2D, completion: ((Error?) -> Void)? = nil) {
     
         let batch = RideModel.db.batch()
         let rideTime = Timestamp()
@@ -53,7 +53,7 @@ class RideModel {
             RideDBKeys.displayName.rawValue: rider.displayName as Any,
             RideDBKeys.reference.rawValue: rider.dbReference
         ]
-        let pickupLocation = GeoPoint(latitude: loc.coordinate.latitude, longitude: loc.coordinate.longitude)
+        let pickupLocation = GeoPoint(latitude: loc.latitude, longitude: loc.longitude)
         let rideData: [String: Any] = [
             RideDBKeys.rider.rawValue: rideRiderData,
             RideDBKeys.event.rawValue: rideEventData,
