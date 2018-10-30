@@ -14,7 +14,6 @@ class EventDetailViewController: UIViewController {
     
     @IBOutlet weak var primaryLabel: UILabel!
     @IBOutlet weak var requestRideButton: UIButton!
-    @IBOutlet weak var saveEventButton: UIButton!
     @IBOutlet weak var memberView: UIView!
     
     private var _userHasSavedEvent = false
@@ -23,9 +22,38 @@ class EventDetailViewController: UIViewController {
     private var _userRideIsThisEvent = false
     private var _userIsAdmin = false
     private var _userIsMember = false
+    private var savedStar: UIBarButtonItem!
+    private var unsavedStar: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let saveButton = UIButton(type: .custom)
+        saveButton.setImage(UIImage(named: "hollowStar")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        saveButton.frame = CGRect(x: 0.0, y: 0.0, width: 24.0, height: 24.0)
+        saveButton.addTarget(
+            self,
+            action: #selector(EventDetailViewController.saveEventButtonPressed),
+            for: .touchUpInside
+        )
+        if let navVC = self.navigationController {
+            saveButton.tintColor = navVC.navigationBar.tintColor
+        }
+        self.unsavedStar = UIBarButtonItem(customView: saveButton)
+        
+        let unsaveButton = UIButton(type: .custom)
+        unsaveButton.setImage(UIImage(named: "fullStar")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        unsaveButton.frame = CGRect(x: 0.0, y: 0.0, width: 24.0, height: 24.0)
+        unsaveButton.addTarget(
+            self,
+            action: #selector(EventDetailViewController.saveEventButtonPressed),
+            for: .touchUpInside
+        )
+        if let navVC = self.navigationController {
+            unsaveButton.tintColor = navVC.navigationBar.tintColor
+        }
+        self.savedStar = UIBarButtonItem(customView: unsaveButton)
+        
         
         self.event.subscribe(using: self.newEventData)
         UserModel.notificationCenter.addObserver(
@@ -139,9 +167,10 @@ class EventDetailViewController: UIViewController {
         self.title = event.title
         self.primaryLabel.text = event.title
         
-        self.saveEventButton.setTitle("Save Event", for: .normal)
         if self._userHasSavedEvent {
-            self.saveEventButton.setTitle("✔️ Event Saved", for: .normal)
+            self.navigationItem.rightBarButtonItem = self.savedStar
+        } else {
+            self.navigationItem.rightBarButtonItem = self.unsavedStar
         }
         
         self.requestRideButton.isEnabled = true
@@ -233,7 +262,7 @@ class EventDetailViewController: UIViewController {
     }
     
     
-    @IBAction func saveEventButtonPressed() {
+    @objc func saveEventButtonPressed() {
         
         guard let paceUser = UserModel.sharedInstance() else {
             return

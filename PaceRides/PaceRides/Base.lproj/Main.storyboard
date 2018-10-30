@@ -180,24 +180,15 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hlQ-zq-xgm">
-                                <rect key="frame" x="16" y="212" width="343" height="30"/>
-                                <state key="normal" title="Save Event">
-                                    <color key="titleColor" red="0.93385511636734009" green="0.77375763654708862" blue="0.16158574819564819" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="saveEventButtonPressed" destination="ZVu-34-QCy" eventType="touchUpInside" id="iiN-bI-2I8"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b7j-6V-07Z">
-                                <rect key="frame" x="16" y="258" width="343" height="30"/>
+                                <rect key="frame" x="16" y="196" width="343" height="30"/>
                                 <state key="normal" title="Request a Ride"/>
                                 <connections>
                                     <action selector="requestRideButtonPressed:" destination="ZVu-34-QCy" eventType="touchUpInside" id="9nf-Ns-A4z"/>
                                 </connections>
                             </button>
                             <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UPy-NP-eBS">
-                                <rect key="frame" x="0.0" y="296" width="375" height="322"/>
+                                <rect key="frame" x="0.0" y="234" width="375" height="384"/>
                                 <connections>
                                     <segue destination="IPC-FL-Y3I" kind="embed" identifier="showMemberView" id="H0W-Nt-KyV"/>
                                 </connections>
@@ -205,7 +196,6 @@
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="boc-BG-l0K" firstAttribute="trailing" secondItem="hlQ-zq-xgm" secondAttribute="trailing" constant="16" id="5aI-PB-1dk"/>
                             <constraint firstItem="UPy-NP-eBS" firstAttribute="leading" secondItem="boc-BG-l0K" secondAttribute="leading" id="BZW-bO-8Px"/>
                             <constraint firstItem="cGO-8F-p9r" firstAttribute="top" secondItem="boc-BG-l0K" secondAttribute="top" constant="32" id="EZ2-hy-9KQ"/>
                             <constraint firstItem="boc-BG-l0K" firstAttribute="trailing" secondItem="cGO-8F-p9r" secondAttribute="trailing" constant="16" id="HVg-wv-GxD"/>
@@ -214,10 +204,8 @@
                             <constraint firstItem="UPy-NP-eBS" firstAttribute="top" secondItem="b7j-6V-07Z" secondAttribute="bottom" constant="8" id="ZLo-tG-X7B"/>
                             <constraint firstItem="boc-BG-l0K" firstAttribute="trailing" secondItem="UPy-NP-eBS" secondAttribute="trailing" id="bj0-g3-J08"/>
                             <constraint firstItem="boc-BG-l0K" firstAttribute="bottom" secondItem="UPy-NP-eBS" secondAttribute="bottom" id="cD8-Hu-Fuo"/>
-                            <constraint firstItem="b7j-6V-07Z" firstAttribute="top" secondItem="hlQ-zq-xgm" secondAttribute="bottom" constant="16" id="e6A-ck-eHO"/>
-                            <constraint firstItem="hlQ-zq-xgm" firstAttribute="top" secondItem="cGO-8F-p9r" secondAttribute="bottom" constant="32" id="fpR-vg-7Q0"/>
                             <constraint firstItem="cGO-8F-p9r" firstAttribute="leading" secondItem="boc-BG-l0K" secondAttribute="leading" constant="16" id="hjz-2P-O16"/>
-                            <constraint firstItem="hlQ-zq-xgm" firstAttribute="leading" secondItem="boc-BG-l0K" secondAttribute="leading" constant="16" id="pug-Ga-R5S"/>
+                            <constraint firstItem="b7j-6V-07Z" firstAttribute="top" secondItem="cGO-8F-p9r" secondAttribute="bottom" constant="16" id="igb-Rr-Btj"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="boc-BG-l0K"/>
                     </view>
@@ -225,7 +213,6 @@
                         <outlet property="memberView" destination="UPy-NP-eBS" id="XYe-Uc-v7n"/>
                         <outlet property="primaryLabel" destination="cGO-8F-p9r" id="f43-zl-bcG"/>
                         <outlet property="requestRideButton" destination="b7j-6V-07Z" id="grs-KT-gh3"/>
-                        <outlet property="saveEventButton" destination="hlQ-zq-xgm" id="yyk-Fq-Y15"/>
                         <segue destination="LNk-8R-yas" kind="presentation" identifier="showRequestRide" id="dho-Hr-IUb"/>
                     </connections>
                 </viewController>
@@ -1465,7 +1452,7 @@
             <objects>
                 <viewController id="IPC-FL-Y3I" customClass="EventMemberViewController" customModule="PaceRides" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="6bN-H1-yS5">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="322"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="384"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HhF-XH-ZP1">
