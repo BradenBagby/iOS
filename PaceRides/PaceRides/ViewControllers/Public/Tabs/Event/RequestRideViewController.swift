@@ -29,7 +29,6 @@ class RequestRideViewController: UIViewController, CLLocationManagerDelegate {
         self.locationManager = CLLocationManager()
         self.locationManager.delegate = self
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        self.locationManager.activityType = .automotiveNavigation
         
         self.mapView.delegate = self
 
@@ -72,8 +71,8 @@ class RequestRideViewController: UIViewController, CLLocationManagerDelegate {
         self.mapView.setRegion(
             MKCoordinateRegion(
                 center: (location.coordinate),
-                latitudinalMeters: 2000,
-                longitudinalMeters: 2000
+                latitudinalMeters: 1000,
+                longitudinalMeters: 1000
             ),
             animated: true
         )

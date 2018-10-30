@@ -1407,7 +1407,7 @@
                                     <action selector="submitButtonPressed" destination="Kqb-1G-684" eventType="touchUpInside" id="Hvg-sl-DHc"/>
                                 </connections>
                             </button>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ab5-sw-E3h">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" mapType="standard" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ab5-sw-E3h">
                                 <rect key="frame" x="32" y="257" width="311" height="328"/>
                                 <connections>
                                     <outlet property="delegate" destination="Kqb-1G-684" id="dUH-5T-Nmv"/>

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 
 class DriveViewController: PaceTabViewController {
     
@@ -151,8 +152,41 @@ class DriveViewController: PaceTabViewController {
             return
         }
         
-        if let _ = self._userDrive {
-            print("Get rider's location")
+        if let userDrive = self._userDrive {
+            
+            if let pickupLocation = userDrive.pickupLocation {
+                
+                let regionDistance:CLLocationDistance = 500
+                let coordinates = CLLocationCoordinate2DMake(
+                    pickupLocation.coordinate.latitude,
+                    pickupLocation.coordinate.longitude
+                )
+                let regionSpan = MKCoordinateRegion(center: coordinates, latitudinalMeters: regionDistance, longitudinalMeters: regionDistance)
+                let options = [
+                    MKLaunchOptionsMapCenterKey: NSValue(mkCoordinate: regionSpan.center),
+                    MKLaunchOptionsMapSpanKey: NSValue(mkCoordinateSpan: regionSpan.span)
+                ]
+                let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: nil)
+                let mapItem = MKMapItem(placemark: placemark)
+                mapItem.name = "Pickup Location"
+                mapItem.openInMaps(launchOptions: options)
+                
+            } else {
+                
+                let alert = UIAlertController(
+                    title: "Location Not Availible",
+                    message: "There is not a pickup location specified for this ride",
+                    preferredStyle: .alert
+                )
+                
+                alert.addAction(UIAlertAction(
+                    title: "Okay",
+                    style: .cancel,
+                    handler: nil
+                ))
+                
+            }
+            
         } else {
             userDriveFor.getNextRiderInQueue(pubProf)
         }
