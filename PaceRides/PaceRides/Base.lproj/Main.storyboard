@@ -317,6 +317,30 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hum-TR-TG5">
+                                <rect key="frame" x="32" y="320" width="311" height="266"/>
+                            </mapView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GYq-sc-Idz">
+                                <rect key="frame" x="86" y="205" width="273" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Status:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T3Y-zF-xsg">
+                                <rect key="frame" x="16" y="205" width="54" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yJm-WB-qho">
+                                <rect key="frame" x="16" y="258" width="343" height="30"/>
+                                <state key="normal" title="Cancel Ride Request">
+                                    <color key="titleColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="cancelRideRequestButtonPressed" destination="ijE-SN-3HT" eventType="touchUpInside" id="bDF-JO-kid"/>
+                                </connections>
+                            </button>
                             <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xdf-jP-KLj">
                                 <rect key="frame" x="0.0" y="116" width="375" height="502"/>
                                 <connections>
@@ -327,11 +351,23 @@
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="UhR-5L-Z0d" firstAttribute="trailing" secondItem="bgS-cV-7SI" secondAttribute="trailing" constant="16" id="1MW-8r-xCE"/>
+                            <constraint firstItem="GYq-sc-Idz" firstAttribute="firstBaseline" secondItem="T3Y-zF-xsg" secondAttribute="firstBaseline" id="2gb-co-67E"/>
                             <constraint firstItem="UhR-5L-Z0d" firstAttribute="trailing" secondItem="Xdf-jP-KLj" secondAttribute="trailing" id="Bch-hv-bUJ"/>
+                            <constraint firstItem="UhR-5L-Z0d" firstAttribute="trailing" secondItem="hum-TR-TG5" secondAttribute="trailing" constant="32" id="MSd-Wj-2fz"/>
+                            <constraint firstItem="UhR-5L-Z0d" firstAttribute="trailing" secondItem="yJm-WB-qho" secondAttribute="trailing" constant="16" id="Q5T-Gq-O4D"/>
+                            <constraint firstItem="T3Y-zF-xsg" firstAttribute="top" secondItem="bgS-cV-7SI" secondAttribute="bottom" constant="25.5" id="WD8-an-LDM"/>
+                            <constraint firstItem="GYq-sc-Idz" firstAttribute="leading" secondItem="T3Y-zF-xsg" secondAttribute="trailing" constant="16" id="Xj0-Yb-5qV"/>
+                            <constraint firstItem="yJm-WB-qho" firstAttribute="top" secondItem="T3Y-zF-xsg" secondAttribute="bottom" constant="32" id="Z3M-Xd-4JP"/>
                             <constraint firstItem="bgS-cV-7SI" firstAttribute="top" secondItem="UhR-5L-Z0d" secondAttribute="top" constant="32" id="aIT-gI-KhV"/>
+                            <constraint firstItem="UhR-5L-Z0d" firstAttribute="trailing" secondItem="GYq-sc-Idz" secondAttribute="trailing" constant="16" id="ayZ-zT-PZt"/>
+                            <constraint firstItem="hum-TR-TG5" firstAttribute="top" secondItem="yJm-WB-qho" secondAttribute="bottom" constant="32" id="dDW-fM-3Sr"/>
                             <constraint firstItem="UhR-5L-Z0d" firstAttribute="bottom" secondItem="Xdf-jP-KLj" secondAttribute="bottom" id="iqQ-NE-w9x"/>
+                            <constraint firstItem="yJm-WB-qho" firstAttribute="leading" secondItem="UhR-5L-Z0d" secondAttribute="leading" constant="16" id="k2F-sZ-Hpo"/>
                             <constraint firstItem="Xdf-jP-KLj" firstAttribute="top" secondItem="UhR-5L-Z0d" secondAttribute="top" id="l0t-Cr-bBq"/>
                             <constraint firstItem="Xdf-jP-KLj" firstAttribute="leading" secondItem="UhR-5L-Z0d" secondAttribute="leading" id="ltm-mp-Vq8"/>
+                            <constraint firstItem="hum-TR-TG5" firstAttribute="leading" secondItem="UhR-5L-Z0d" secondAttribute="leading" constant="32" id="mOS-K3-OZw"/>
+                            <constraint firstItem="T3Y-zF-xsg" firstAttribute="leading" secondItem="UhR-5L-Z0d" secondAttribute="leading" constant="16" id="oUT-Kh-Jnm"/>
+                            <constraint firstItem="UhR-5L-Z0d" firstAttribute="bottom" secondItem="hum-TR-TG5" secondAttribute="bottom" constant="32" id="oXt-ay-PWK"/>
                             <constraint firstItem="bgS-cV-7SI" firstAttribute="leading" secondItem="UhR-5L-Z0d" secondAttribute="leading" constant="16" id="uzx-at-zdu"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="UhR-5L-Z0d"/>
@@ -340,9 +376,11 @@
                         <barButtonItem key="leftBarButtonItem" image="hamburgerMenuIcon" id="2PF-IR-ffx"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="mapView" destination="hum-TR-TG5" id="c7C-nC-ceX"/>
                         <outlet property="noRideView" destination="Xdf-jP-KLj" id="WIM-PX-Tlr"/>
                         <outlet property="openMenuBarButtonItem" destination="2PF-IR-ffx" id="9s6-4v-g7s"/>
                         <outlet property="primaryLabel" destination="bgS-cV-7SI" id="1QB-v9-3V5"/>
+                        <outlet property="statusLabel" destination="GYq-sc-Idz" id="1rT-wJ-gMr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jct-MA-jWO" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1369,7 +1407,7 @@
                                     <action selector="submitButtonPressed" destination="Kqb-1G-684" eventType="touchUpInside" id="Hvg-sl-DHc"/>
                                 </connections>
                             </button>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="ab5-sw-E3h">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ab5-sw-E3h">
                                 <rect key="frame" x="32" y="257" width="311" height="328"/>
                                 <connections>
                                     <outlet property="delegate" destination="Kqb-1G-684" id="dUH-5T-Nmv"/>

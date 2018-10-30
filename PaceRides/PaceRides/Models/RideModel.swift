@@ -116,6 +116,13 @@ class RideModel {
         return self._riderReference
     }
     
+    private var _status: Int?
+    var status: Int? {
+        get {
+            return self._status
+        }
+    }
+    
     private var _pickupLocation: CLLocation?
     var pickupLocation: CLLocation? {
         get {
@@ -218,10 +225,17 @@ class RideModel {
             self._riderReference = nil
             self._eventTitle = nil
             self._eventReference = nil
+            self._status = nil
+            self._pickupLocation = nil
             
             return
         }
         
+        if let status = docData[RideDBKeys.status.rawValue] as? Int {
+            self._status = status
+        } else {
+            self._status = nil
+        }
         
         if let eventData = docData[RideDBKeys.event.rawValue] as? [String: Any] {
             self._eventTitle = eventData[RideDBKeys.title.rawValue] as? String
