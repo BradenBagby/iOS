@@ -36,6 +36,7 @@ class RideViewController: PaceTabViewController {
         
         guard let paceUser = UserModel.sharedInstance(), let userRide = paceUser.ride else {
             self.noRideView.isHidden = false
+            self.mapView.removeAnnotations(self.mapView.annotations)
             return
         }
         

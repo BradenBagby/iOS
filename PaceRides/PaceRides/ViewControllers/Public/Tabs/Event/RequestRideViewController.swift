@@ -33,7 +33,7 @@ class RequestRideViewController: UIViewController {
         self.setNavigationBarColors()
         
         self.title = self.event.title
-        self.primaryLabel.text = self.event.title
+        self.primaryLabel.text = "to \(self.event.title ?? "Error")"
         
         self.locationManager = CLLocationManager()
         self.locationManager.delegate = self
@@ -54,10 +54,14 @@ class RequestRideViewController: UIViewController {
         }
         self.pendingPickupLocationPinView.canShowCallout = false
         self.pendingPickupLocationPinView.isDraggable = false
-        self.pendingPickupLocationPinView.isDraggable = false
+        self.pendingPickupLocationPinView.isSelected = true
         
         self.mapView.delegate = self
         self.mapView.addAnnotation(self.pendingPickupLocationPin)
+        self.mapView.isScrollEnabled = false
+        self.mapView.isZoomEnabled = false
+        self.mapView.isRotateEnabled = false
+        self.mapView.isPitchEnabled = false
 
         if CLLocationManager.locationServicesEnabled(),
                 CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
@@ -78,15 +82,25 @@ class RequestRideViewController: UIViewController {
             
             self.locationLoaded = true
             
-            self.mapView.setRegion(
-                MKCoordinateRegion(
-                    center: (location),
-                    latitudinalMeters: 1000,
-                    longitudinalMeters: 1000
-                ),
-                animated: true
-            )
+            self.updateMapRegion(location)
         }
+    }
+    
+    
+    private func updateMapCenter(_ coordinate: CLLocationCoordinate2D) {
+        self.mapView.setCenter(coordinate, animated: true)
+    }
+    
+    
+    private func updateMapRegion(_ coordinate: CLLocationCoordinate2D) {
+        self.mapView.setRegion(
+            MKCoordinateRegion(
+                center: coordinate,
+                latitudinalMeters: 1000,
+                longitudinalMeters: 1000
+            ),
+            animated: true
+        )
     }
     
     
@@ -124,13 +138,27 @@ class RequestRideViewController: UIViewController {
             self.userHasUpdatedLocation = true
             self.editLocationButton.setTitle("Commit Location", for: .normal)
             self.pendingPickupLocationPinView.isDraggable = true
+            self.primaryLabel.text = "Hold pin and drag to desired location."
+            
+            self.mapView.isScrollEnabled = true
+            self.mapView.isZoomEnabled = true
+            self.mapView.isRotateEnabled = true
+            self.mapView.isPitchEnabled = true
             
         } else {
             
+            if let pickupLocation = self.pendingPickupLocation {
+                self.updateMapCenter(pickupLocation)
+            }
             self.submitButton.isEnabled = true
             self.editLocationButton.setTitle("Edit Location", for: .normal)
             self.pendingPickupLocationPinView.isDraggable = false
+            self.primaryLabel.text = "to \(self.event.title ?? "Error")"
             
+            self.mapView.isScrollEnabled = false
+            self.mapView.isZoomEnabled = false
+            self.mapView.isRotateEnabled = false
+            self.mapView.isPitchEnabled = false
         }
         
     }
@@ -201,7 +229,8 @@ extension RequestRideViewController: MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        
+        guard let annotation = view.annotation else { return }
+        self.updateMapCenter(annotation.coordinate)
     }
 
     func mapView(_ mapView: MKMapView,
