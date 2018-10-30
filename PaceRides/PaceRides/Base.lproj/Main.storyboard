@@ -317,7 +317,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hum-TR-TG5">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hum-TR-TG5">
                                 <rect key="frame" x="32" y="320" width="311" height="266"/>
                             </mapView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GYq-sc-Idz">
@@ -1408,20 +1408,30 @@
                                 </connections>
                             </button>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" mapType="standard" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ab5-sw-E3h">
-                                <rect key="frame" x="32" y="257" width="311" height="328"/>
+                                <rect key="frame" x="32" y="257" width="311" height="274"/>
                                 <connections>
                                     <outlet property="delegate" destination="Kqb-1G-684" id="dUH-5T-Nmv"/>
                                 </connections>
                             </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tYD-SD-hht">
+                                <rect key="frame" x="16" y="563" width="343" height="30"/>
+                                <state key="normal" title="Edit Location"/>
+                                <connections>
+                                    <action selector="editLocationButtonPressed" destination="Kqb-1G-684" eventType="touchUpInside" id="zeR-wx-fs1"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="Rae-Bc-LAm" firstAttribute="leading" secondItem="feQ-CC-8Mu" secondAttribute="leading" constant="16" id="0to-bW-ChT"/>
-                            <constraint firstItem="Rae-Bc-LAm" firstAttribute="top" secondItem="ab5-sw-E3h" secondAttribute="bottom" constant="32" id="8Dz-sg-t80"/>
+                            <constraint firstItem="tYD-SD-hht" firstAttribute="leading" secondItem="feQ-CC-8Mu" secondAttribute="leading" constant="16" id="D5a-K4-7eu"/>
                             <constraint firstItem="OSX-ql-fdu" firstAttribute="top" secondItem="feQ-CC-8Mu" secondAttribute="top" constant="32" id="Tbb-6z-w7a"/>
+                            <constraint firstItem="feQ-CC-8Mu" firstAttribute="trailing" secondItem="tYD-SD-hht" secondAttribute="trailing" constant="16" id="TgD-1p-5Nc"/>
                             <constraint firstItem="OSX-ql-fdu" firstAttribute="leading" secondItem="feQ-CC-8Mu" secondAttribute="leading" constant="16" id="UAE-js-kzu"/>
                             <constraint firstItem="Br8-ZY-djt" firstAttribute="leading" secondItem="feQ-CC-8Mu" secondAttribute="leading" constant="16" id="YTS-BC-6lK"/>
+                            <constraint firstItem="Rae-Bc-LAm" firstAttribute="top" secondItem="tYD-SD-hht" secondAttribute="bottom" constant="24" id="Z5Z-aY-hMw"/>
                             <constraint firstItem="feQ-CC-8Mu" firstAttribute="trailing" secondItem="Br8-ZY-djt" secondAttribute="trailing" constant="16" id="ZQb-pz-tcN"/>
+                            <constraint firstItem="tYD-SD-hht" firstAttribute="top" secondItem="ab5-sw-E3h" secondAttribute="bottom" constant="32" id="axL-Nu-0do"/>
                             <constraint firstItem="feQ-CC-8Mu" firstAttribute="trailing" secondItem="ab5-sw-E3h" secondAttribute="trailing" constant="32" id="dem-wf-dg9"/>
                             <constraint firstItem="feQ-CC-8Mu" firstAttribute="trailing" secondItem="Rae-Bc-LAm" secondAttribute="trailing" constant="16" id="hjj-Uv-4Wo"/>
                             <constraint firstItem="ab5-sw-E3h" firstAttribute="top" secondItem="Br8-ZY-djt" secondAttribute="bottom" constant="32" id="iNX-SS-4Po"/>
@@ -1440,8 +1450,10 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="editLocationButton" destination="tYD-SD-hht" id="jMN-QH-fPT"/>
                         <outlet property="mapView" destination="ab5-sw-E3h" id="Ztt-tV-tSX"/>
                         <outlet property="primaryLabel" destination="Br8-ZY-djt" id="Dsb-3r-f83"/>
+                        <outlet property="submitButton" destination="Rae-Bc-LAm" id="GFD-JP-lwC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l9A-Jr-LSH" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -10,13 +10,21 @@ import UIKit
 import CoreLocation
 import MapKit
 
-class RequestRideViewController: UIViewController, CLLocationManagerDelegate {
+class RequestRideViewController: UIViewController {
 
     var event: EventModel!
     private var locationManager: CLLocationManager!
+    private var pendingPickupLocation: CLLocation?
+    private var pendingPickupLocationPin: MKPointAnnotation!
+    private var userHasUpdatedLocation = false
+    private var userIsEditingLocation = false
+    private var locationLoaded = false
     
     @IBOutlet weak var primaryLabel: UILabel!
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var editLocationButton: UIButton!
+    @IBOutlet weak var submitButton: UIButton!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,53 +38,42 @@ class RequestRideViewController: UIViewController, CLLocationManagerDelegate {
         self.locationManager.delegate = self
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
         
+        self.pendingPickupLocationPin = MKPointAnnotation()
+        self.pendingPickupLocationPin.title = "Pickup Location"
+        
         self.mapView.delegate = self
+        self.mapView.addAnnotation(self.pendingPickupLocationPin)
 
-        if CLLocationManager.locationServicesEnabled() {
-            switch CLLocationManager.authorizationStatus() {
-            case .notDetermined, .restricted, .denied:
-                locationManager.requestWhenInUseAuthorization()
-            case .authorizedAlways, .authorizedWhenInUse:
-                self.locationManager.startUpdatingLocation()
-            }
+        if CLLocationManager.locationServicesEnabled(),
+                CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
+                CLLocationManager.authorizationStatus() == .authorizedAlways {
+            
+            self.locationManager.startUpdatingLocation()
         } else {
-            print("Location services are not enabled")
-        }
-    }
-    
-    func locationManager(_ location: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        
-        guard status == .authorizedWhenInUse || status == .authorizedAlways else {
             self.displayNeedLocationAlert()
-            return
         }
+    }
+
+    
+    private func updateLocation(location: CLLocation) {
+        self.pendingPickupLocation = location
+        self.pendingPickupLocationPin.coordinate = location.coordinate
         
-        self.locationManager.startUpdatingLocation()
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        for location in locations {
-            self.setMap(location: location)
+        if !self.locationLoaded {
+            
+            self.locationLoaded = true
+            
+            self.mapView.setRegion(
+                MKCoordinateRegion(
+                    center: (location.coordinate),
+                    latitudinalMeters: 1000,
+                    longitudinalMeters: 1000
+                ),
+                animated: true
+            )
         }
     }
     
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("error")
-        print(error.localizedDescription)
-    }
-    
-    
-    private func setMap(location: CLLocation) {
-        self.mapView.showsUserLocation = true
-        self.mapView.setRegion(
-            MKCoordinateRegion(
-                center: (location.coordinate),
-                latitudinalMeters: 1000,
-                longitudinalMeters: 1000
-            ),
-            animated: true
-        )
-    }
     
     private func displayNeedLocationAlert() {
         
@@ -101,6 +98,27 @@ class RequestRideViewController: UIViewController, CLLocationManagerDelegate {
         self.dismiss(animated: true)
     }
     
+    
+    @IBAction func editLocationButtonPressed() {
+        
+        self.userIsEditingLocation = !self.userIsEditingLocation
+        
+        if self.userIsEditingLocation {
+            
+            self.submitButton.isEnabled = false
+            self.userHasUpdatedLocation = true
+            self.editLocationButton.setTitle("Commit Location", for: .normal)
+            
+        } else {
+            
+            self.submitButton.isEnabled = true
+            self.editLocationButton.setTitle("Edit Location", for: .normal)
+            
+        }
+        
+    }
+    
+    
     @IBAction func submitButtonPressed() {
         
         guard let paceUser = UserModel.sharedInstance(), let publicProfile = paceUser.publicProfile() else {
@@ -124,6 +142,55 @@ class RequestRideViewController: UIViewController, CLLocationManagerDelegate {
     }
 }
 
+
+extension RequestRideViewController: CLLocationManagerDelegate {
+
+    
+    func locationManager(_ location: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        
+        guard status == .authorizedWhenInUse || status == .authorizedAlways else {
+            self.displayNeedLocationAlert()
+            return
+        }
+        
+        self.locationManager.startUpdatingLocation()
+    }
+    
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard !userHasUpdatedLocation else { return }
+        if let location = locations.last {
+            self.updateLocation(location: location)
+        }
+    }
+    
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("error")
+        print(error.localizedDescription)
+    }
+}
+
+
 extension RequestRideViewController: MKMapViewDelegate {
+    
+//    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+//
+//        var view: MKAnnotationView!
+//
+//
+//
+//        return view
+//    }
+//
+//    func mapView(_ mapView: MKMapView,
+//                 annotationView view: MKAnnotationView,
+//                 didChange newState: MKAnnotationView.DragState,
+//                 fromOldState oldState: MKAnnotationView.DragState
+//    ) {
+//
+//
+//
+//    }
     
 }
