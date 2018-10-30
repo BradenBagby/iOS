@@ -8,7 +8,7 @@
 
 import Foundation
 import Firebase
-
+import CoreLocation
 
 enum RideDBKeys: String {
     case rides = "rides"
@@ -17,6 +17,7 @@ enum RideDBKeys: String {
     case event = "event"
     case status = "status"
     
+    case pickupLocation = "pickupLocation"
     case displayName = "displayName"
     case title = "title"
     case reference = "reference"
@@ -38,7 +39,7 @@ class RideModel {
     static let NewData = Notification.Name("NewRideData")
     static let RideDoesNotExist = Notification.Name("RideDoesNotExits")
     
-    static func createNewRide(rider: PacePublicProfile, event: EventModel, completion: ((Error?) -> Void)? = nil) {
+    static func createNewRide(rider: PacePublicProfile, event: EventModel, location loc: CLLocation, completion: ((Error?) -> Void)? = nil) {
     
         let batch = RideModel.db.batch()
         let rideTime = Timestamp()
@@ -52,9 +53,11 @@ class RideModel {
             RideDBKeys.displayName.rawValue: rider.displayName as Any,
             RideDBKeys.reference.rawValue: rider.dbReference
         ]
+        let pickupLocation = GeoPoint(latitude: loc.coordinate.latitude, longitude: loc.coordinate.longitude)
         let rideData: [String: Any] = [
             RideDBKeys.rider.rawValue: rideRiderData,
             RideDBKeys.event.rawValue: rideEventData,
+            RideDBKeys.pickupLocation.rawValue: pickupLocation,
             RideDBKeys.status.rawValue: RideStatus.queued.rawValue,
             RideDBKeys.timeOfRequest.rawValue: rideTime
         ]
@@ -111,6 +114,13 @@ class RideModel {
     private var _riderReference: DocumentReference?
     var riderReference: DocumentReference? {
         return self._riderReference
+    }
+    
+    private var _pickupLocation: CLLocation?
+    var pickupLocation: CLLocation? {
+        get {
+            return self._pickupLocation
+        }
     }
     
     
@@ -230,6 +240,14 @@ class RideModel {
             self._riderReference = nil
         }
         
+        if let pickupLocation = docData[RideDBKeys.pickupLocation.rawValue] as? GeoPoint {
+            self._pickupLocation = CLLocation(
+                latitude: pickupLocation.latitude,
+                longitude: pickupLocation.longitude
+            )
+        } else {
+            self._pickupLocation = nil
+        }
         
         RideModel.notificationCenter.post(
             name: RideModel.NewData,

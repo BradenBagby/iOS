@@ -169,27 +169,23 @@ class EventDetailViewController: UIViewController {
             if let destVC = segue.destination as? EventMemberViewController {
                 destVC.event = self.event
             }
+        } else if segue.identifier == "showRequestRide" {
+            if let navVC = segue.destination as? UINavigationController, let destVC = navVC.viewControllers[0] as? RequestRideViewController {
+                destVC.event = self.event
+            }
         }
     }
     
     
     @IBAction func requestRideButtonPressed(_ sender: Any) {
         
-        guard let paceUser = UserModel.sharedInstance(), let publicProfile = paceUser.publicProfile() else {
+        guard let paceUser = UserModel.sharedInstance() else {
             return
         }
         
         if self._userRide == nil {
             
-            RideModel.createNewRide(rider: publicProfile, event: self.event) { error in
-                
-                guard error == nil else {
-                    print("Error")
-                    self.requestRideButton.setTitle("Error", for: .normal)
-                    print(error!.localizedDescription)
-                    return
-                }
-            }
+            self.performSegue(withIdentifier: "showRequestRide", sender: self)
             return
             
         } else if self._userRideIsForThisEvent {

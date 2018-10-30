@@ -10,6 +10,7 @@
 		53E223524B3AEADAA982C83D /* Pods_PaceRidesUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80EEF146E4D555728D6B7315 /* Pods_PaceRidesUITests.framework */; };
 		5A31E1791CD9303110039676 /* Pods_PaceRidesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C03A8D1EAF739638F7645745 /* Pods_PaceRidesTests.framework */; };
 		A8737F286A9BBFB497BD5620 /* Pods_PaceRides.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26BDF7F891739D7D0B305928 /* Pods_PaceRides.framework */; };
+		E014341D21880F3100330104 /* RequestRideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E014341C21880F3100330104 /* RequestRideViewController.swift */; };
 		E018D7C7217146310063A362 /* OrganizationExternalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E018D7C6217146310063A362 /* OrganizationExternalViewController.swift */; };
 		E018D7C92171463B0063A362 /* OrganizationMemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E018D7C82171463B0063A362 /* OrganizationMemberViewController.swift */; };
 		E018D7CB21718FC30063A362 /* OrganizationMembersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E018D7CA21718FC30063A362 /* OrganizationMembersTableViewController.swift */; };
@@ -79,6 +80,7 @@
 		80EEF146E4D555728D6B7315 /* Pods_PaceRidesUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PaceRidesUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C03A8D1EAF739638F7645745 /* Pods_PaceRidesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PaceRidesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D11902CAC4075A23A8DA9911 /* Pods-PaceRidesUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PaceRidesUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PaceRidesUITests/Pods-PaceRidesUITests.release.xcconfig"; sourceTree = "<group>"; };
+		E014341C21880F3100330104 /* RequestRideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestRideViewController.swift; sourceTree = "<group>"; };
 		E018D7C6217146310063A362 /* OrganizationExternalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationExternalViewController.swift; sourceTree = "<group>"; };
 		E018D7C82171463B0063A362 /* OrganizationMemberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationMemberViewController.swift; sourceTree = "<group>"; };
 		E018D7CA21718FC30063A362 /* OrganizationMembersTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationMembersTableViewController.swift; sourceTree = "<group>"; };
@@ -187,6 +189,7 @@
 				E07754CF216DB5D6008421CE /* EventListViewController.swift */,
 				E06C1B3D21767D19009A91DD /* EventDetailViewController.swift */,
 				E05429C02186363400231901 /* EventMemberViewController.swift */,
+				E014341C21880F3100330104 /* RequestRideViewController.swift */,
 			);
 			path = Event;
 			sourceTree = "<group>";
@@ -633,6 +636,7 @@
 				E0246DF22167024300DB3CC8 /* PaceSchoolProfileTableViewCell.swift in Sources */,
 				E0860A7F2161B867003375A7 /* SWRevealViewController.m in Sources */,
 				E07754D4216DB626008421CE /* DriveViewController.swift in Sources */,
+				E014341D21880F3100330104 /* RequestRideViewController.swift in Sources */,
 				E0889552218517310050FED1 /* LaunchScreenViewController.swift in Sources */,
 				E018D7C7217146310063A362 /* OrganizationExternalViewController.swift in Sources */,
 			);
