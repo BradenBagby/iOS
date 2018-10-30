@@ -194,7 +194,7 @@ class EventDetailViewController: UIViewController {
     @objc func share() {
         
         let activityVC = UIActivityViewController(
-            activityItems: [URL(string: self.event.link)!],
+            activityItems: [self],
             applicationActivities: nil
         )
         
@@ -270,4 +270,25 @@ class EventDetailViewController: UIViewController {
             paceUser.save(event: self.event)
         }
     }
+}
+
+
+extension EventDetailViewController: UIActivityItemSource {
+    
+    func activityViewControllerPlaceholderItem(_ activityViewController: UIActivityViewController) -> Any {
+        return URL(string: self.event.link) ?? ""
+    }
+    
+    func activityViewController(_ activityViewController: UIActivityViewController, itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {
+        return URL(string: self.event.link) ?? ""
+    }
+    
+    func activityViewController(_ activityViewController: UIActivityViewController, subjectForActivityType activityType: UIActivity.ActivityType?) -> String {
+        if activityType == .postToTwitter {
+            return ""
+        }
+        
+        return self.event.title ?? ""
+    }
+    
 }
