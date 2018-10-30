@@ -69,14 +69,6 @@ class EventMemberViewController: UIViewController {
         
     }
     
-    @IBAction func copyLinkButtonPressed() {
-        UIPasteboard.general.string = self.event.link
-        self.btnCopyLink.setTitle("✔️ Link Copied!", for: .normal)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-            self.btnCopyLink.setTitle("Copy Link", for: .normal)
-        }
-    }
-    
     @IBAction func driveButtonPressed() {
         
         guard let paceUser = UserModel.sharedInstance(), let pubProf = paceUser.publicProfile() else {

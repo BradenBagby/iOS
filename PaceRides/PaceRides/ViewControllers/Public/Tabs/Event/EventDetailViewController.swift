@@ -15,6 +15,7 @@ class EventDetailViewController: UIViewController {
     @IBOutlet weak var primaryLabel: UILabel!
     @IBOutlet weak var requestRideButton: UIButton!
     @IBOutlet weak var memberView: UIView!
+    @IBOutlet weak var saveButton: UIButton!
     
     private var _userHasSavedEvent = false
     private var _userRide: RideModel?
@@ -22,38 +23,20 @@ class EventDetailViewController: UIViewController {
     private var _userRideIsThisEvent = false
     private var _userIsAdmin = false
     private var _userIsMember = false
-    private var savedStar: UIBarButtonItem!
-    private var unsavedStar: UIBarButtonItem!
+    private var shareButton: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let saveButton = UIButton(type: .custom)
-        saveButton.setImage(UIImage(named: "hollowStar")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        saveButton.frame = CGRect(x: 0.0, y: 0.0, width: 24.0, height: 24.0)
-        saveButton.addTarget(
-            self,
-            action: #selector(EventDetailViewController.saveEventButtonPressed),
-            for: .touchUpInside
-        )
         if let navVC = self.navigationController {
-            saveButton.tintColor = navVC.navigationBar.tintColor
+            self.saveButton.tintColor = navVC.navigationBar.barTintColor
         }
-        self.unsavedStar = UIBarButtonItem(customView: saveButton)
-        
-        let unsaveButton = UIButton(type: .custom)
-        unsaveButton.setImage(UIImage(named: "fullStar")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        unsaveButton.frame = CGRect(x: 0.0, y: 0.0, width: 24.0, height: 24.0)
-        unsaveButton.addTarget(
-            self,
-            action: #selector(EventDetailViewController.saveEventButtonPressed),
-            for: .touchUpInside
+
+        self.shareButton = UIBarButtonItem(
+            barButtonSystemItem: .action,
+            target: self,
+            action: #selector(EventDetailViewController.share)
         )
-        if let navVC = self.navigationController {
-            unsaveButton.tintColor = navVC.navigationBar.tintColor
-        }
-        self.savedStar = UIBarButtonItem(customView: unsaveButton)
-        
         
         self.event.subscribe(using: self.newEventData)
         UserModel.notificationCenter.addObserver(
@@ -168,9 +151,9 @@ class EventDetailViewController: UIViewController {
         self.primaryLabel.text = event.title
         
         if self._userHasSavedEvent {
-            self.navigationItem.rightBarButtonItem = self.savedStar
+            self.saveButton.setImage(UIImage(named: "fullStar")?.withRenderingMode(.alwaysTemplate), for: .normal)
         } else {
-            self.navigationItem.rightBarButtonItem = self.unsavedStar
+            self.saveButton.setImage(UIImage(named: "hollowStar")?.withRenderingMode(.alwaysTemplate), for: .normal)
         }
         
         self.requestRideButton.isEnabled = true
@@ -185,9 +168,12 @@ class EventDetailViewController: UIViewController {
             }
         }
         
-        self.memberView.isHidden = true
         if self._userIsAdmin || self._userIsMember {
             self.memberView.isHidden = false
+            self.navigationItem.rightBarButtonItem = self.shareButton
+        } else {
+            self.memberView.isHidden = true
+            self.navigationItem.rightBarButtonItem = nil
         }
         
     }
@@ -203,6 +189,16 @@ class EventDetailViewController: UIViewController {
                 destVC.event = self.event
             }
         }
+    }
+    
+    @objc func share() {
+        
+        let activityVC = UIActivityViewController(
+            activityItems: [URL(string: self.event.link)!],
+            applicationActivities: nil
+        )
+        
+        self.present(activityVC, animated: true)
     }
     
     
@@ -262,7 +258,7 @@ class EventDetailViewController: UIViewController {
     }
     
     
-    @objc func saveEventButtonPressed() {
+    @IBAction func saveEventButtonPressed() {
         
         guard let paceUser = UserModel.sharedInstance() else {
             return
