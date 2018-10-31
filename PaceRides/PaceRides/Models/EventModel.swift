@@ -24,6 +24,7 @@ enum EventDBKeys: String {
     case timeOfRequest = "timeOfRequest"
     case drivers = "drivers"
     case displayName = "displayName"
+    case disabled = "disabled"
 }
 
 
@@ -74,6 +75,12 @@ class EventModel {
         }
     }
     
+    private var _disabled = false
+    var disabled: Bool {
+        get {
+            return self._disabled
+        }
+    }
     
     private var docListener: ListenerRegistration? = nil
     
@@ -285,6 +292,39 @@ class EventModel {
         batch.commit()
     }
     
+    private func setDisabled(value: Bool) {
+        
+        guard let paceUser = UserModel.sharedInstance(), let org = self._organization else {
+            return
+        }
+        
+        var userIsAdmin = false
+        for admin in org.administrators {
+            if paceUser.uid == admin.uid {
+                userIsAdmin = true
+                break
+            }
+        }
+        
+        guard userIsAdmin else {
+            return
+        }
+        
+        let disabledData: [String: Any] = [
+            EventDBKeys.disabled.rawValue: value ? value : FieldValue.delete()
+        ]
+        self.reference.setData(disabledData, merge: true)
+        
+    }
+    
+    func disableEvent() {
+        self.setDisabled(value: true )
+    }
+    
+    func enableEvent() {
+        self.setDisabled(value: false)
+    }
+    
     private func snapshotListener(document: DocumentSnapshot?, error: Error?) {
         
         guard error == nil else {
@@ -306,6 +346,12 @@ class EventModel {
         
         if let newTitle = docData[OrgDBKeys.title.rawValue] as? String {
             self._title = newTitle
+        }
+        
+        if let newDisabled = docData[EventDBKeys.disabled.rawValue] as? Bool {
+            self._disabled = newDisabled
+        } else {
+            self._disabled = false
         }
         
         if let newOrgData = docData[EventDBKeys.organization.rawValue] as? [String: Any],

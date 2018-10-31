@@ -111,6 +111,24 @@ class EventDetailViewController: UIViewController {
             }
         }
         
+        if org.administrators.count > 0, !_userIsAdmin, self.event.disabled, let navVC = self.navigationController {
+            
+            let alertController = UIAlertController(
+                title: "Oops",
+                message: "This event does not exist",
+                preferredStyle: .alert
+            )
+            
+            alertController.addAction(UIAlertAction(
+                title: "Okay",
+                style: .cancel
+            ) { _ in
+                navVC.popViewController(animated: true)
+            })
+            
+            self.present(alertController, animated: true)
+        }
+        
         self.updateUI()
     }
     

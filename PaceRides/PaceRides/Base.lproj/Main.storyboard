@@ -181,14 +181,14 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b7j-6V-07Z">
-                                <rect key="frame" x="16" y="196" width="343" height="30"/>
+                                <rect key="frame" x="16" y="212" width="343" height="30"/>
                                 <state key="normal" title="Request a Ride"/>
                                 <connections>
                                     <action selector="requestRideButtonPressed:" destination="ZVu-34-QCy" eventType="touchUpInside" id="9nf-Ns-A4z"/>
                                 </connections>
                             </button>
                             <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UPy-NP-eBS">
-                                <rect key="frame" x="0.0" y="234" width="375" height="384"/>
+                                <rect key="frame" x="0.0" y="250" width="375" height="368"/>
                                 <connections>
                                     <segue destination="IPC-FL-Y3I" kind="embed" identifier="showMemberView" id="H0W-Nt-KyV"/>
                                 </connections>
@@ -213,7 +213,7 @@
                             <constraint firstItem="UPy-NP-eBS" firstAttribute="top" secondItem="b7j-6V-07Z" secondAttribute="bottom" constant="8" id="ZLo-tG-X7B"/>
                             <constraint firstItem="boc-BG-l0K" firstAttribute="trailing" secondItem="UPy-NP-eBS" secondAttribute="trailing" id="bj0-g3-J08"/>
                             <constraint firstItem="boc-BG-l0K" firstAttribute="bottom" secondItem="UPy-NP-eBS" secondAttribute="bottom" id="cD8-Hu-Fuo"/>
-                            <constraint firstItem="b7j-6V-07Z" firstAttribute="top" secondItem="cGO-8F-p9r" secondAttribute="bottom" constant="16" id="igb-Rr-Btj"/>
+                            <constraint firstItem="b7j-6V-07Z" firstAttribute="top" secondItem="cGO-8F-p9r" secondAttribute="bottom" constant="32" id="igb-Rr-Btj"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="boc-BG-l0K"/>
                     </view>
@@ -1461,7 +1461,7 @@
             <objects>
                 <viewController id="IPC-FL-Y3I" customClass="EventMemberViewController" customModule="PaceRides" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="6bN-H1-yS5">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="384"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="368"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HhF-XH-ZP1">
@@ -1471,17 +1471,28 @@
                                     <action selector="driveButtonPressed" destination="IPC-FL-Y3I" eventType="touchUpInside" id="SjB-kx-Lon"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IwY-V5-ihl">
+                                <rect key="frame" x="16" y="54" width="343" height="30"/>
+                                <state key="normal" title="Disable"/>
+                                <connections>
+                                    <action selector="disableButtonPressed" destination="IPC-FL-Y3I" eventType="touchUpInside" id="csk-rf-tag"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="HhF-XH-ZP1" firstAttribute="top" secondItem="6bN-H1-yS5" secondAttribute="top" constant="8" id="7wa-Em-5pJ"/>
+                            <constraint firstItem="xkb-Be-i5A" firstAttribute="trailing" secondItem="IwY-V5-ihl" secondAttribute="trailing" constant="16" id="8Oy-OI-loz"/>
                             <constraint firstAttribute="trailing" secondItem="HhF-XH-ZP1" secondAttribute="trailing" constant="16" id="ESm-8M-gED"/>
                             <constraint firstItem="HhF-XH-ZP1" firstAttribute="leading" secondItem="6bN-H1-yS5" secondAttribute="leading" constant="16" id="UoS-vl-2hR"/>
+                            <constraint firstItem="IwY-V5-ihl" firstAttribute="leading" secondItem="xkb-Be-i5A" secondAttribute="leading" constant="16" id="fhI-zu-LeO"/>
+                            <constraint firstItem="IwY-V5-ihl" firstAttribute="top" secondItem="HhF-XH-ZP1" secondAttribute="bottom" constant="16" id="oz4-cJ-YYc"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="xkb-Be-i5A"/>
                     </view>
                     <connections>
                         <outlet property="btnDrive" destination="HhF-XH-ZP1" id="2pF-33-Wum"/>
+                        <outlet property="disableButton" destination="IwY-V5-ihl" id="6lJ-Pp-L6F"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DWz-jp-QVy" userLabel="First Responder" sceneMemberID="firstResponder"/>

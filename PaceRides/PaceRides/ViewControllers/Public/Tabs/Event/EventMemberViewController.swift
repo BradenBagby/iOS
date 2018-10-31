@@ -11,8 +11,8 @@ import UIKit
 class EventMemberViewController: UIViewController {
 
     var event: EventModel!
-    @IBOutlet weak var btnCopyLink: UIButton!
     @IBOutlet weak var btnDrive: UIButton!
+    @IBOutlet weak var disableButton: UIButton!
     
     private var _userIsDrivingForEvent = true
     private var _userIsDrivingForThisEvent = false
@@ -27,6 +27,8 @@ class EventMemberViewController: UIViewController {
             queue: OperationQueue.main,
             using: self.newUserData
         )
+        
+        self.event.subscribe(using: self.newEventData)
     }
     
     
@@ -49,6 +51,10 @@ class EventMemberViewController: UIViewController {
         self.updateUI()
     }
     
+    func newEventData(_: Notification? = nil) {
+        self.updateUI()
+    }
+    
     func updateUI() {
         
         if _userIsDrivingForEvent {
@@ -67,6 +73,13 @@ class EventMemberViewController: UIViewController {
             self.btnDrive.setTitleColor(nil, for: .normal)
         }
         
+        if self.event.disabled {
+            self.disableButton.setTitle("Enable", for: .normal)
+            self.disableButton.setTitleColor(.forrestGreen, for: .normal)
+        } else {
+            self.disableButton.setTitle("Disable", for: .normal)
+            self.disableButton.setTitleColor(.red, for: .normal)
+        }
     }
     
     @IBAction func driveButtonPressed() {
@@ -102,6 +115,14 @@ class EventMemberViewController: UIViewController {
             }
         } else {
             self.event.addDriver(paceUser: pubProf)
+        }
+    }
+    
+    @IBAction func disableButtonPressed() {
+        if self.event.disabled {
+            self.event.enableEvent()
+        } else {
+            self.event.disableEvent()
         }
     }
 }
