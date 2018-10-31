@@ -16,6 +16,7 @@ class EventMemberViewController: UIViewController {
     
     private var _userIsDrivingForEvent = true
     private var _userIsDrivingForThisEvent = false
+    private var _userIsInActiveDrive = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,6 +49,8 @@ class EventMemberViewController: UIViewController {
             self._userIsDrivingForEvent = false
         }
         
+        _userIsInActiveDrive = paceUser.drive != nil
+        
         self.updateUI()
     }
     
@@ -59,9 +62,13 @@ class EventMemberViewController: UIViewController {
         
         if _userIsDrivingForEvent {
             if _userIsDrivingForThisEvent {
-                self.btnDrive.isEnabled = true
+                self.btnDrive.isEnabled = !_userIsInActiveDrive
                 self.btnDrive.setTitle("Stop Driving", for: .normal)
-                self.btnDrive.setTitleColor(.red, for: .normal)
+                if !_userIsInActiveDrive {
+                    self.btnDrive.setTitleColor(.red, for: .normal)
+                } else {
+                    self.btnDrive.setTitleColor(.gray, for: .disabled)
+                }
             } else {
                 self.btnDrive.isEnabled = false
                 self.btnDrive.setTitle("Drive", for: .normal)
