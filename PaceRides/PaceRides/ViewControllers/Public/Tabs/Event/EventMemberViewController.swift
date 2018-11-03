@@ -17,6 +17,8 @@ class EventMemberViewController: UIViewController {
     private var _userIsDrivingForEvent = true
     private var _userIsDrivingForThisEvent = false
     private var _userIsInActiveDrive = false
+    private var _userIsAdmin = false
+    private var _userIsMember = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +32,7 @@ class EventMemberViewController: UIViewController {
         )
         
         self.event.subscribe(using: self.newEventData)
+        self.event.organization?.subscribe(using: self.newOrgData)
     }
     
     
@@ -50,6 +53,37 @@ class EventMemberViewController: UIViewController {
         }
         
         _userIsInActiveDrive = paceUser.drive != nil
+        
+        self.updateUI()
+    }
+    
+    func newOrgData(_: Notification? = nil) {
+        
+        guard let org = self.event.organization else {
+            return
+        }
+        
+        guard let paceUser = UserModel.sharedInstance() else {
+            return
+        }
+        
+        self._userIsAdmin = false
+        self._userIsMember = false
+        for admin in org.administrators {
+            if paceUser.uid == admin.uid {
+                self._userIsAdmin = true
+                break
+            }
+        }
+        
+        if !_userIsAdmin {
+            for member in org.members {
+                if paceUser.uid == member.uid {
+                    self._userIsMember = true
+                    break
+                }
+            }
+        }
         
         self.updateUI()
     }
@@ -80,6 +114,7 @@ class EventMemberViewController: UIViewController {
             self.btnDrive.setTitleColor(nil, for: .normal)
         }
         
+        self.disableButton.isHidden = !_userIsAdmin
         if self.event.disabled {
             self.disableButton.setTitle("Enable", for: .normal)
             self.disableButton.setTitleColor(.forrestGreen, for: .normal)
@@ -87,6 +122,8 @@ class EventMemberViewController: UIViewController {
             self.disableButton.setTitle("Disable", for: .normal)
             self.disableButton.setTitleColor(.red, for: .normal)
         }
+        
+        
     }
     
     @IBAction func driveButtonPressed() {
