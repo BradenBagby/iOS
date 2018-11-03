@@ -197,6 +197,11 @@ class RideModel {
                                     .collection(EventDBKeys.rideQueue.rawValue)
                                     .document(self.uid)
         batch.deleteDocument(eventRideQueueRef)
+        let eventActiveRidesRef = EventModel.ref
+                                    .document(eventUID)
+                                    .collection(EventDBKeys.activeRides.rawValue)
+                                    .document(self.uid)
+        batch.deleteDocument(eventActiveRidesRef)
         
         // Comit writes
         batch.commit(completion: completion)
