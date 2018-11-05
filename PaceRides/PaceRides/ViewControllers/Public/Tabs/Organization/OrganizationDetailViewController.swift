@@ -20,7 +20,16 @@ class OrganizationDetailViewController: UIViewController {
     @IBOutlet weak var btnCopyLink: UIButton!
     @IBOutlet weak var btnManageMembers: UIButton!
     @IBOutlet weak var eventsTableView: UITableView!
+    var shareBarButtonItem: UIBarButtonItem!
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.shareBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .action,
+            target: self,
+            action: #selector(OrganizationDetailViewController.shareButtonPressed))
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         self.title = self.organizationModel.title ?? self.organizationModel.uid
@@ -122,17 +131,38 @@ class OrganizationDetailViewController: UIViewController {
                 self.eventsTableView.reloadData()
             }
             
+            self.navigationItem.rightBarButtonItem = self.shareBarButtonItem
+            
         } else if self._userIsMember {
             
             self.externalView.isHidden = true
             self.memberView.isHidden = false
+            
+            self.navigationItem.rightBarButtonItem = self.shareBarButtonItem
             
         } else {
             
             self.externalView.isHidden = false
             self.memberView.isHidden = true
             
+            self.navigationItem.rightBarButtonItem = nil
+            
         }
+    }
+    
+    @objc func shareButtonPressed() {
+        
+        guard let url = URL(string: self.organizationModel.link) else {
+            return
+        }
+        
+        let activityVC = UIActivityViewController(
+            activityItems: [url],
+            applicationActivities: nil
+        )
+        
+        self.present(activityVC, animated: true)
+        
     }
     
     @IBAction func copyLinkButtonPressed() {

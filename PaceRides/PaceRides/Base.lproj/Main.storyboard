@@ -466,15 +466,8 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e28-He-dw5">
-                                <rect key="frame" x="16" y="211.5" width="343" height="30"/>
-                                <state key="normal" title="Copy Link"/>
-                                <connections>
-                                    <action selector="copyLinkButtonPressed" destination="qWh-fM-hMF" eventType="touchUpInside" id="lZr-1C-h9Z"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K50-Gh-ufx">
-                                <rect key="frame" x="16" y="257.5" width="343" height="30"/>
+                                <rect key="frame" x="16" y="203.5" width="343" height="30"/>
                                 <state key="normal" title="Manage Members"/>
                                 <connections>
                                     <action selector="manageMembersButtonPressed" destination="qWh-fM-hMF" eventType="touchUpInside" id="grL-j7-btK"/>
@@ -487,7 +480,7 @@
                                 </connections>
                             </containerView>
                             <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="giW-Ox-2ky">
-                                <rect key="frame" x="0.0" y="295.5" width="375" height="322.5"/>
+                                <rect key="frame" x="0.0" y="241.5" width="375" height="376.5"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="default_cell" textLabel="ThJ-Gw-Pd4" style="IBUITableViewCellStyleDefault" id="bht-ut-Sjj">
@@ -526,16 +519,13 @@
                             <constraint firstItem="75d-1j-dSq" firstAttribute="trailing" secondItem="giW-Ox-2ky" secondAttribute="trailing" id="2aP-gi-RFD"/>
                             <constraint firstItem="75d-1j-dSq" firstAttribute="bottom" secondItem="NSw-O6-Ep4" secondAttribute="bottom" id="39e-ZY-7EJ"/>
                             <constraint firstItem="NSw-O6-Ep4" firstAttribute="leading" secondItem="75d-1j-dSq" secondAttribute="leading" id="6f7-uy-BBG"/>
+                            <constraint firstItem="K50-Gh-ufx" firstAttribute="top" secondItem="0qQ-xP-nDg" secondAttribute="bottom" constant="24" id="9mz-j0-brg"/>
                             <constraint firstItem="giW-Ox-2ky" firstAttribute="leading" secondItem="75d-1j-dSq" secondAttribute="leading" id="AaM-OX-QId"/>
                             <constraint firstItem="75d-1j-dSq" firstAttribute="bottom" secondItem="hJl-F6-OA2" secondAttribute="bottom" id="CJs-3l-JE5"/>
                             <constraint firstItem="0qQ-xP-nDg" firstAttribute="leading" secondItem="75d-1j-dSq" secondAttribute="leading" constant="16" id="DF6-3X-kz6"/>
-                            <constraint firstItem="75d-1j-dSq" firstAttribute="trailing" secondItem="e28-He-dw5" secondAttribute="trailing" constant="16" id="Eqy-S5-9Ko"/>
                             <constraint firstItem="75d-1j-dSq" firstAttribute="bottom" secondItem="giW-Ox-2ky" secondAttribute="bottom" id="IYh-9F-RMF"/>
                             <constraint firstItem="75d-1j-dSq" firstAttribute="trailing" secondItem="K50-Gh-ufx" secondAttribute="trailing" constant="16" id="Pvx-HN-0g9"/>
-                            <constraint firstItem="e28-He-dw5" firstAttribute="top" secondItem="0qQ-xP-nDg" secondAttribute="bottom" constant="32" id="QtZ-MV-F6B"/>
-                            <constraint firstItem="e28-He-dw5" firstAttribute="leading" secondItem="75d-1j-dSq" secondAttribute="leading" constant="16" id="QvG-Fg-XrO"/>
                             <constraint firstItem="NSw-O6-Ep4" firstAttribute="top" secondItem="0qQ-xP-nDg" secondAttribute="bottom" constant="24" id="XY3-LN-Dg1"/>
-                            <constraint firstItem="K50-Gh-ufx" firstAttribute="top" secondItem="e28-He-dw5" secondAttribute="bottom" constant="16" id="XrW-f0-QOm"/>
                             <constraint firstItem="75d-1j-dSq" firstAttribute="trailing" secondItem="hJl-F6-OA2" secondAttribute="trailing" id="gTc-Jn-PYd"/>
                             <constraint firstItem="giW-Ox-2ky" firstAttribute="top" secondItem="K50-Gh-ufx" secondAttribute="bottom" constant="8" id="jOo-MK-aTa"/>
                             <constraint firstItem="hJl-F6-OA2" firstAttribute="top" secondItem="0qQ-xP-nDg" secondAttribute="bottom" constant="24" id="oh6-AC-r88"/>
@@ -547,7 +537,6 @@
                         <viewLayoutGuide key="safeArea" id="75d-1j-dSq"/>
                     </view>
                     <connections>
-                        <outlet property="btnCopyLink" destination="e28-He-dw5" id="aQ3-uZ-wl1"/>
                         <outlet property="btnManageMembers" destination="K50-Gh-ufx" id="k4x-3X-MUs"/>
                         <outlet property="eventsTableView" destination="giW-Ox-2ky" id="V5H-0x-N3G"/>
                         <outlet property="externalView" destination="hJl-F6-OA2" id="jmX-Ub-Epb"/>
@@ -1151,15 +1140,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="414.5"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Tb-bQ-MMB">
-                                <rect key="frame" x="16" y="8" width="343" height="30"/>
-                                <state key="normal" title="Copy Link"/>
-                                <connections>
-                                    <action selector="copyLinkButtonPressed" destination="V3J-TM-fIk" eventType="touchUpInside" id="vfT-1f-B1g"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1OV-LZ-k1D">
-                                <rect key="frame" x="16" y="46" width="343" height="30"/>
+                                <rect key="frame" x="16" y="8" width="343" height="30"/>
                                 <state key="normal" title="Leave Organization">
                                     <color key="titleColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
@@ -1170,18 +1152,12 @@
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="eqB-5k-79Q" firstAttribute="trailing" secondItem="5Tb-bQ-MMB" secondAttribute="trailing" constant="16" id="0Zy-ny-0Eg"/>
-                            <constraint firstItem="5Tb-bQ-MMB" firstAttribute="top" secondItem="eqB-5k-79Q" secondAttribute="top" constant="8" id="R1X-7M-Ekk"/>
+                            <constraint firstItem="1OV-LZ-k1D" firstAttribute="top" secondItem="eqB-5k-79Q" secondAttribute="top" constant="8" id="8de-ES-PRn"/>
                             <constraint firstItem="1OV-LZ-k1D" firstAttribute="leading" secondItem="eqB-5k-79Q" secondAttribute="leading" constant="16" id="ZV1-jq-Gew"/>
-                            <constraint firstItem="1OV-LZ-k1D" firstAttribute="top" secondItem="5Tb-bQ-MMB" secondAttribute="bottom" constant="8" id="i7O-Rd-9un"/>
                             <constraint firstItem="eqB-5k-79Q" firstAttribute="trailing" secondItem="1OV-LZ-k1D" secondAttribute="trailing" constant="16" id="lt0-Sh-wIQ"/>
-                            <constraint firstItem="5Tb-bQ-MMB" firstAttribute="leading" secondItem="eqB-5k-79Q" secondAttribute="leading" constant="16" id="qmn-ma-IOm"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="eqB-5k-79Q"/>
                     </view>
-                    <connections>
-                        <outlet property="btnCopyLink" destination="5Tb-bQ-MMB" id="fkM-Ox-Zod"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gPn-HI-m4C" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
