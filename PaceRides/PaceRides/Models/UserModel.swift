@@ -624,6 +624,12 @@ class UserModel: NSObject, PaceUser {
             if let existingDriveFor = self._driveFor {
                 if newDriveFor.documentID != existingDriveFor.uid {
                     self._driveFor = EventModel(withUID: newDriveFor.documentID)
+                    EventModel.notificationCenter.addObserver(
+                        forName: EventModel.EventDoesNotExist,
+                        object: self._driveFor,
+                        queue: nil,
+                        using: self.driveForEventDeleted
+                    )
                 }
             } else {
                 self._driveFor = EventModel(withUID: newDriveFor.documentID)
@@ -644,6 +650,16 @@ class UserModel: NSObject, PaceUser {
         } else {
             self._drive = nil
         }
+        
+        UserModel.notificationCenter.post(
+            name: .NewPaceUserData,
+            object: nil
+        )
+    }
+    
+    
+    private func driveForEventDeleted(_: Notification? = nil) {
+        self._driveFor = nil
         
         UserModel.notificationCenter.post(
             name: .NewPaceUserData,

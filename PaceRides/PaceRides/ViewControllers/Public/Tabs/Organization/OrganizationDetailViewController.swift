@@ -197,6 +197,58 @@ extension OrganizationDetailViewController: UITableViewDataSource {
 
 extension OrganizationDetailViewController: UITableViewDelegate {
     
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        
+        let deleteAction = UITableViewRowAction(
+            style: .destructive,
+            title: "Delete"
+        ) { _, indexPath in
+            
+            let actionSheet = UIAlertController(
+                title: "Delete",
+                message: "Are you sure you want to delete this event?",
+                preferredStyle: .actionSheet
+            )
+            
+            actionSheet.addAction(
+                UIAlertAction(
+                    title: "Delete",
+                    style: .destructive
+                ) { _ in
+                    
+                    if indexPath.row < self.organizationModel.events.count {
+                        self.organizationModel.events[indexPath.row].deleteEvent() { error in
+                         
+                            guard error == nil else {
+                                print("Error")
+                                print(error!.localizedDescription)
+                                return
+                            }
+                            
+                            self.eventsTableView.reloadData()
+                        }
+                    }
+                    
+                }
+            )
+            
+            actionSheet.addAction(
+                UIAlertAction(
+                    title: "Cancel",
+                    style: .cancel,
+                    handler: nil
+                )
+            )
+            
+            
+            self.present(actionSheet, animated: true)
+        }
+        
+        return [deleteAction]
+    }
+    
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         

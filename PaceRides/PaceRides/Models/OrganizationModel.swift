@@ -63,7 +63,7 @@ class OrganizationModel {
     
     
     private var orgData: [String: Any]?
-    private let reference: DocumentReference
+    let reference: DocumentReference
     private var docListener: ListenerRegistration? = nil
     private var administratorsListener: ListenerRegistration? = nil
     private var memberListener: ListenerRegistration? = nil

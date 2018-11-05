@@ -38,7 +38,14 @@ class EventDetailViewController: UIViewController {
             action: #selector(EventDetailViewController.share)
         )
         
+        EventModel.notificationCenter.addObserver(
+            forName: EventModel.EventDoesNotExist,
+            object: self.event,
+            queue: OperationQueue.main,
+            using: self.eventDoesNotExist
+        )
         self.event.subscribe(using: self.newEventData)
+        
         UserModel.notificationCenter.addObserver(
             forName: .NewPaceUserData,
             object: nil,
@@ -83,6 +90,11 @@ class EventDetailViewController: UIViewController {
     }
     
     
+    func eventDoesNotExist(_: Notification? = nil) {
+        self.alertEventDoesntExist()
+    }
+    
+    
     func newOrganizationData(_: Notification? = nil) {
         
         guard let org = self.event.organization else {
@@ -111,25 +123,34 @@ class EventDetailViewController: UIViewController {
             }
         }
         
-        if org.administrators.count > 0, !_userIsAdmin, self.event.disabled, let navVC = self.navigationController {
-            
-            let alertController = UIAlertController(
-                title: "Oops",
-                message: "This event does not exist",
-                preferredStyle: .alert
-            )
-            
-            alertController.addAction(UIAlertAction(
-                title: "Okay",
-                style: .cancel
-            ) { _ in
-                navVC.popViewController(animated: true)
-            })
-            
-            self.present(alertController, animated: true)
+        if org.administrators.count > 0, !_userIsAdmin, self.event.disabled {
+            self.alertEventDoesntExist()
         }
         
         self.updateUI()
+    }
+    
+    
+    func alertEventDoesntExist() {
+        
+        guard let navVC = self.navigationController else {
+            return
+        }
+        
+        let alertController = UIAlertController(
+            title: "Oops",
+            message: "This event does not exist",
+            preferredStyle: .alert
+        )
+        
+        alertController.addAction(UIAlertAction(
+            title: "Okay",
+            style: .cancel
+        ) { _ in
+            navVC.popViewController(animated: true)
+        })
+        
+        self.present(alertController, animated: true)
     }
     
     
@@ -159,7 +180,7 @@ class EventDetailViewController: UIViewController {
             return
         }
         
-        userRide.cancelRequest(toEvent: self.event.uid, forRider: paceUser)
+        userRide.cancelRequest(forRider: paceUser, toEvent: self.event.uid)
     }
     
     
@@ -244,7 +265,7 @@ class EventDetailViewController: UIViewController {
                 style: .destructive
             ) { _ in
                 
-                self._userRide!.cancelRequest(toEvent: self.event.uid, forRider: paceUser) { error in
+                self._userRide!.cancelRequest(forRider: paceUser, toEvent: self.event.uid) { error in
                     
                     guard error == nil else {
                         print("Error")

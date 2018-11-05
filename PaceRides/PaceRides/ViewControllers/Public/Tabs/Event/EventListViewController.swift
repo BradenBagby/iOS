@@ -27,6 +27,12 @@ class EventListViewController: PaceTabViewController {
             queue: OperationQueue.main,
             using: self.newPaceUserData
         )
+        EventModel.notificationCenter.addObserver(
+            forName: EventModel.EventDoesNotExist,
+            object: nil,
+            queue: OperationQueue.main,
+            using: self.newEventData
+        )
     }
     
     override func viewDidAppear(_ animated: Bool) {

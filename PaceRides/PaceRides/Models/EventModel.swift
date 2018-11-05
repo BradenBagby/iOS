@@ -30,12 +30,14 @@ enum EventDBKeys: String {
 
 class EventModel {
     
-    static let NewData = Notification.Name("NewEventData")
     static let notificationCenter = NotificationCenter.default
+    static let NewData = Notification.Name("NewEventData")
+    static let EventDoesNotExist = Notification.Name("EventDoesNotExist")
     static let db = Firestore.firestore()
     static let ref = EventModel.db.collection(EventDBKeys.events.rawValue)
     
     private var data: [String: Any]? = nil
+    private var recievedData = false
     
     let uid: String
     
@@ -62,10 +64,24 @@ class EventModel {
         }
     }
     
+    private var _drivers = [UserReference]()
+    var drivers: [UserReference] {
+        get {
+            return self._drivers
+        }
+    }
+    
     private var _rideQueue = [RideModel]()
     var rideQueue: [RideModel] {
         get {
             return self._rideQueue
+        }
+    }
+    
+    private var _activeRides = [RideModel]()
+    var activeRides: [RideModel] {
+        get {
+            return self._activeRides
         }
     }
     
@@ -167,17 +183,36 @@ class EventModel {
     func fetch() {
         
         guard self.docListener == nil else {
-            EventModel.notificationCenter.post(
-                name: EventModel.NewData,
-                object: self
-            )
+            
+            if self.recievedData {
+                
+                if self._title != nil {
+                    
+                    EventModel.notificationCenter.post(
+                        name: EventModel.NewData,
+                        object: self
+                    )
+                    
+                } else {
+                    
+                    EventModel.notificationCenter.post(
+                        name: EventModel.EventDoesNotExist,
+                        object: self
+                    )
+                }
+            }
             return
         }
         
         docListener = self.reference.addSnapshotListener(self.snapshotListener)
+        self.reference.collection(EventDBKeys.drivers.rawValue)
+            .addSnapshotListener(self.driversListener)
         self.reference.collection(EventDBKeys.rideQueue.rawValue)
             .order(by: EventDBKeys.timeOfRequest.rawValue, descending: false)
             .addSnapshotListener(self.rideQueueListener)
+        self.reference.collection(EventDBKeys.activeRides.rawValue)
+            .order(by: EventDBKeys.timeOfRequest.rawValue, descending: false)
+            .addSnapshotListener(self.activeRidesListener)
     }
     
     
@@ -275,7 +310,7 @@ class EventModel {
         }
     }
     
-    func endDrive(_ driver: PacePublicProfile, rideModel: RideModel) {
+    func endDrive(_ driver: PacePublicProfile, rideModel: RideModel, completion: ((Error?) -> Void)? = nil) {
         
         let batch = EventModel.db.batch()
         
@@ -289,7 +324,7 @@ class EventModel {
         ]
         batch.setData(newDriverData, forDocument: driver.dbReference, merge: true)
         
-        batch.commit()
+        batch.commit(completion: completion)
     }
     
     private func setDisabled(value: Bool) {
@@ -325,6 +360,41 @@ class EventModel {
         self.setDisabled(value: false)
     }
     
+    func deleteEvent(completion: ((Error?) -> Void)? = nil) {
+        
+        let batch = EventModel.db.batch()
+        
+        for queuedRide in self._rideQueue {
+            
+            let queuedRideRef = self.reference.collection(EventDBKeys.rideQueue.rawValue).document(queuedRide.uid)
+            batch.deleteDocument(queuedRideRef)
+            
+            let rideRef = RideModel.ref.document(queuedRide.uid)
+            batch.deleteDocument(rideRef)
+        }
+        
+        for activeRide in self._activeRides {
+            let activeRideRef = self.reference.collection(EventDBKeys.activeRides.rawValue).document(activeRide.uid)
+            batch.deleteDocument(activeRideRef)
+            
+            let rideRef = RideModel.ref.document(activeRide.uid)
+            batch.deleteDocument(rideRef)
+        }
+        
+        for driver in self._drivers {
+            let eventDriverRef = self.reference.collection(EventDBKeys.drivers.rawValue).document(driver.uid)
+            batch.deleteDocument(eventDriverRef)
+        }
+        
+        if let org = self.organization {
+            let orgEventRef = org.reference.collection(OrgDBKeys.events.rawValue).document(self.uid)
+            batch.deleteDocument(orgEventRef)
+        }
+        batch.deleteDocument(self.reference)
+        
+        batch.commit(completion: completion)
+    }
+    
     private func snapshotListener(document: DocumentSnapshot?, error: Error?) {
         
         guard error == nil else {
@@ -337,8 +407,22 @@ class EventModel {
             return
         }
         
+        self.recievedData = true
+        
         guard let docData = document.data() else {
             print("No data in document for event uid: \(self.uid)")
+            EventModel.notificationCenter.post(
+                name: EventModel.EventDoesNotExist,
+                object: self
+            )
+            
+            self._title = nil
+            self._disabled = true
+            self._organization = nil
+            self._drivers.removeAll()
+            self._rideQueue.removeAll()
+            self._activeRides.removeAll()
+            
             return
         }
         
@@ -372,6 +456,34 @@ class EventModel {
     }
     
     
+    private func driversListener(snapshot: QuerySnapshot?, error: Error?) {
+        
+        guard error == nil else {
+            print(error!.localizedDescription)
+            return
+        }
+        
+        guard let snapshot = snapshot else {
+            print("No drivers in snapshot for event: \(self.uid)")
+            return
+        }
+        
+        self._drivers.removeAll()
+        for document in snapshot.documents {
+            if let driver = UserReference(fromDocument: document) {
+                self._drivers.append(driver)
+            } else {
+                print("Could not create driver from doc with id \(document.documentID)")
+            }
+        }
+        
+        EventModel.notificationCenter.post(
+            name: EventModel.NewData,
+            object: self
+        )
+    }
+    
+    
     private func rideQueueListener(snapshot: QuerySnapshot?, error: Error?) {
         
         guard error == nil else {
@@ -388,6 +500,30 @@ class EventModel {
         for document in snapshot.documents {
             let rideRef = RideModel(fromUID: document.documentID) 
             self._rideQueue.append(rideRef)
+        }
+        
+        EventModel.notificationCenter.post(
+            name: EventModel.NewData,
+            object: self
+        )
+    }
+    
+    private func activeRidesListener(snapshot: QuerySnapshot?, error: Error?) {
+        
+        guard error == nil else {
+            print(error!.localizedDescription)
+            return
+        }
+        
+        guard let snapshot = snapshot else {
+            print("No active rides snapshot for event: \(self.uid)")
+            return
+        }
+        
+        self._activeRides.removeAll()
+        for document in snapshot.documents {
+            let rideRef = RideModel(fromUID: document.documentID)
+            self._activeRides.append(rideRef)
         }
         
         EventModel.notificationCenter.post(

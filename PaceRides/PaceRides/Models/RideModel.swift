@@ -175,8 +175,8 @@ class RideModel {
     
     
     func cancelRequest(
-        toEvent eventUID: String,
         forRider rider: PaceUser,
+        toEvent eventUID: String? = nil,
         completion: ((Error?) -> Void)? = nil
     ) {
         
@@ -191,17 +191,25 @@ class RideModel {
         ]
         batch.setData(riderData, forDocument: rider.dbReference, merge: true)
         
+        
+        var eid = eventUID
+        if eid == nil, let eUID  = self.eventUID {
+            eid = eUID
+        }
+        
         // Set event space
-        let eventRideQueueRef = EventModel.ref
-                                    .document(eventUID)
-                                    .collection(EventDBKeys.rideQueue.rawValue)
-                                    .document(self.uid)
-        batch.deleteDocument(eventRideQueueRef)
-        let eventActiveRidesRef = EventModel.ref
-                                    .document(eventUID)
-                                    .collection(EventDBKeys.activeRides.rawValue)
-                                    .document(self.uid)
-        batch.deleteDocument(eventActiveRidesRef)
+        if let eventUID = eid {
+            let eventRideQueueRef = EventModel.ref
+                                        .document(eventUID)
+                                        .collection(EventDBKeys.rideQueue.rawValue)
+                                        .document(self.uid)
+            batch.deleteDocument(eventRideQueueRef)
+            let eventActiveRidesRef = EventModel.ref
+                                        .document(eventUID)
+                                        .collection(EventDBKeys.activeRides.rawValue)
+                                        .document(self.uid)
+            batch.deleteDocument(eventActiveRidesRef)
+        }
         
         // Comit writes
         batch.commit(completion: completion)

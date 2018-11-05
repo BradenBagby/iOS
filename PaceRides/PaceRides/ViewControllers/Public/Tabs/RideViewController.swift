@@ -40,7 +40,35 @@ class RideViewController: PaceTabViewController {
             return
         }
         
+        RideModel.notificationCenter.addObserver(
+            forName: RideModel.RideDoesNotExist,
+            object: userRide,
+            queue: OperationQueue.main,
+            using: self.rideDoesNotExist
+        )
         userRide.subscribe(using: self.newRideData)
+        
+        
+        guard let driveFor = paceUser.driveFor else {
+            return
+        }
+        
+        EventModel.notificationCenter.addObserver(
+            forName: EventModel.EventDoesNotExist,
+            object: driveFor,
+            queue: OperationQueue.main,
+            using: self.rideDoesNotExist
+        )
+    }
+    
+    
+    func rideDoesNotExist(_: Notification? = nil) {
+        
+        guard let paceUser = UserModel.sharedInstance(), let userRide = paceUser.ride else {
+            return
+        }
+        
+        userRide.cancelRequest(forRider: paceUser)
     }
     
     
@@ -112,7 +140,7 @@ class RideViewController: PaceTabViewController {
             style: .destructive
         ) { _ in
             
-            userRide.cancelRequest(toEvent: eventUID, forRider: paceUser) { error in
+            userRide.cancelRequest(forRider: paceUser, toEvent: eventUID) { error in
                 
                 guard error == nil else {
                     print("Error")

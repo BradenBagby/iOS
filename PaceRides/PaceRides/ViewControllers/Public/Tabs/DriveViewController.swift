@@ -47,6 +47,13 @@ class DriveViewController: PaceTabViewController {
         
         if let userDriveFor = paceUser.driveFor {
             self._userDriveFor = userDriveFor
+            
+            EventModel.notificationCenter.addObserver(
+                forName: EventModel.EventDoesNotExist,
+                object: userDriveFor,
+                queue: OperationQueue.main,
+                using: self.eventDoesNotExist
+            )
             userDriveFor.subscribe(using: self.newEventData)
         } else {
             self._userDriveFor = nil
@@ -73,6 +80,19 @@ class DriveViewController: PaceTabViewController {
     
     func newEventData(_: Notification? = nil) {
         updateUI()
+    }
+    
+    
+    func eventDoesNotExist(_: Notification? = nil) {
+        
+        guard let paceUser = UserModel.sharedInstance() else {
+            return
+        }
+        
+        if let userDriveFor = self._userDriveFor {
+            userDriveFor.stopDriving(paceUser: paceUser)
+        }
+        
     }
     
     

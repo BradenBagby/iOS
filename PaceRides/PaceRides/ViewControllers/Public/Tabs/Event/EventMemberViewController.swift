@@ -13,6 +13,7 @@ class EventMemberViewController: UIViewController {
     var event: EventModel!
     @IBOutlet weak var btnDrive: UIButton!
     @IBOutlet weak var disableButton: UIButton!
+    @IBOutlet weak var deleteButton: UIButton!
     
     private var _userIsDrivingForEvent = true
     private var _userIsDrivingForThisEvent = false
@@ -115,6 +116,7 @@ class EventMemberViewController: UIViewController {
         }
         
         self.disableButton.isHidden = !_userIsAdmin
+        self.deleteButton.isHidden = !_userIsAdmin
         if self.event.disabled {
             self.disableButton.setTitle("Enable", for: .normal)
             self.disableButton.setTitleColor(.forrestGreen, for: .normal)
@@ -168,5 +170,39 @@ class EventMemberViewController: UIViewController {
         } else {
             self.event.disableEvent()
         }
+    }
+    
+    
+    @IBAction func deleteButtonPressed() {
+        
+        let actionSheet = UIAlertController(
+            title: "Delete Event",
+            message: "Are you sure you want to delete this event?",
+            preferredStyle: .actionSheet
+        )
+        
+        actionSheet.addAction(
+            UIAlertAction(
+                title: "Delete Event",
+                style: .destructive) { _ in
+                    self.event.deleteEvent() { error in
+                    
+                        guard error == nil else {
+                            print("Error")
+                            print(error!.localizedDescription)
+                            return
+                        }
+                    }
+        })
+        
+        actionSheet.addAction(
+            UIAlertAction(
+                title: "Keep Event",
+                style: .cancel,
+                handler: nil
+            )
+        )
+        
+        self.present(actionSheet, animated: true)
     }
 }

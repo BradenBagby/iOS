@@ -1478,6 +1478,16 @@
                                     <action selector="disableButtonPressed" destination="IPC-FL-Y3I" eventType="touchUpInside" id="csk-rf-tag"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2WI-Ro-B0y">
+                                <rect key="frame" x="16" y="92" width="343" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Delete">
+                                    <color key="titleColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="deleteButtonPressed" destination="IPC-FL-Y3I" eventType="touchUpInside" id="SnJ-sj-2SX"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <constraints>
@@ -1492,6 +1502,7 @@
                     </view>
                     <connections>
                         <outlet property="btnDrive" destination="HhF-XH-ZP1" id="2pF-33-Wum"/>
+                        <outlet property="deleteButton" destination="2WI-Ro-B0y" id="97b-R6-fZq"/>
                         <outlet property="disableButton" destination="IwY-V5-ihl" id="6lJ-Pp-L6F"/>
                     </connections>
                 </viewController>
