@@ -71,6 +71,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
                     // TODO: Handle errors
                     guard error == nil else {
                         print(error!.localizedDescription)
+                        
+                        mainLaunchScreen.activityIndicator.stopAnimating()
+                        
+                        let alert = UIAlertController(
+                            title: "Error",
+                            message: error!.localizedDescription,
+                            preferredStyle: .alert
+                        )
+                        
+                        alert.addAction(
+                            UIAlertAction(
+                                title: "Okay",
+                                style: .default,
+                                handler: nil
+                            )
+                        )
+                        
+                        mainLaunchScreen.present(alert, animated: true)
+                        
                         return
                     }
                     
