@@ -25,11 +25,14 @@ extension NSNotification.Name {
 
 class PaceFbLoginDelegate: NSObject, FBSDKLoginButtonDelegate {
     
-    func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
+    let notificationCenter = NotificationCenter.default
+    let FBSDKDidCompleteLogin = Notification.Name("FBSDKDidCompleteLogin")
+    
+    func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error fbError: Error!) {
         
-        guard error == nil else {
+        guard fbError == nil else {
             print("Error logging into facebook")
-            print(error.localizedDescription)
+            print(fbError!.localizedDescription)
             return
         }
         
@@ -53,6 +56,11 @@ class PaceFbLoginDelegate: NSObject, FBSDKLoginButtonDelegate {
                 
                 return
             }
+            
+            self.notificationCenter.post(
+                name: self.FBSDKDidCompleteLogin,
+                object: self
+            )
         }
     }
     
@@ -341,7 +349,7 @@ class UserModel: NSObject, PaceUser {
     
     
     /// The delegate for the facebook login button
-    static let fbLoginDelegate: FBSDKLoginButtonDelegate = PaceFbLoginDelegate()
+    static let fbLoginDelegate = PaceFbLoginDelegate()
     
     
     /// Creates a user using facebook credentials

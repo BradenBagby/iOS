@@ -9,7 +9,9 @@
 import UIKit
 import Firebase
 import UserNotifications
+import CoreLocation
 import FBSDKCoreKit
+import FBSDKLoginKit
 
 enum TransitionDestination {
     case organization(String)
@@ -18,6 +20,7 @@ enum TransitionDestination {
 
 enum UserDefaultsKeys: String {
     case EULAAgreementSeconds = "EULAAgreementSeconds"
+    case userHasSeenWelcome = "userHasSeenWelcome"
 }
 
 enum DataDBKeys: String {
@@ -36,7 +39,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 
     var window: UIWindow?
     var fcmToken: String?
-
+    let notificationCenter = NotificationCenter.default
+    let NotificationsAuthorizationMayHaveChanged = Notification.Name("NotificationsAuthorizationMayHaveChanged")
+    var userIsInWelcomeScreen = false
+    var locationManager: CLLocationManager?
+    let LocationServicesAuthorizationMayHaveChanged = Notification.Name("LocationServicesAuthorizationMayHaveChanged")
+    
     var transitionDestination: TransitionDestination? = nil
     
     override init() {
@@ -53,8 +61,62 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         
         Auth.auth().addStateDidChangeListener(UserModel.firebaseAuthStateChangeListener)
     }
-
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        // User Notification Configuration
+        UNUserNotificationCenter.current().delegate = self
+        Messaging.messaging().delegate = self
+        Messaging.messaging().shouldEstablishDirectChannel = true
+        Messaging.messaging().useMessagingDelegateForDirectChannel = true
+        self.checkNotificationAuthorization()
+        UIApplication.shared.registerForRemoteNotifications()
+        
+        // Instaciate Window
+        if self.window == nil {
+            self.window = UIWindow()
+        }
+        guard let window = self.window else {
+            return false
+        }
+        
+        let userHasSeenWelcome = UserDefaults.standard.bool(forKey: UserDefaultsKeys.userHasSeenWelcome.rawValue)
+        
+        guard userHasSeenWelcome else {
+            self.userIsInWelcomeScreen = true
+            
+            if Auth.auth().currentUser != nil {
+                do {
+                    try Auth.auth().signOut()
+                } catch {}
+            } 
+            
+            UserModel.fbLoginDelegate.notificationCenter.addObserver(
+                forName: UserModel.fbLoginDelegate.FBSDKDidCompleteLogin,
+                object: UserModel.fbLoginDelegate,
+                queue: OperationQueue.main,
+                using: self.fbsdkDidCompleteLogin
+            )
+            let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let welcomeViewController = mainStoryboard.instantiateViewController(withIdentifier: "WelcomeViewController")
+            window.rootViewController = welcomeViewController
+            window.makeKeyAndVisible()
+            return FBSDKApplicationDelegate.sharedInstance()!.application(application, didFinishLaunchingWithOptions: launchOptions)
+        }
+        
+        self.launchApplication()
+        
+        return FBSDKApplicationDelegate.sharedInstance()!.application(application, didFinishLaunchingWithOptions: launchOptions)
+    }
+    
+    private func fbsdkDidCompleteLogin(_: Notification? = nil) {
+        if self.userIsInWelcomeScreen {
+            UserDefaults.standard.set(true, forKey: UserDefaultsKeys.userHasSeenWelcome.rawValue)
+            self.launchApplication()
+        }
+    }
+    
+    private func launchApplication() {
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -63,8 +125,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         self.window?.makeKeyAndVisible()
         mainLaunchScreen.activityIndicator.isHidden = false
         mainLaunchScreen.activityIndicator.startAnimating()
-        
-        self.registerForNotifications()
         
         let eulaAgreementSeconds
             = UserDefaults.standard.object(forKey: UserDefaultsKeys.EULAAgreementSeconds.rawValue) as? NSNumber
@@ -118,8 +178,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         } else {
             self.displayEULAViewController()
         }
-        
-        return FBSDKApplicationDelegate.sharedInstance()!.application(application, didFinishLaunchingWithOptions: launchOptions)
     }
     
     private func displayEULAViewController() {
@@ -225,6 +283,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
         
+        self.checkNotificationAuthorization()
+        
         Messaging.messaging().shouldEstablishDirectChannel = true
         Messaging.messaging().useMessagingDelegateForDirectChannel = true
     }
@@ -248,7 +308,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
     
-    private func registerForNotifications() {
+    func getNotificationAuthorization(completion: @escaping (UNNotificationSettings) -> Void) {
+        UNUserNotificationCenter.current().getNotificationSettings(completionHandler: completion)
+    }
+    
+    
+    func requestNotificationAuthorization(completion: (() -> Void)? = nil) {
         
         UNUserNotificationCenter.current().requestAuthorization(
             options: [.alert, .badge, .sound]
@@ -262,80 +327,29 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                 return
             }
             
-            guard granted else {
-                
-                guard let window = self.window, let viewController = window.rootViewController else {
-                    print("Needs notification privilidge!")
-                    print("The App needs notification privilidges\n\nPlease allow this in your device settings.")
-                    return
-                }
-                
-                let alert = UIAlertController(
-                    title: "Needs Notification Privilidge",
-                    message: "\nThis App needs notification privilidges.\n\nPlease allow this in your device settings.",
-                    preferredStyle: .alert
-                )
-                
-                alert.addAction(
-                    UIAlertAction(title: "Settings", style: .default) { _ in
-                        guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
-                            return
-                        }
-                        
-                        if UIApplication.shared.canOpenURL(settingsUrl) {
-                            UIApplication.shared.open(settingsUrl) { success in
-                                print("Setting is opened: \(success)")
-                            }
-                        }
-                    }
-                )
-                
-                alert.addAction(
-                    UIAlertAction(
-                        title: "Okay",
-                        style: .cancel,
-                        handler: nil
-                    )
-                )
-                
-                viewController.present(alert, animated: true)
-                return
+            if let completion = completion {
+                completion()
             }
-            
-            Messaging.messaging().shouldEstablishDirectChannel = true
-            Messaging.messaging().useMessagingDelegateForDirectChannel = true
         }
+    }
+    
+    func checkNotificationAuthorization() {
         
-        UNUserNotificationCenter.current().delegate = self
-        Messaging.messaging().delegate = self
-        UIApplication.shared.registerForRemoteNotifications()
+        self.notificationCenter.post(
+            name: self.NotificationsAuthorizationMayHaveChanged,
+            object: self
+        )
     }
     
     
-    func sendLocalNotificaiton(withTitle title: String, andBody body: String, after timeInterval: Double = 1) {
+    func openApplicationSettings() {
+        guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
+            return
+        }
         
-        let content = UNMutableNotificationContent()
-        content.title = title
-        content.body = body
-        content.sound = UNNotificationSound.default
-        
-        let trigger = UNTimeIntervalNotificationTrigger(
-            timeInterval: timeInterval,
-            repeats: false
-        )
-        
-        let request = UNNotificationRequest(
-            identifier: UUID().uuidString,
-            content: content,
-            trigger: trigger
-        )
-        
-        UNUserNotificationCenter.current().add(request) { error in
-            
-            guard error == nil else {
-                print("Error")
-                print(error!.localizedDescription)
-                return
+        if UIApplication.shared.canOpenURL(settingsUrl) {
+            UIApplication.shared.open(settingsUrl) { success in
+                print("Setting is opened: \(success)")
             }
         }
     }
@@ -451,5 +465,30 @@ extension AppDelegate: MessagingDelegate {
         Messaging.messaging().unsubscribe(fromTopic: topic, completion: completion)
         
         return true
+    }
+}
+
+
+extension AppDelegate: CLLocationManagerDelegate {
+    
+    func getLocationAuthroizationStatus() -> CLAuthorizationStatus? {
+        if CLLocationManager.locationServicesEnabled() {
+            return CLLocationManager.authorizationStatus()
+        } else {
+            return nil
+        }
+    }
+    
+    func requestLocationServices() {
+        self.locationManager = CLLocationManager()
+        self.locationManager!.delegate = self
+        self.locationManager!.requestAlwaysAuthorization()
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        self.notificationCenter.post(
+            name: self.LocationServicesAuthorizationMayHaveChanged,
+            object: self
+        )
     }
 }

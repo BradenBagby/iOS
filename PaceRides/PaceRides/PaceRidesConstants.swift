@@ -19,13 +19,33 @@ extension UIColor {
     
     open class var coral: UIColor {
         get {
-            return UIColor.init(red: 0.973, green: 0.514, blue: 0.475, alpha: 1.0)
+            return UIColor.init(red: 252.0/255.0, green: 105.0/255.0, blue: 64.0/255.0, alpha: 1.0)
         }
     }
     
     open class var tiffanyBlue: UIColor {
         get {
-            return UIColor.init(red: 0.039, green: 0.729, blue: 0.710, alpha: 1.0)
+            return UIColor.init(red: 118.0/255.0, green: 199.0/255.0, blue: 191.0/255.0, alpha: 1.0)
         }
+    }
+}
+
+
+extension UIImage {
+    
+    static var welcomeImage: UIImage? {
+        return UIImage(named: "welcome")
+    }
+    
+    static var notificationImage: UIImage? {
+        return UIImage(named: "notification")
+    }
+    
+    static var mapImage: UIImage? {
+        return UIImage(named: "map")
+    }
+    
+    static var facebookIconImage: UIImage? {
+        return UIImage(named: "facebookIcon")
     }
 }

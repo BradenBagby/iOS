@@ -48,7 +48,11 @@
 		<true/>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Location is needed to request a ride.</string>
+	<string>The drivers need to know where to pick you up.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>The drivers need to know where to pick you up.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>The drivers need to know where to pick you up.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>
