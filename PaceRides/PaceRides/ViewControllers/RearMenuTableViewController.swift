@@ -117,11 +117,11 @@ class RearMenuTableViewController: UIViewController {
         
         // TODO: reset
         self.menuItems[0][1].text = "School"
-        self.view.backgroundColor = UIColor.groupTableViewBackground
-        self.tableView.backgroundColor = UIColor.groupTableViewBackground
-        self.profileImageView.layer.borderColor = UIColor.white.cgColor
-        self.headerLabel.textColor = UIColor.darkText
-        self.signOutButton.setTitleColor(self.view.tintColor, for: .normal)
+        self.view.backgroundColor = .tiffanyBlue
+        self.tableView.backgroundColor = .tiffanyBlue
+        self.profileImageView.layer.borderColor = UIColor.coral.cgColor
+        self.headerLabel.textColor = UIColor.white
+        self.signOutButton.setTitleColor(.coral, for: .normal)
         
         if let pU = UserModel.sharedInstance(), let userSchoolProfile = pU.schoolProfile() {
             userSchoolProfile.getUniversityModel() { university, error in

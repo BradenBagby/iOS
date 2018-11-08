@@ -85,10 +85,10 @@ class PublicTabBarController: UITabBarController {
     
     func paceUserUniversityDataDidChange(_ : Notification? = nil) {
         
-        self.tabBar.backgroundColor = nil
-        self.tabBar.barTintColor = nil
+        self.tabBar.barTintColor = .tiffanyBlue
+        self.tabBar.tintColor = .coral
         if #available(iOS 10.0, *) {
-            self.tabBar.unselectedItemTintColor = nil
+            self.tabBar.unselectedItemTintColor = .white
         }
         
         if let paceUser = UserModel.sharedInstance(), let userSchoolProfile = paceUser.schoolProfile() {

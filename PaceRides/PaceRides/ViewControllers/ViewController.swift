@@ -33,13 +33,13 @@ extension UIViewController {
     func setNavigationBarColors(_: Notification? = nil) {
         
         if let navCon = self.navigationController {
-            navCon.navigationBar.barTintColor = nil
-            navCon.navigationBar.tintColor = self.view.tintColor
+            navCon.navigationBar.barTintColor = .tiffanyBlue
+            navCon.navigationBar.tintColor = .coral
             navCon.navigationBar.titleTextAttributes
-                = [NSAttributedString.Key.foregroundColor: UIColor.darkText]
+                = [NSAttributedString.Key.foregroundColor: UIColor.white]
             if #available(iOS 11.0, *) {
                 navCon.navigationBar.largeTitleTextAttributes
-                    = [NSAttributedString.Key.foregroundColor: UIColor.darkText]
+                    = [NSAttributedString.Key.foregroundColor: UIColor.white]
             }
         }
         

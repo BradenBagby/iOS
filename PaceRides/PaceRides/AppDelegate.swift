@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import UserNotifications
 import FBSDKCoreKit
 
 enum TransitionDestination {
@@ -34,6 +35,7 @@ enum EULADBKeys: String {
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
 
     var window: UIWindow?
+    var fcmToken: String?
 
     var transitionDestination: TransitionDestination? = nil
     
@@ -47,6 +49,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         settings.areTimestampsInSnapshotsEnabled = true
         db.settings = settings
         
+        UIApplication.shared.applicationIconBadgeNumber = 0
+        
         Auth.auth().addStateDidChangeListener(UserModel.firebaseAuthStateChangeListener)
     }
 
@@ -59,6 +63,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         self.window?.makeKeyAndVisible()
         mainLaunchScreen.activityIndicator.isHidden = false
         mainLaunchScreen.activityIndicator.startAnimating()
+        
+        self.registerForNotifications()
         
         let eulaAgreementSeconds
             = UserDefaults.standard.object(forKey: UserDefaultsKeys.EULAAgreementSeconds.rawValue) as? NSNumber
@@ -173,6 +179,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
         
+//        print("Continue user activity")
+        
         if userActivity.activityType == NSUserActivityTypeBrowsingWeb {
             if let url = userActivity.webpageURL {
                 
@@ -201,23 +209,247 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
+        
+        Messaging.messaging().shouldEstablishDirectChannel = false
+        Messaging.messaging().useMessagingDelegateForDirectChannel = false
     }
-
+    
     func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        
+        Messaging.messaging().shouldEstablishDirectChannel = false
+        Messaging.messaging().useMessagingDelegateForDirectChannel = false
     }
-
+    
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+        
+        Messaging.messaging().shouldEstablishDirectChannel = true
+        Messaging.messaging().useMessagingDelegateForDirectChannel = true
     }
-
+    
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        
+        Messaging.messaging().shouldEstablishDirectChannel = true
+        Messaging.messaging().useMessagingDelegateForDirectChannel = true
     }
-
+    
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+        
+        Messaging.messaging().shouldEstablishDirectChannel = false
+        Messaging.messaging().useMessagingDelegateForDirectChannel = false
     }
 }
 
+
+
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    
+    private func registerForNotifications() {
+        
+        UNUserNotificationCenter.current().requestAuthorization(
+            options: [.alert, .badge, .sound]
+        ) { granted, error in
+            
+            guard error == nil else {
+                
+                print("Error")
+                print(error!.localizedDescription)
+                
+                return
+            }
+            
+            guard granted else {
+                
+                guard let window = self.window, let viewController = window.rootViewController else {
+                    print("Needs notification privilidge!")
+                    print("The App needs notification privilidges\n\nPlease allow this in your device settings.")
+                    return
+                }
+                
+                let alert = UIAlertController(
+                    title: "Needs Notification Privilidge",
+                    message: "\nThis App needs notification privilidges.\n\nPlease allow this in your device settings.",
+                    preferredStyle: .alert
+                )
+                
+                alert.addAction(
+                    UIAlertAction(title: "Settings", style: .default) { _ in
+                        guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
+                            return
+                        }
+                        
+                        if UIApplication.shared.canOpenURL(settingsUrl) {
+                            UIApplication.shared.open(settingsUrl) { success in
+                                print("Setting is opened: \(success)")
+                            }
+                        }
+                    }
+                )
+                
+                alert.addAction(
+                    UIAlertAction(
+                        title: "Okay",
+                        style: .cancel,
+                        handler: nil
+                    )
+                )
+                
+                viewController.present(alert, animated: true)
+                return
+            }
+            
+            Messaging.messaging().shouldEstablishDirectChannel = true
+            Messaging.messaging().useMessagingDelegateForDirectChannel = true
+        }
+        
+        UNUserNotificationCenter.current().delegate = self
+        Messaging.messaging().delegate = self
+        UIApplication.shared.registerForRemoteNotifications()
+    }
+    
+    
+    func sendLocalNotificaiton(withTitle title: String, andBody body: String, after timeInterval: Double = 1) {
+        
+        let content = UNMutableNotificationContent()
+        content.title = title
+        content.body = body
+        content.sound = UNNotificationSound.default
+        
+        let trigger = UNTimeIntervalNotificationTrigger(
+            timeInterval: timeInterval,
+            repeats: false
+        )
+        
+        let request = UNNotificationRequest(
+            identifier: UUID().uuidString,
+            content: content,
+            trigger: trigger
+        )
+        
+        UNUserNotificationCenter.current().add(request) { error in
+            
+            guard error == nil else {
+                print("Error")
+                print(error!.localizedDescription)
+                return
+            }
+        }
+    }
+    
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        
+        Messaging.messaging().apnsToken = deviceToken
+        
+        let hexToken = deviceToken.map { String(format: "%02.2hhx", $0) }.joined()
+        
+        print()
+        print("application:didRegisterForRemoteNotificationsWithDeviceToken")
+        print("Token: \(hexToken)")
+    }
+    
+    
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        
+        print()
+        print("application:didFailToRegisterForRemoteNotificationsWithError")
+        print("Error: \(error.localizedDescription)")
+    }
+    
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        
+        print()
+        print("userNotificationCenter:didRecieve:withCompletionHandler")
+        print("response UUID: \(response.notification.request.identifier)")
+        
+        completionHandler()
+    }
+    
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        
+        Messaging.messaging().appDidReceiveMessage(notification.request.content.userInfo)
+        
+        print()
+        print("userNotificationCenter:willPresent:withCompletionHandler")
+        print("notification UUID: \(notification.request.identifier)")
+        
+        completionHandler([.alert, .sound])
+    }
+    
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any]) {
+        
+        Messaging.messaging().appDidReceiveMessage(userInfo)
+        
+        print()
+        print("application:didReceiveRemoteNotification")
+        print("User Info: \(userInfo)")
+    }
+    
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        
+        Messaging.messaging().appDidReceiveMessage(userInfo)
+        
+        print()
+        print("application:didReceiveRemoteNotification:fetchCompletionHandler")
+        print("User Info: \(userInfo)")
+        
+        completionHandler(UIBackgroundFetchResult.newData)
+    }
+}
+
+
+extension AppDelegate: MessagingDelegate {
+    
+    
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
+        
+        self.fcmToken = fcmToken
+        
+        print()
+        print("Firebase registration token: \(fcmToken)")
+        
+        let dataDict:[String: String] = ["token": fcmToken]
+        NotificationCenter.default.post(name: Notification.Name("FCMToken"), object: nil, userInfo: dataDict)
+    }
+    
+    
+    func messaging(_ messaging: Messaging, didReceive remoteMessage: MessagingRemoteMessage) {
+        
+        print()
+        print("messaging:didRecieve")
+        print("Remote Message: \(remoteMessage)")
+        
+    }
+    
+    
+    func subscribe(toTopic topic: String, completion: ((Error?) -> Void)? = nil) -> Bool {
+        
+        guard self.fcmToken != nil else {
+            return false
+        }
+        
+        Messaging.messaging().subscribe(toTopic: topic, completion: completion)
+        
+        return true
+    }
+    
+    
+    func unsubscribe(fromTopic topic: String, completion: ((Error?) -> Void)? = nil) -> Bool {
+        
+        guard self.fcmToken != nil else {
+            return false
+        }
+        
+        Messaging.messaging().unsubscribe(fromTopic: topic, completion: completion)
+        
+        return true
+    }
+}
